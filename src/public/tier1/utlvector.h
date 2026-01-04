@@ -43,6 +43,8 @@ class CUtlVector
 	typedef A CAllocator;
 public:
 	typedef T ElemType_t;
+	typedef T* iterator;
+	typedef const T* const_iterator;
 
 	// constructor, destructor
 	CUtlVector( int growSize = 0, int initSize = 0 );
@@ -61,6 +63,13 @@ public:
 	const T& Head() const;
 	T& Tail();
 	const T& Tail() const;
+
+	// STL compatible member functions. These allow easier use of std::sort
+	// and they are forward compatible with the C++ 11 range-based for loops.
+	iterator begin() { return Base(); }
+	const_iterator begin() const { return Base(); }
+	iterator end() { return Base() + Count(); }
+	const_iterator end() const { return Base() + Count(); }
 
 	// Gets the base address (can change when adding elements!)
 	T* Base()								{ return m_Memory.Base(); }

@@ -9,6 +9,14 @@
 //
 //=============================================================================//
 
+#define NO_PROP_LIGHTMAPS
+
+//TODO: stub
+unsigned char* LZMA_Compress( unsigned char* pInput, unsigned int	inputSize, unsigned int* pOutputSize)
+{
+		return 0;
+}
+
 #include "vrad.h"
 #include "mathlib/vector.h"
 #include "UtlBuffer.h"
@@ -27,9 +35,9 @@
 #include "pacifier.h"
 #include "materialsystem/imaterial.h"
 #include "materialsystem/hardwareverts.h"
-//#ifndef NO_PROP_LIGHTMAPS
-//#include "materialsystem/hardwaretexels.h"
-//#endif
+#ifndef NO_PROP_LIGHTMAPS
+#include "materialsystem/hardwaretexels.h"
+#endif
 #include "byteswap.h"
 #include "mpivrad.h"
 #include "vtf/vtf.h"
