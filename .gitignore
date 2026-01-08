@@ -20,6 +20,7 @@ ipch
 *.unsuccessfulbild
 
 # DO NOT ADD .obj TO THE EXCLUDES, some are in the sdk on purpose =)
+*.obj # praying
 
 # OSX/Linux build products
 *.mak
