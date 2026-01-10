@@ -1,17 +1,23 @@
-# Emulsion
-Emulsion is a paint focused puzzle game built on the Portal 2 Source Engine branch.
+# Movercell's Improved Portal 2 Compile Tools
 
-# Setup
-Before settng up the code project, I recommend that you install Visual Studio 2010 from the link provided. 
-You do not have to use the actual vs 2010 IDE, you just need it installed so that you can use the v100 platform tools for emulsion's compilation.
-HOWEVER, The v120_xp toolset is still used for gamepadui due to compatibility issues with the v100 toolset. 
-Once you have Visual Studio 2010 installed, you will be able to use the v100 toolset with your MSVC IDE of choice (i.e. vs 2013, 2019, 2022, etc.)
+Ever wondered whether you can speed up your compile times way more than you're allowed with the vanilla compilers? Well, here's your answer: ***Yes!*** 
 
-Link to archived Visual Studio 2010. I recommend downloading the ISO image, mounting it, and running the installer inside.
-https://archive.org/details/en_vs_2010_ult
+## Features
+- Drastically improved compile time!
+- Prettier console output
+- Makes your screw-ups show as errors instead of warnings
 
-To setup emulsion, you must first create a gameinfo.txt. I did things this way to prevent shipping Portal 2's assets.
-to setup the gameinfo.txt, go into game/emulsion, and locate "gameinfo.EDIT_ME_WITH_TXT_EDITOR". Follow the instructions inside this fie,
-and save it as a "gameinfo.txt" in the same directory you found it. This will also need to be done for the skeleton template (game/skeleton), if it is used.
+## Planned
+- VIS
+- Even faster compile times!
 
-Have Fun!
+## Not planned but maybe
+- BSP
+
+
+PS: If you do compile maps with it please put a link to this repo in your map's workshop description to help it spread, it will help out a huge lot!
+
+
+# Credits
+- [theKlaxon/emulsion-sdk](https://github.com/theKlaxon/emulsion-sdk) for Portal 2-compatible headers
+- [ReactiveDrop/reactivedrop_public_src](https://github.com/ReactiveDrop/reactivedrop_public_src) for the closest to Portal 2 branch compile tools
