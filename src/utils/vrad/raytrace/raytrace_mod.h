@@ -269,6 +269,7 @@ public:
 	CUtlVector<CacheOptimizedKDNode> OptimizedKDTree;		//< the packed kdtree. root is 0
 	std::mutex OptimizedKDTreeLock;							///< the thread lock for OptimizedKDTree
 	CUtlBlockVector<CacheOptimizedTriangle> OptimizedTriangleList; //< the packed triangles
+	std::mutex		  OptimizedTriangleListLock;			//< the thread lock for OptimizedTriangleList
 	CUtlVector<int32> TriangleIndexList;					//< the list of triangle indices.
 	std::mutex		  TriangleIndexListLock;				//< the thread lock for TriangleIndexList
 	CUtlVector<LightDesc_t> LightList;						//< the list of lights

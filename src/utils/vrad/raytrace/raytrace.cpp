@@ -7,6 +7,7 @@
 #include <cmdlib.h>
 #include <stdio.h>
 #include <memory>
+#include <future>
 
 static bool SameSign(float a, float b)
 {
@@ -599,13 +600,21 @@ void RayTracingEnvironment::Trace4Rays(const FourRays &rays, fltx4 TMin, fltx4 T
 
 int RayTracingEnvironment::MakeLeafNode(int first_tri, int last_tri)
 {
+	TriangleIndexListLock.lock();
+	OptimizedKDTreeLock.lock();
+
 	CacheOptimizedKDNode ret;
 	ret.Children=KDNODE_STATE_LEAF+(TriangleIndexList.Count()<<2);
 	ret.SetNumberOfTrianglesInLeafNode(1+(last_tri-first_tri));
 	for(int tnum=first_tri;tnum<=last_tri;tnum++)
 		TriangleIndexList.AddToTail(tnum);
 	OptimizedKDTree.AddToTail(ret);
-	return OptimizedKDTree.Count()-1;
+
+	auto retval = OptimizedKDTree.Count() - 1;
+	TriangleIndexListLock.unlock();
+	OptimizedKDTreeLock.unlock();
+
+	return retval;
 }
 
 
@@ -670,10 +679,19 @@ float RayTracingEnvironment::CalculateCostsOfSplit(
 	nboth=0;
 	float min_coord=1.0e23,max_coord=-1.0e23;
 
+	
+
 	for(int t=0;t<ntris;t++)
 	{
-		CacheOptimizedTriangle &tri=OptimizedTriangleList[tri_list[t]];
+		OptimizedTriangleListLock.lock();
+
+		volatile auto temp = tri_list[t];
+		volatile auto temp2 = &(OptimizedTriangleList[temp]);
+		CacheOptimizedTriangle tri=OptimizedTriangleList[temp];
 		TriTemporaryData_t& tri_tempdata = tri_temp_list[tri_list[t]];
+
+		OptimizedTriangleListLock.unlock();
+		
 		// determine max and min coordinate values for later optimization
 		for(int v=0;v<3;v++)
 		{
@@ -698,6 +716,7 @@ float RayTracingEnvironment::CalculateCostsOfSplit(
 				break;
 		}
 	}
+	
 	// now, if the split resulted in one half being empty, "grow" the empty half
 	if (nleft && (nboth==0) && (nright==0))
 		split_value=max_coord;
@@ -730,6 +749,8 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 
 	if (ntris<3)											// never split empty lists
 	{
+		OptimizedKDTreeLock.lock();
+		TriangleIndexListLock.lock();
 		// no point in continuing
 		OptimizedKDTree[node_number].Children=KDNODE_STATE_LEAF+(TriangleIndexList.Count()<<2);
 		OptimizedKDTree[node_number].SetNumberOfTrianglesInLeafNode(ntris);
@@ -738,13 +759,14 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 		OptimizedKDTree[node_number].vecMins = MinBound;
 		OptimizedKDTree[node_number].vecMaxs = MaxBound;
 #endif
+		OptimizedKDTreeLock.unlock();
 
 		for (int t = 0; t < ntris; t++)
 		{
-			TriangleIndexListLock.lock();
 			TriangleIndexList.AddToTail(tri_list[t]);
-			TriangleIndexListLock.unlock();
+			
 		}
+		TriangleIndexListLock.unlock();
 		return;
 	}
 
@@ -768,8 +790,10 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 				else
 				{
 					// else, split at the triangle vertex if possible
+					OptimizedTriangleListLock.lock();
 					CacheOptimizedTriangle &tri=OptimizedTriangleList[tri_list[ts]];
 					trial_splitvalue = tri.Vertex(tv)[axis];
+					OptimizedTriangleListLock.unlock();
 					if ((trial_splitvalue>MaxBound[axis]) || (trial_splitvalue<MinBound[axis]))
 						continue;							// don't try this vertex - not inside
 					
@@ -805,6 +829,9 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 	float cost_of_no_split=COST_OF_INTERSECTION*ntris;
 	if ( (cost_of_no_split<=best_cost) || NEVER_SPLIT || (depth>MAX_TREE_DEPTH))
 	{
+		OptimizedKDTreeLock.lock();
+		TriangleIndexListLock.lock();
+
 		// no benefit to splitting. just make this a leaf node
 		OptimizedKDTree[node_number].Children=KDNODE_STATE_LEAF+(TriangleIndexList.Count()<<2);
 		OptimizedKDTree[node_number].SetNumberOfTrianglesInLeafNode(ntris);
@@ -812,12 +839,13 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 		OptimizedKDTree[node_number].vecMins = MinBound;
 		OptimizedKDTree[node_number].vecMaxs = MaxBound;
 #endif
+		OptimizedKDTreeLock.unlock();
+
 		for (int t = 0; t < ntris; t++)
 		{
-			TriangleIndexListLock.lock();
-			TriangleIndexList.AddToTail(tri_list[t]);
-			TriangleIndexListLock.unlock();
+			TriangleIndexList.AddToTail(tri_list[t]);	
 		}
+		TriangleIndexListLock.unlock();
 	}
 	else
 	{
@@ -873,9 +901,7 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 		OptimizedKDTree.AddToTail(newnode);
 		OptimizedKDTree.AddToTail(newnode);
 
-		OptimizedKDTreeLock.unlock();
-
-// 		printf("node %d split on axis %d at %f, nl=%d nr=%d nb=%d lc=%d rc=%d\n",node_number,
+		// 		printf("node %d split on axis %d at %f, nl=%d nr=%d nb=%d lc=%d rc=%d\n",node_number,
 // 	    split_plane,best_splitvalue,best_nleft,best_nright,best_nboth,
 // 		left_child,right_child);
 		OptimizedKDTree[node_number].Children = split_plane + (left_child << 2);
@@ -885,13 +911,25 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 		OptimizedKDTree[node_number].vecMaxs = MaxBound;
 #endif
 
+		OptimizedKDTreeLock.unlock();
+
 		// now, recurse!
 		if ( (ntris<10) && ((best_nleft==0) || (best_nright==0)) )
 			depth+=100;
 		//TODO: multithreading, maybe?
-		RefineNode(left_child,new_triangle_list,best_nleft+best_nboth,LeftMins,LeftMaxes,depth+1);
-		RefineNode(right_child,new_triangle_list+best_nleft,best_nright+best_nboth,
-				   RightMins,RightMaxes,depth+1);
+		if ( depth < 1 )
+		{
+			std::future<void> wait = std::async(std::launch::async, &RayTracingEnvironment::RefineNode, this,
+				left_child, new_triangle_list, best_nleft + best_nboth, LeftMins, LeftMaxes, depth + 1);
+			//RefineNode(right_child, new_triangle_list + best_nleft, best_nright + best_nboth, RightMins, RightMaxes, depth + 1);
+			wait.get();
+		}
+		else
+		{
+			RefineNode(left_child, new_triangle_list, best_nleft + best_nboth, LeftMins, LeftMaxes, depth + 1);
+			RefineNode(right_child, new_triangle_list + best_nleft, best_nright + best_nboth,
+				RightMins, RightMaxes, depth + 1);
+		}
 		delete[] new_triangle_list;
 	}	
 }
