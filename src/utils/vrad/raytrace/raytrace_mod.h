@@ -12,6 +12,7 @@
 #include <tier1/utlvector.h>
 #include <mathlib/mathlib.h>
 #include <bspfile.h>
+#include <mutex>
 
 // fast SSE-ONLY ray tracing module. Based upon various "real time ray tracing" research.
 //#define DEBUG_RAYTRACE 1
@@ -262,6 +263,7 @@ public:
 
 	FourVectors BackgroundColor;							//< color where no intersection
 	CUtlVector<CacheOptimizedKDNode> OptimizedKDTree;		//< the packed kdtree. root is 0
+	std::mutex OptimizedKDTreeLock;							///< the thread lock for OptimizedKDTree
 	CUtlBlockVector<CacheOptimizedTriangle> OptimizedTriangleList; //< the packed triangles
 	CUtlVector<int32> TriangleIndexList;					//< the list of triangle indices.
 	CUtlVector<LightDesc_t> LightList;						//< the list of lights
