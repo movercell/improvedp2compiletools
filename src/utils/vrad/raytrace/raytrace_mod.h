@@ -14,6 +14,66 @@
 #include <bspfile.h>
 #include <mutex>
 
+
+#include <cstddef>
+#include <type_traits>
+#include <new>
+#include <utility>
+#include <stdexcept>
+
+template <typename T, std::size_t N>
+class inplace_vector {
+	// Aligned buffer for uninitialized storage
+	typename std::aligned_storage<sizeof(T), alignof(T)>::type data_[N];
+	std::size_t size_ = 0;
+
+public:
+	inplace_vector() = default;
+
+	~inplace_vector() { clear(); }
+
+	// Element access
+	T* data() { return reinterpret_cast<T*>(data_); }
+	const T* data() const { return reinterpret_cast<const T*>(data_); }
+	T& operator[](std::size_t i) { return data()[i]; }
+	const T& operator[](std::size_t i) const { return data()[i]; }
+
+	// Capacity
+	std::size_t size() const { return size_; }
+	static constexpr std::size_t capacity() { return N; }
+	bool empty() const { return size_ == 0; }
+
+	// Modifiers
+	void push_back(const T& value) {
+		if (size_ >= N) throw std::bad_alloc();
+		new (data() + size_) T(value);
+		++size_;
+	}
+
+	template <typename... Args>
+	T& emplace_back(Args&&... args) {
+		if (size_ >= N) throw std::bad_alloc();
+		T* ptr = new (data() + size_) T(std::forward<Args>(args)...);
+		++size_;
+		return *ptr;
+	}
+
+	void pop_back() {
+		if (size_ > 0) {
+			data()[--size_].~T();
+		}
+	}
+
+	void clear() {
+		while (size_ > 0) pop_back();
+	}
+
+	// Iterators
+	T* begin() { return data(); }
+	T* end() { return data() + size_; }
+};
+
+
 // fast SSE-ONLY ray tracing module. Based upon various "real time ray tracing" research.
 //#define DEBUG_RAYTRACE 1
 
@@ -266,11 +326,11 @@ public:
 	Vector m_MaxBound;
 
 	FourVectors BackgroundColor;							//< color where no intersection
-	CUtlVector<CacheOptimizedKDNode> OptimizedKDTree;		//< the packed kdtree. root is 0
+	inplace_vector<CacheOptimizedKDNode, 10000> OptimizedKDTree;		//< the packed kdtree. root is 0
 	std::mutex OptimizedKDTreeLock;							///< the thread lock for OptimizedKDTree
 	CUtlBlockVector<CacheOptimizedTriangle> OptimizedTriangleList; //< the packed triangles
 	std::mutex		  OptimizedTriangleListLock;			//< the thread lock for OptimizedTriangleList
-	CUtlVector<int32> TriangleIndexList;					//< the list of triangle indices.
+	inplace_vector<int32, 10000> TriangleIndexList;			//< the list of triangle indices.
 	std::mutex		  TriangleIndexListLock;				//< the thread lock for TriangleIndexList
 	CUtlVector<LightDesc_t> LightList;						//< the list of lights
 	CUtlVector<Vector> TriangleColors;						//< color of tries

@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <memory>
 #include <future>
+#include <windows.h>
 
 static bool SameSign(float a, float b)
 {
@@ -604,13 +605,13 @@ int RayTracingEnvironment::MakeLeafNode(int first_tri, int last_tri)
 	OptimizedKDTreeLock.lock();
 
 	CacheOptimizedKDNode ret;
-	ret.Children=KDNODE_STATE_LEAF+(TriangleIndexList.Count()<<2);
+	ret.Children=KDNODE_STATE_LEAF+(TriangleIndexList.size()<<2);
 	ret.SetNumberOfTrianglesInLeafNode(1+(last_tri-first_tri));
 	for(int tnum=first_tri;tnum<=last_tri;tnum++)
-		TriangleIndexList.AddToTail(tnum);
-	OptimizedKDTree.AddToTail(ret);
+		TriangleIndexList.push_back(tnum);
+	OptimizedKDTree.push_back(ret);
 
-	auto retval = OptimizedKDTree.Count() - 1;
+	auto retval = OptimizedKDTree.size() - 1;
 	TriangleIndexListLock.unlock();
 	OptimizedKDTreeLock.unlock();
 
@@ -752,7 +753,7 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 		OptimizedKDTreeLock.lock();
 		TriangleIndexListLock.lock();
 		// no point in continuing
-		OptimizedKDTree[node_number].Children=KDNODE_STATE_LEAF+(TriangleIndexList.Count()<<2);
+		OptimizedKDTree[node_number].Children=KDNODE_STATE_LEAF+(TriangleIndexList.size()<<2);
 		OptimizedKDTree[node_number].SetNumberOfTrianglesInLeafNode(ntris);
 
 #ifdef DEBUG_RAYTRACE
@@ -763,7 +764,7 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 
 		for (int t = 0; t < ntris; t++)
 		{
-			TriangleIndexList.AddToTail(tri_list[t]);
+			TriangleIndexList.push_back(tri_list[t]);
 			
 		}
 		TriangleIndexListLock.unlock();
@@ -833,7 +834,7 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 		TriangleIndexListLock.lock();
 
 		// no benefit to splitting. just make this a leaf node
-		OptimizedKDTree[node_number].Children=KDNODE_STATE_LEAF+(TriangleIndexList.Count()<<2);
+		OptimizedKDTree[node_number].Children=KDNODE_STATE_LEAF+(TriangleIndexList.size()<<2);
 		OptimizedKDTree[node_number].SetNumberOfTrianglesInLeafNode(ntris);
 #ifdef DEBUG_RAYTRACE
 		OptimizedKDTree[node_number].vecMins = MinBound;
@@ -843,7 +844,7 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 
 		for (int t = 0; t < ntris; t++)
 		{
-			TriangleIndexList.AddToTail(tri_list[t]);	
+			TriangleIndexList.push_back(tri_list[t]);
 		}
 		TriangleIndexListLock.unlock();
 	}
@@ -854,7 +855,9 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 		// its worth splitting!
 		// we will achieve the splitting without sorting by using a selection algorithm.
 		int32 *new_triangle_list;
-		new_triangle_list=new int32[ntris];
+		//movercell: i fucking hate this but alright. 
+		HANDLE hHeap = HeapCreate(0, 0, 0);
+		new_triangle_list = reinterpret_cast<int32*>(HeapAlloc(hHeap, HEAP_ZERO_MEMORY, sizeof(int32) * ntris));
 
 		// now, perform surface area/cost check to determine whether this split was worth it
 		Vector LeftMins=MinBound;
@@ -895,11 +898,11 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 		
 		OptimizedKDTreeLock.lock();
 
-		int left_child=OptimizedKDTree.Count();
+		int left_child = OptimizedKDTree.size();
 		int right_child=left_child+1;
 		CacheOptimizedKDNode newnode;
-		OptimizedKDTree.AddToTail(newnode);
-		OptimizedKDTree.AddToTail(newnode);
+		OptimizedKDTree.push_back(newnode);
+		OptimizedKDTree.push_back(newnode);
 
 		// 		printf("node %d split on axis %d at %f, nl=%d nr=%d nb=%d lc=%d rc=%d\n",node_number,
 // 	    split_plane,best_splitvalue,best_nleft,best_nright,best_nboth,
@@ -930,7 +933,8 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 			RefineNode(right_child, new_triangle_list + best_nleft, best_nright + best_nboth,
 				RightMins, RightMaxes, depth + 1);
 		}
-		delete[] new_triangle_list;
+		HeapFree(hHeap, 0, new_triangle_list);
+		HeapDestroy(hHeap);
 	}	
 }
 
@@ -938,7 +942,7 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 void RayTracingEnvironment::SetupAccelerationStructure(void)
 {
 	CacheOptimizedKDNode root;
-	OptimizedKDTree.AddToTail(root);
+	OptimizedKDTree.push_back(root);
 	int32 *root_triangle_list=new int32[OptimizedTriangleList.Count()];
 	for(int t=0;t<OptimizedTriangleList.Count();t++)
 		root_triangle_list[t]=t;

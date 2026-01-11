@@ -494,7 +494,7 @@ void ProcessSkyCameras()
 
 }
 
-
+#include <iostream>
 /*
 =============
 MakePatchForFace
@@ -534,7 +534,8 @@ void MakePatchForFace (int fn, winding_t *w)
 	totalarea += area;
 
 	// get a patch
-	int ndxPatch = g_Patches.AddToTail();
+	std::cout << &g_Patches << std::endl;;
+	int ndxPatch = g_Patches.AddToTail(CPatch());
 	patch = &g_Patches[ndxPatch];
 	memset( patch, 0, sizeof( CPatch ) );
 	patch->ndxNext = g_Patches.InvalidIndex();
