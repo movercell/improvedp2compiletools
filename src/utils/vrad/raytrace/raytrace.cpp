@@ -6,6 +6,7 @@
 #include <filesystem_tools.h>
 #include <cmdlib.h>
 #include <stdio.h>
+#include <memory>
 
 static bool SameSign(float a, float b)
 {
@@ -653,7 +654,7 @@ void RayTracingEnvironment::CalculateTriangleListBounds(int32 const *tris,int nt
 
 
 float RayTracingEnvironment::CalculateCostsOfSplit(
-	int split_plane,int32 const *tri_list,int ntris,
+	int split_plane, int32 const* tri_list, TriTemporaryData_t* tri_temp_list, int ntris,
 	Vector MinBound,Vector MaxBound, float &split_value,
 	int &nleft, int &nright, int &nboth)
 {
@@ -672,6 +673,7 @@ float RayTracingEnvironment::CalculateCostsOfSplit(
 	for(int t=0;t<ntris;t++)
 	{
 		CacheOptimizedTriangle &tri=OptimizedTriangleList[tri_list[t]];
+		TriTemporaryData_t& tri_tempdata = tri_temp_list[tri_list[t]];
 		// determine max and min coordinate values for later optimization
 		for(int v=0;v<3;v++)
 		{
@@ -682,17 +684,17 @@ float RayTracingEnvironment::CalculateCostsOfSplit(
 		{
 			case PLANECHECK_NEGATIVE:
 				nleft++;
-				tri.m_Data.m_GeometryData.m_nTmpData0 = PLANECHECK_NEGATIVE;
+				tri_tempdata.m_nTmpData0 = PLANECHECK_NEGATIVE;
 				break;
 
 			case PLANECHECK_POSITIVE:
 				nright++;
-				tri.m_Data.m_GeometryData.m_nTmpData0 = PLANECHECK_POSITIVE;
+				tri_tempdata.m_nTmpData0 = PLANECHECK_POSITIVE;
 				break;
 
 			case PLANECHECK_STRADDLING:
 				nboth++;
-				tri.m_Data.m_GeometryData.m_nTmpData0 = PLANECHECK_STRADDLING;
+				tri_tempdata.m_nTmpData0 = PLANECHECK_STRADDLING;
 				break;
 		}
 	}
@@ -723,6 +725,9 @@ float RayTracingEnvironment::CalculateCostsOfSplit(
 void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int ntris,
 									   Vector MinBound,Vector MaxBound, int depth)
 {
+
+	static thread_local std::unique_ptr<TriTemporaryData_t[]> tri_temp_list = std::make_unique<TriTemporaryData_t[]>(ntris);
+
 	if (ntris<3)											// never split empty lists
 	{
 		// no point in continuing
@@ -734,8 +739,12 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 		OptimizedKDTree[node_number].vecMaxs = MaxBound;
 #endif
 
-		for(int t=0;t<ntris;t++)
+		for (int t = 0; t < ntris; t++)
+		{
+			TriangleIndexListLock.lock();
 			TriangleIndexList.AddToTail(tri_list[t]);
+			TriangleIndexListLock.unlock();
+		}
 		return;
 	}
 
@@ -767,7 +776,7 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 				}
 //				printf("ts=%d tv=%d tp=%f\n",ts,tv,trial_splitvalue);
 				float trial_cost=
-					CalculateCostsOfSplit(axis,tri_list,ntris,MinBound,MaxBound,trial_splitvalue,
+					CalculateCostsOfSplit(axis,tri_list,tri_temp_list.get(), ntris, MinBound, MaxBound, trial_splitvalue,
 										  trial_nleft,trial_nright, trial_nboth);
 // 				printf("try %d cost=%f nl=%d nr=%d nb=%d sp=%f\n",axis,trial_cost,trial_nleft,trial_nright, trial_nboth,
 // 					   trial_splitvalue);
@@ -783,8 +792,8 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 					for(int t=0 ; t < ntris; t++)
 					{
 						//movercell: if i can move tempdata out of the triangle then i will be able to multithread this thing i guess
-						CacheOptimizedTriangle &tri=OptimizedTriangleList[tri_list[t]];
-						tri.m_Data.m_GeometryData.m_nTmpData1 = tri.m_Data.m_GeometryData.m_nTmpData0;
+						TriTemporaryData_t& tri_tempdata = tri_temp_list[tri_list[t]];
+						tri_tempdata.m_nTmpData1 = tri_tempdata.m_nTmpData0;
 					}
 				}
 				if (ts==-1)
@@ -803,8 +812,12 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 		OptimizedKDTree[node_number].vecMins = MinBound;
 		OptimizedKDTree[node_number].vecMaxs = MaxBound;
 #endif
-		for(int t=0;t<ntris;t++)
+		for (int t = 0; t < ntris; t++)
+		{
+			TriangleIndexListLock.lock();
 			TriangleIndexList.AddToTail(tri_list[t]);
+			TriangleIndexListLock.unlock();
+		}
 	}
 	else
 	{
@@ -828,8 +841,8 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 		int n_right_output=0;
 		for(int t=0;t<ntris;t++)
 		{
-			CacheOptimizedTriangle &tri=OptimizedTriangleList[tri_list[t]];
-			switch( tri.m_Data.m_GeometryData.m_nTmpData1 )
+			TriTemporaryData_t& tri_tempdata = tri_temp_list[tri_list[t]];
+			switch( tri_tempdata.m_nTmpData1 )
 			{
 				case PLANECHECK_NEGATIVE:
 //					printf("%d goes left\n",t);

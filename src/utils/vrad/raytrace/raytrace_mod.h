@@ -85,8 +85,6 @@ struct TriGeometryData_t
 	float m_VertexCoordData[9];								// can't use a vector in a union
 
 	uint8 m_nFlags;											// triangle flags
-	signed char m_nTmpData0;								// used by kd-tree builder
-	signed char m_nTmpData1;								// used by kd-tree builder
 
 
 	// accessors to get around union annoyance
@@ -95,6 +93,12 @@ struct TriGeometryData_t
 		return * ( reinterpret_cast<Vector *> (  m_VertexCoordData+3*idx ) );
 	}
 
+};
+
+struct TriTemporaryData_t
+{
+	signed char m_nTmpData0 : 4;								// used by kd-tree builder
+	signed char m_nTmpData1 : 4;								// used by kd-tree builder
 };
 
 
@@ -266,6 +270,7 @@ public:
 	std::mutex OptimizedKDTreeLock;							///< the thread lock for OptimizedKDTree
 	CUtlBlockVector<CacheOptimizedTriangle> OptimizedTriangleList; //< the packed triangles
 	CUtlVector<int32> TriangleIndexList;					//< the list of triangle indices.
+	std::mutex		  TriangleIndexListLock;				//< the thread lock for TriangleIndexList
 	CUtlVector<LightDesc_t> LightList;						//< the list of lights
 	CUtlVector<Vector> TriangleColors;						//< color of tries
 	CUtlVector<int32> TriangleMaterials;					//< material index of tries
@@ -348,7 +353,7 @@ public:
 
 
 	float CalculateCostsOfSplit(
-		int split_plane,int32 const *tri_list,int ntris,
+		int split_plane,int32 const *tri_list, TriTemporaryData_t* tri_temp_list, int ntris,
 		Vector MinBound,Vector MaxBound, float &split_value,
 		int &nleft, int &nright, int &nboth);
 		
