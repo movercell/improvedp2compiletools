@@ -169,20 +169,6 @@ extern const int32 ALIGN16 g_AVX_EveryOtherMask[];				// 0, ~0, 0, ~0
 #define PREFETCH360(x,y) // nothing
 #endif
 
-// Here's a handy function to align a pointer to the next
-// sixteen byte boundary -- it'll round it up to the nearest
-// multiple of 16. This is useful if you're subdividing
-// big swaths of allocated memory, but in that case, remember
-// to leave yourself the necessary slack in the allocation.
-#ifndef AlignPointer
-template<class T>
-inline T *AlignPointer(void * ptr)
-{
-	unsigned temp = ptr;
-	temp = ALIGN_VALUE(temp, sizeof(T));
-	return (T *)temp;
-}
-#endif
 // Define prefetch macros.
 // The characteristics of cache and prefetch are completely 
 // different between the different platforms, so you DO NOT
@@ -2077,6 +2063,7 @@ FORCEINLINE fltx8 BiasAVX( const fltx8 &val, const fltx8 &precalc_param )
 // Box/plane test 
 // NOTE: The w component of emins + emaxs must be 1 for this to work
 //-----------------------------------------------------------------------------
+#if 0
 FORCEINLINE int BoxOnPlaneSideAVX( const fltx8& emins, const fltx8& emaxs, const cplane_t *p, float tolerance = 0.f )
 {
 	fltx8 corners[2];
@@ -2096,9 +2083,9 @@ FORCEINLINE int BoxOnPlaneSideAVX( const fltx8& emins, const fltx8& emaxs, const
 	fltx8 result2 = MaskedAssign( cmp2, Eight_Twos, Eight_Zeros );
 	result = AddAVX( result, result2 );
 	intx8 sides;
-	ConvertStoreAsIntsAVX( &sides, result );
+	ConvertStoreAsIntsSIMD( &sides, result );
 	return sides[0];
 }
-
+#endif
 
 #endif // _ssemath_h

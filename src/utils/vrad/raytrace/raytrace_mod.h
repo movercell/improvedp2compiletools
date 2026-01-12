@@ -42,6 +42,31 @@ public:
 
 };
 
+class EightRays
+{
+public:
+	EightVectors origin;
+	EightVectors direction;
+
+	inline void Check(void) const
+	{
+		// in order to be valid to trace as a group, all four rays must have the same signs in all
+		// of their direction components
+#ifndef NDEBUG
+		for (int c = 1; c < 8; c++)
+		{
+			Assert(direction.X(0) * direction.X(c) >= 0);
+			Assert(direction.Y(0) * direction.Y(c) >= 0);
+			Assert(direction.Z(0) * direction.Z(c) >= 0);
+		}
+#endif
+	}
+	// returns direction sign mask for 8 rays. returns -1 if the rays can not be traced as a
+	// bundle.
+	int CalculateDirectionSignMask(void) const;
+
+};
+
 /// The format a triangle is stored in for intersections. size of this structure is important.
 /// This structure can be in one of two forms. Before the ray tracing environment is set up, the
 /// ProjectedEdgeEquations hold the coordinates of the 3 vertices, for facilitating bounding box
