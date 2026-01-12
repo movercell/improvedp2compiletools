@@ -8,6 +8,7 @@
 
 #include <mathlib/vector.h>
 #include <mathlib/mathlib.h>
+#include <mathlib/ssemath.h>
 #include <mathlib/compressed_vector.h>
 #include <immintrin.h> 
 
@@ -1095,7 +1096,19 @@ public:
 class ALIGN16 EightVectors
 {
 public:
-	fltx8 x, y, z;
+	union {
+		fltx8 x;
+		fltx4 xhalves[2];
+	};
+	union {
+		fltx8 y;
+		fltx4 yhalves[2];
+	};
+	union {
+		fltx8 z;
+		fltx4 zhalves[2];
+	};
+
 
 	EightVectors(void)
 	{
@@ -1113,13 +1126,14 @@ public:
 		fltx8 aReplicated = ReplicateX8( a );
 		x = y = z = aReplicated;
 	}
-
+#endif
 	/// construct a EightVectors from 8 separate Vectors
-	FORCEINLINE EightVectors(Vector const &a, Vector const &b, Vector const &c, Vector const &d)
+	FORCEINLINE EightVectors(Vector const &a, Vector const &b, Vector const &c, Vector const &d, Vector const& e, Vector const& f, Vector const& g, Vector const& h )
 	{
-		LoadAndSwizzle(a,b,c,d);
+		LoadAndSwizzle( a, b, c, d, 0 );
+		LoadAndSwizzle( e, f, g, h, 1 );
 	}
-
+#if 0
 	/// construct a EightVectors from 8 separate Vectors
 	FORCEINLINE EightVectors(VectorAligned const &a, VectorAligned const &b, VectorAligned const &c, VectorAligned const &d)
 	{
@@ -1324,9 +1338,9 @@ public:
 		y=src.y;
 		z=src.z;
 	}
-#if 0
+
 	/// LoadAndSwizzle - load 8 Vectors into a EightVectors, performing transpose op
-	FORCEINLINE void LoadAndSwizzle(Vector const &a, Vector const &b, Vector const &c, Vector const &d)
+	FORCEINLINE void LoadAndSwizzle(Vector const &a, Vector const &b, Vector const &c, Vector const &d, bool half )
 	{
 		// TransposeAVX has large sub-expressions that the compiler can't eliminate on x360
 		// use an unfolded implementation here
@@ -1344,22 +1358,23 @@ public:
 		y = __vmrglw(r0, r1);
 		z = __vmrghw(r2, r3);
 #else
-		x		= LoadUnalignedAVX( &( a.x ));
-		y		= LoadUnalignedAVX( &( b.x ));
-		z		= LoadUnalignedAVX( &( c.x ));
-		fltx8 w = LoadUnalignedAVX( &( d.x ));
+		xhalves[half]	= LoadUnalignedSIMD( &( a.x ));
+		yhalves[half]	= LoadUnalignedSIMD( &( b.x ));
+		zhalves[half]	= LoadUnalignedSIMD( &( c.x ));
+		fltx4 w = LoadUnalignedSIMD( &( d.x ));
 		// now, matrix is:
 		// x y z ?
 		// x y z ?
 		// x y z ?
 		// x y z ?
-		TransposeAVX(x, y, z, w);
-#endif
-	}
+		TransposeSIMD(xhalves[half], yhalves[half], zhalves[half], w);
+#endif				  				
+	}				  
 
 	FORCEINLINE void LoadAndSwizzle(Vector const &a)
 	{
-		LoadAndSwizzle( a, a, a, a );
+		LoadAndSwizzle( a, a, a, a, 0 );
+		LoadAndSwizzle( a, a, a, a, 1 );
 	}
 
 	// Broadcasts a, b, c, and d into the four vectors
@@ -1390,7 +1405,7 @@ public:
 		z = v;
 #endif
 	}
-
+#if 0
 	// transform four horizontal vectors into the internal vertical ones
 	FORCEINLINE void LoadAndSwizzle( FLTX8 a, FLTX8 b, FLTX8 c, FLTX8 d  )
 	{
