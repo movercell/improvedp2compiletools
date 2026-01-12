@@ -738,9 +738,8 @@ void ComputeIndirectLightingAtPoint( Vector &position, Vector &normal, Vector &o
 			ColorRGBExp32ToVector( *pLightmap, lightmapColor );
 		}
 
-		float invLengthSqr = 1.0f / (1.0f + ((vEnd - position) * surfEnum.m_HitFrac / 128.0).LengthSqr());
-		// Include falloff using invsqrlaw.
-		VectorMultiply( lightmapColor, invLengthSqr * dtexdata[pTex->texdata].reflectivity, lightmapColor );
+		// From ValveSoftware/source-sdk-2013#1345
+		VectorMultiply(lightmapColor, dot * dtexdata[pTex->texdata].reflectivity, lightmapColor);
 		VectorAdd( outColor, lightmapColor, outColor );
 	}
 
