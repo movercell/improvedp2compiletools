@@ -121,6 +121,32 @@ struct CacheOptimizedTriangle
 	                                                        // computing intersections.
 
 	int ClassifyAgainstAxisSplit(int split_plane, float split_value); // PLANECHECK_xxx below
+
+	fltx4 MakeMaxs() const
+	{
+		fltx4 result;
+		fltx4 data[3];
+		for ( int i = 0; i < 3; i++ )
+			data[i] = LoadUnalignedSIMD((void*)(&m_Data.m_GeometryData.m_VertexCoordData[i * 3]));
+		
+		result = MaxSIMD(data[0], data[1]);
+		result = MaxSIMD(result, data[2]);
+
+		return result;
+	}
+
+	fltx4 MakeMins() const
+	{
+		fltx4 result;
+		fltx4 data[3];
+		for (int i = 0; i < 3; i++)
+			data[i] = LoadUnalignedSIMD((void*)(&m_Data.m_GeometryData.m_VertexCoordData[i * 3]));
+
+		result = MinSIMD(data[0], data[1]);
+		result = MinSIMD(result, data[2]);
+
+		return result;
+	}
 	
 };
 
