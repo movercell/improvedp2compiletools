@@ -239,23 +239,12 @@ void CacheOptimizedTriangle::ChangeIntoIntersectionFormat(void)
 
 //int n_intersection_calculations=0;
 
-int CacheOptimizedTriangle::ClassifyAgainstAxisSplit(int split_plane, float split_value)
+int CacheOptimizedTriangle::ClassifyAgainstAxisSplit(const float &minc, const float& maxc, const float& split_value)
 {
-	// classify a triangle against an axis-aligned plane
-	float minc=Vertex(0)[split_plane];
-	float maxc=minc;
-	for(int v=1;v<3;v++)
-	{
-		minc=min(minc,Vertex(v)[split_plane]);
-		maxc=max(maxc,Vertex(v)[split_plane]);
-	}
-
 	if (minc>=split_value)
 		return PLANECHECK_POSITIVE;
 	if (maxc<=split_value)
 		return PLANECHECK_NEGATIVE;
-	if (minc==maxc)
-		return PLANECHECK_POSITIVE;
 	return PLANECHECK_STRADDLING;
 }
 
@@ -624,7 +613,7 @@ void RayTracingEnvironment::CalculateTriangleListBounds(int32 const *tris,int nt
 		tri_mins_list[tris[i]] = tri.MakeMins();
 		min = MinSIMD( min, tri.MakeMins() );
 
-		tri_maxs_list[tris[i]] = tri.MakeMins();
+		tri_maxs_list[tris[i]] = tri.MakeMaxs();
 		max = MaxSIMD( max, tri.MakeMaxs() );
 	}
 
@@ -679,13 +668,19 @@ float RayTracingEnvironment::CalculateCostsOfSplit(
 	for(int t=0;t<ntris;t++)
 	{
 		CacheOptimizedTriangle &tri=OptimizedTriangleList[tri_list[t]];
-		// determine max and min coordinate values for later optimization
-		for(int v=0;v<3;v++)
-		{
-			min_coord = min( min_coord, tri.Vertex(v)[split_plane] );
-			max_coord = max( max_coord, tri.Vertex(v)[split_plane] );
-		}
-		switch(tri.ClassifyAgainstAxisSplit(split_plane,split_value))
+		// fetch max and min coordinate values for later optimization
+		float all_min[4];
+		StoreUnalignedSIMD(all_min, tri_mins_list[tri_list[t]]);
+		float all_max[4];
+		StoreUnalignedSIMD(all_max, tri_maxs_list[tri_list[t]]);
+
+		float minc = all_min[split_plane];
+		float maxc = all_max[split_plane];
+
+		min_coord = min( min_coord, minc );
+		max_coord = max( max_coord, maxc );
+		
+		switch(tri.ClassifyAgainstAxisSplit(minc, maxc,split_value))
 		{
 			case PLANECHECK_NEGATIVE:
 				nleft++;
@@ -872,7 +867,7 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 		OptimizedKDTree.AddToTail(newnode);
 		OptimizedKDTree.AddToTail(newnode);
 		// now, recurse!
-		if ( (ntris<20) && ((best_nleft==0) || (best_nright==0)) )
+		if ( (ntris<10) && ((best_nleft==0) || (best_nright==0)) )
 			depth+=100;
 		RefineNode(left_child,new_triangle_list,best_nleft+best_nboth,LeftMins,LeftMaxes,depth+1);
 		RefineNode(right_child,new_triangle_list+best_nleft,best_nright+best_nboth,

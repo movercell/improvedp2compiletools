@@ -120,7 +120,7 @@ struct CacheOptimizedTriangle
 	void ChangeIntoIntersectionFormat(void);				// change information storage format for
 	                                                        // computing intersections.
 
-	int ClassifyAgainstAxisSplit(int split_plane, float split_value); // PLANECHECK_xxx below
+	int ClassifyAgainstAxisSplit(const float& minc, const float& maxc, const float& split_value); // PLANECHECK_xxx below
 
 	fltx4 MakeMaxs() const
 	{
