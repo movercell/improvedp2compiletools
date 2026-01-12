@@ -7,6 +7,7 @@
 #include <tier0/platform.h>
 #include <mathlib/vector.h>
 #include <mathlib/ssemath.h>
+#include <mathlib/avxmath.h>
 #include <mathlib/lightdesc.h>
 #include <assert.h>
 #include <tier1/utlvector.h>

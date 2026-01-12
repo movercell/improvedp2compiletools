@@ -116,7 +116,7 @@ struct ALIGN16 intx4
 } ALIGN16_POST;
 
 
-#if defined( _DEBUG ) && defined( _X360 )
+#if defined( _DEBUG ) && defined( _X360 ) && !defined( TestVPUFlags )
 FORCEINLINE void TestVPUFlags()
 {
 	// Check that the VPU is in the appropriate (Java-compliant) mode (see 3.2.1 in altivec_pem.pdf on xds.xbox.com)
@@ -215,6 +215,7 @@ extern const int32 ALIGN16 g_SIMD_EveryOtherMask[];				// 0, ~0, 0, ~0
 // multiple of 16. This is useful if you're subdividing
 // big swaths of allocated memory, but in that case, remember
 // to leave yourself the necessary slack in the allocation.
+#ifndef AlignPointer
 template<class T>
 inline T *AlignPointer(void * ptr)
 {
@@ -222,7 +223,7 @@ inline T *AlignPointer(void * ptr)
 	temp = ALIGN_VALUE(temp, sizeof(T));
 	return (T *)temp;
 }
-
+#endif
 // Define prefetch macros.
 // The characteristics of cache and prefetch are completely 
 // different between the different platforms, so you DO NOT
