@@ -782,7 +782,6 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 					// save away the axis classification of each triangle
 					for(int t=0 ; t < ntris; t++)
 					{
-						//movercell: if i can move tempdata out of the triangle then i will be able to multithread this thing i guess
 						CacheOptimizedTriangle &tri=OptimizedTriangleList[tri_list[t]];
 						tri.m_Data.m_GeometryData.m_nTmpData1 = tri.m_Data.m_GeometryData.m_nTmpData0;
 					}
@@ -845,37 +844,27 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 					new_triangle_list[best_nleft+n_both_output]=tri_list[t];
 					n_both_output++;
 					break;
-				default:
-					Error("Error: Accidentally classified a triangle as outside of reality.");
 
 					
 			}
 		}
-		
-		OptimizedKDTreeLock.lock();
-
 		int left_child=OptimizedKDTree.Count();
 		int right_child=left_child+1;
-		CacheOptimizedKDNode newnode;
-		OptimizedKDTree.AddToTail(newnode);
-		OptimizedKDTree.AddToTail(newnode);
-
-		OptimizedKDTreeLock.unlock();
-
 // 		printf("node %d split on axis %d at %f, nl=%d nr=%d nb=%d lc=%d rc=%d\n",node_number,
-// 	    split_plane,best_splitvalue,best_nleft,best_nright,best_nboth,
-// 		left_child,right_child);
-		OptimizedKDTree[node_number].Children = split_plane + (left_child << 2);
-		OptimizedKDTree[node_number].SplittingPlaneValue = best_splitvalue;
+// 			   split_plane,best_splitvalue,best_nleft,best_nright,best_nboth,
+// 			   left_child,right_child);
+		OptimizedKDTree[node_number].Children=split_plane+(left_child<<2);
+		OptimizedKDTree[node_number].SplittingPlaneValue=best_splitvalue;
 #ifdef DEBUG_RAYTRACE
 		OptimizedKDTree[node_number].vecMins = MinBound;
 		OptimizedKDTree[node_number].vecMaxs = MaxBound;
 #endif
-
+		CacheOptimizedKDNode newnode;
+		OptimizedKDTree.AddToTail(newnode);
+		OptimizedKDTree.AddToTail(newnode);
 		// now, recurse!
-		if ( (ntris<10) && ((best_nleft==0) || (best_nright==0)) )
+		if ( (ntris<20) && ((best_nleft==0) || (best_nright==0)) )
 			depth+=100;
-		//TODO: multithreading, maybe?
 		RefineNode(left_child,new_triangle_list,best_nleft+best_nboth,LeftMins,LeftMaxes,depth+1);
 		RefineNode(right_child,new_triangle_list+best_nleft,best_nright+best_nboth,
 				   RightMins,RightMaxes,depth+1);
