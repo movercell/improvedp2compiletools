@@ -7,9 +7,6 @@
 #include <cmdlib.h>
 #include <stdio.h>
 
-static fltx4 *tri_maxs_list;
-static fltx4 *tri_mins_list;
-
 static bool SameSign(float a, float b)
 {
 	int32 aa=*((int *) &a);
@@ -239,12 +236,23 @@ void CacheOptimizedTriangle::ChangeIntoIntersectionFormat(void)
 
 //int n_intersection_calculations=0;
 
-int CacheOptimizedTriangle::ClassifyAgainstAxisSplit(const float &minc, const float& maxc, const float& split_value)
+int CacheOptimizedTriangle::ClassifyAgainstAxisSplit(int split_plane, float split_value)
 {
+	// classify a triangle against an axis-aligned plane
+	float minc=Vertex(0)[split_plane];
+	float maxc=minc;
+	for(int v=1;v<3;v++)
+	{
+		minc=min(minc,Vertex(v)[split_plane]);
+		maxc=max(maxc,Vertex(v)[split_plane]);
+	}
+
 	if (minc>=split_value)
 		return PLANECHECK_POSITIVE;
 	if (maxc<=split_value)
 		return PLANECHECK_NEGATIVE;
+	if (minc==maxc)
+		return PLANECHECK_POSITIVE;
 	return PLANECHECK_STRADDLING;
 }
 
@@ -599,26 +607,22 @@ int RayTracingEnvironment::MakeLeafNode(int first_tri, int last_tri)
 	return OptimizedKDTree.Count()-1;
 }
 
-// Calculates the full volume of the BVH and also caches triangle individual bounds.
+
 void RayTracingEnvironment::CalculateTriangleListBounds(int32 const *tris,int ntris,
 														Vector &minout, Vector &maxout)
 {
-	fltx4 min = _mm_set_ps( 1.0e23, 1.0e23, 1.0e23, 0 );
-	fltx4 max = _mm_set_ps( -1.0e23, -1.0e23, -1.0e23, 0 );
-
+	minout = Vector( 1.0e23, 1.0e23, 1.0e23);
+	maxout = Vector( -1.0e23, -1.0e23, -1.0e23);
 	for(int i=0; i<ntris; i++)
 	{
 		CacheOptimizedTriangle const &tri=OptimizedTriangleList[tris[i]];
-
-		tri_mins_list[tris[i]] = tri.MakeMins();
-		min = MinSIMD( min, tri.MakeMins() );
-
-		tri_maxs_list[tris[i]] = tri.MakeMaxs();
-		max = MaxSIMD( max, tri.MakeMaxs() );
+		for(int v=0; v<3; v++)
+			for(int c=0; c<3; c++)
+			{
+				minout[c]=min(minout[c],tri.Vertex(v)[c]);
+							  maxout[c]=max(maxout[c],tri.Vertex(v)[c]);
+			}
 	}
-
-	minout = *((Vector*)&min);
-	maxout = *((Vector*)&max);
 }
 
 
@@ -668,19 +672,13 @@ float RayTracingEnvironment::CalculateCostsOfSplit(
 	for(int t=0;t<ntris;t++)
 	{
 		CacheOptimizedTriangle &tri=OptimizedTriangleList[tri_list[t]];
-		// fetch max and min coordinate values for later optimization
-		float all_min[4];
-		StoreUnalignedSIMD(all_min, tri_mins_list[tri_list[t]]);
-		float all_max[4];
-		StoreUnalignedSIMD(all_max, tri_maxs_list[tri_list[t]]);
-
-		float minc = all_min[split_plane];
-		float maxc = all_max[split_plane];
-
-		min_coord = min( min_coord, minc );
-		max_coord = max( max_coord, maxc );
-		
-		switch(tri.ClassifyAgainstAxisSplit(minc, maxc,split_value))
+		// determine max and min coordinate values for later optimization
+		for(int v=0;v<3;v++)
+		{
+			min_coord = min( min_coord, tri.Vertex(v)[split_plane] );
+			max_coord = max( max_coord, tri.Vertex(v)[split_plane] );
+		}
+		switch(tri.ClassifyAgainstAxisSplit(split_plane,split_value))
 		{
 			case PLANECHECK_NEGATIVE:
 				nleft++;
@@ -846,8 +844,6 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 					new_triangle_list[best_nleft+n_both_output]=tri_list[t];
 					n_both_output++;
 					break;
-				default:
-					Error("Error: Accidentally classified a triangle as outside of reality.");
 
 					
 			}
@@ -867,7 +863,7 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 		OptimizedKDTree.AddToTail(newnode);
 		OptimizedKDTree.AddToTail(newnode);
 		// now, recurse!
-		if ( (ntris<10) && ((best_nleft==0) || (best_nright==0)) )
+		if ( (ntris<20) && ((best_nleft==0) || (best_nright==0)) )
 			depth+=100;
 		RefineNode(left_child,new_triangle_list,best_nleft+best_nboth,LeftMins,LeftMaxes,depth+1);
 		RefineNode(right_child,new_triangle_list+best_nleft,best_nright+best_nboth,
@@ -884,18 +880,10 @@ void RayTracingEnvironment::SetupAccelerationStructure(void)
 	int32 *root_triangle_list=new int32[OptimizedTriangleList.Count()];
 	for(int t=0;t<OptimizedTriangleList.Count();t++)
 		root_triangle_list[t]=t;
-
-	tri_mins_list = new fltx4[OptimizedTriangleList.Count()];
-	tri_maxs_list = new fltx4[OptimizedTriangleList.Count()];
-
 	CalculateTriangleListBounds(root_triangle_list,OptimizedTriangleList.Count(),m_MinBound,
 								m_MaxBound);
 	RefineNode(0,root_triangle_list,OptimizedTriangleList.Count(),m_MinBound,m_MaxBound,0);
-
-
 	delete[] root_triangle_list;
-	delete[] tri_mins_list;
-	delete[] tri_maxs_list;
 
 	// now, convert all triangles to "intersection format"
 	for(int i=0;i<OptimizedTriangleList.Count();i++)
