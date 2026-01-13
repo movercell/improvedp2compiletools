@@ -85,6 +85,14 @@ int EightRays::CalculateDirectionSignMask(void) const
 	andmask &= *(treat_as_int++);
 	ormask |= *(treat_as_int);
 	andmask &= *(treat_as_int++);
+	ormask |= *(treat_as_int);
+	andmask &= *(treat_as_int++);
+	ormask |= *(treat_as_int);
+	andmask &= *(treat_as_int++);
+	ormask |= *(treat_as_int);
+	andmask &= *(treat_as_int++);
+	ormask |= *(treat_as_int);
+	andmask &= *(treat_as_int++);
 	if (ormask >= 0)
 		ret = 0;
 	else
@@ -95,6 +103,14 @@ int EightRays::CalculateDirectionSignMask(void) const
 	}
 	ormask = andmask = *(treat_as_int++);
 	ormask |= *treat_as_int;
+	andmask &= *(treat_as_int++);
+	ormask |= *(treat_as_int);
+	andmask &= *(treat_as_int++);
+	ormask |= *(treat_as_int);
+	andmask &= *(treat_as_int++);
+	ormask |= *(treat_as_int);
+	andmask &= *(treat_as_int++);
+	ormask |= *(treat_as_int);
 	andmask &= *(treat_as_int++);
 	ormask |= *(treat_as_int);
 	andmask &= *(treat_as_int++);
@@ -113,62 +129,18 @@ int EightRays::CalculateDirectionSignMask(void) const
 	andmask &= *(treat_as_int++);
 	ormask |= *(treat_as_int);
 	andmask &= *(treat_as_int++);
+	ormask |= *(treat_as_int);
+	andmask &= *(treat_as_int++);
+	ormask |= *(treat_as_int);
+	andmask &= *(treat_as_int++);
+	ormask |= *(treat_as_int);
+	andmask &= *(treat_as_int++);
+	ormask |= *(treat_as_int);
+	andmask &= *(treat_as_int++);
 	if (ormask < 0)
 	{
 		if (andmask < 0)
 			ret |= 4;
-		else return -1;
-	}
-	ormask = andmask = *(treat_as_int++);
-	ormask |= *treat_as_int;
-	andmask &= *(treat_as_int++);
-	ormask |= *(treat_as_int);
-	andmask &= *(treat_as_int++);
-	ormask |= *(treat_as_int);
-	andmask &= *(treat_as_int++);
-	if (ormask < 0)
-	{
-		if (andmask < 0)
-			ret |= 8;
-		else return -1;
-	}
-	ormask = andmask = *(treat_as_int++);
-	ormask |= *treat_as_int;
-	andmask &= *(treat_as_int++);
-	ormask |= *(treat_as_int);
-	andmask &= *(treat_as_int++);
-	ormask |= *(treat_as_int);
-	andmask &= *(treat_as_int++);
-	if (ormask < 0)
-	{
-		if (andmask < 0)
-			ret |= 16;
-		else return -1;
-	}
-	ormask = andmask = *(treat_as_int++);
-	ormask |= *treat_as_int;
-	andmask &= *(treat_as_int++);
-	ormask |= *(treat_as_int);
-	andmask &= *(treat_as_int++);
-	ormask |= *(treat_as_int);
-	andmask &= *(treat_as_int++);
-	if (ormask < 0)
-	{
-		if (andmask < 0)
-			ret |= 32;
-		else return -1;
-	}
-	ormask = andmask = *(treat_as_int++);
-	ormask |= *treat_as_int;
-	andmask &= *(treat_as_int++);
-	ormask |= *(treat_as_int);
-	andmask &= *(treat_as_int++);
-	ormask |= *(treat_as_int);
-	andmask &= *(treat_as_int++);
-	if (ormask < 0)
-	{
-		if (andmask < 0)
-			ret |= 64;
 		else return -1;
 	}
 	return ret;
@@ -981,11 +953,6 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 
 void RayTracingEnvironment::SetupAccelerationStructure(void)
 {
-	FourRays temp = FourRays();
-	temp.direction.Load(1, 0, 0, 0);
-	EightRays temp2 = EightRays();
-	temp2.direction.Load(1, 0, 0, 0);
-
 	CacheOptimizedKDNode root;
 	OptimizedKDTree.AddToTail(root);
 	int32 *root_triangle_list=new int32[OptimizedTriangleList.Count()];
