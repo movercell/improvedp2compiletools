@@ -107,6 +107,12 @@ public:
 		return 0xF != TestSignSIMD ( CmpEqSIMD ( AndSIMD( *pHitMask, onesMask ), *pHitMask ) );
 	}
 
+	virtual bool VisitTriangle_ShouldContinueAVX(const TriIntersectData_t& triangle, const EightRays& rays, fltx8* pHitMask, fltx8* b0, fltx8* b1, fltx8* b2, int32 hitID)
+	{
+		Error("Error: Wrong CCoverageCount instance!");
+		return false;
+	}
+
 	fltx4 GetCoverage()
 	{
 		return m_coverage;
@@ -146,6 +152,63 @@ public:
 		// so ts(hitMask & onesMask == hitMask) != 0xF says go on
 		return 0xF != TestSignSIMD ( CmpEqSIMD ( AndSIMD( *pHitMask, onesMask ), *pHitMask ) );
 	}
+
+	virtual bool VisitTriangle_ShouldContinueAVX(const TriIntersectData_t& triangle, const EightRays& rays, fltx8* pHitMask, fltx8* b0, fltx8* b1, fltx8* b2, int32 hitID)
+	{
+		Error("Error: Wrong CCoverageCount instance!");
+		return false;
+	}
+};
+
+class CCoverageCountAVX : public ITransparentTriangleCallback
+{
+public:
+	CCoverageCountAVX()
+	{
+		m_coverage = Eight_Zeros;
+	}
+
+	virtual bool VisitTriangle_ShouldContinue(const TriIntersectData_t& triangle, const FourRays& rays, fltx4* pHitMask, fltx4* b0, fltx4* b1, fltx4* b2, int32 hitID)
+	{
+		Error("Error: Wrong CCoverageCount instance!");
+	}
+
+	virtual bool VisitTriangle_ShouldContinueAVX(const TriIntersectData_t& triangle, const EightRays& rays, fltx8* pHitMask, fltx8* b0, fltx8* b1, fltx8* b2, int32 hitID)
+	{
+		float color = g_RtEnv.GetTriangleColor(hitID).x;
+		m_coverage = AddAVX(m_coverage, AndAVX(*pHitMask, ReplicateX8(color)));
+		m_coverage = MinAVX(m_coverage, Eight_Ones);
+
+		fltx8 onesMask = CmpEqAVX(m_coverage, Eight_Ones);
+
+		// we should continue if the ones that hit the triangle have onesMask set to zero
+		// so hitMask & onesMask != hitMask
+		// so hitMask & onesMask == hitMask means we're done
+		// so ts(hitMask & onesMask == hitMask) != 0xF says go on
+		return 0xFF != TestSignAVX(CmpEqAVX(AndAVX(*pHitMask, onesMask), *pHitMask));
+	}
+
+	fltx8 GetCoverage()
+	{
+		return m_coverage;
+	}
+
+	fltx8 GetFractionVisible()
+	{
+		return SubAVX(Eight_Ones, m_coverage);
+	}
+
+	fltx8 m_coverage;
+};
+
+// this will sample the texture to get a coverage at the ray intersection point
+class CCoverageCountTextureAVX : public CCoverageCountAVX
+{
+public:
+	virtual bool VisitTriangle_ShouldContinue(const TriIntersectData_t& triangle, const FourRays& rays, fltx4* pHitMask, fltx4* b0, fltx4* b1, fltx4* b2, int32 hitID)
+	{
+		Error("Error: Wrong CCoverageCount instance!");
+	}
 	virtual bool VisitTriangle_ShouldContinueAVX(const TriIntersectData_t& triangle, const EightRays& rays, fltx8* pHitMask, fltx8* b0, fltx8* b1, fltx8* b2, int32 hitID)
 	{
 		int sign = TestSignAVX(*pHitMask);
@@ -159,8 +222,8 @@ public:
 			}
 		}
 		m_coverage = AddAVX(m_coverage, LoadUnalignedAVX(addedCoverage));
-		m_coverage = MinAVX(m_coverage, Four_Ones);
-		fltx4 onesMask = CmpEqAVX(m_coverage, Four_Ones);
+		m_coverage = MinAVX(m_coverage, Eight_Ones);
+		fltx8 onesMask = CmpEqAVX(m_coverage, Eight_Ones);
 
 		// we should continue if the ones that hit the triangle have onesMask set to zero
 		// so hitMask & onesMask != hitMask

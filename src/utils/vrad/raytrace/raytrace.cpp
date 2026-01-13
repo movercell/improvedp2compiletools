@@ -355,6 +355,10 @@ const fltx4 FourEpsilons={1.0e-10,1.0e-10,1.0e-10,1.0e-10};
 const fltx4 FourZeros={1.0e-10,1.0e-10,1.0e-10,1.0e-10};
 const fltx4 FourNegativeEpsilons={-1.0e-10,-1.0e-10,-1.0e-10,-1.0e-10};
 
+const fltx8 EightEpsilons = { 1.0e-10,1.0e-10,1.0e-10,1.0e-10 };
+const fltx8 EightZeros = { 1.0e-10,1.0e-10,1.0e-10,1.0e-10 };
+const fltx8 EightNegativeEpsilons = { -1.0e-10,-1.0e-10,-1.0e-10,-1.0e-10 };
+
 static float BoxSurfaceArea(Vector const &boxmin, Vector const &boxmax)
 {
 	Vector boxdim=boxmax-boxmin;

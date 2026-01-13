@@ -93,22 +93,28 @@ FORCEINLINE void TestVPUFlags() {}
 #endif // _DEBUG
 #endif
 
+FORCEINLINE fltx8 ReplicateX8(float flValue)
+{
+	return _mm256_broadcast_ss(&flValue);
+}
+
+
 // useful constants in AVX packed float format:
 // (note: some of these aren't stored on the 360, 
 // but are manufactured directly in one or two 
 // instructions, saving a load and possible L2
 // miss.)
 #ifndef _X360
-extern const fltx8 Eight_Zeros;									// 0 0 0 0
-extern const fltx8 Eight_Ones;									// 1 1 1 1
-extern const fltx8 Eight_Twos;									// 2 2 2 2
-extern const fltx8 Eight_Threes;									// 3 3 3 3
-extern const fltx8 Eight_Eights;									// guess.
+const fltx8 Eight_Zeros	   = ReplicateX8( 0 );									// 0 0 0 0  0 0 0 0
+const fltx8 Eight_Ones     = ReplicateX8( 1 );									// 1 1 1 1  1 1 1 1
+const fltx8 Eight_Twos     = ReplicateX8( 2 );									// 2 2 2 2  2 2 2 2
+const fltx8 Eight_Threes   = ReplicateX8( 3 );									// 3 3 3 3  3 3 3 3
+const fltx8 Eight_Eights   = ReplicateX8( 8 );									// guess.
 extern const fltx8 Eight_Point225s;								// .225 .225 .225 .225
 extern const fltx8 Eight_PointFives;								// .5 .5 .5 .5
 extern const fltx8 Eight_Thirds;									// 1/3
 extern const fltx8 Eight_TwoThirds;								// 2/3
-extern const fltx8 Eight_Epsilons;								// FLT_EPSILON FLT_EPSILON FLT_EPSILON FLT_EPSILON
+const fltx8 Eight_Epsilons = ReplicateX8( FLT_EPSILON );								// FLT_EPSILON FLT_EPSILON FLT_EPSILON FLT_EPSILON
 extern const fltx8 Eight_2ToThe21s;								// (1<<21)..
 extern const fltx8 Eight_2ToThe22s;								// (1<<22)..
 extern const fltx8 Eight_2ToThe23s;								// (1<<23)..
@@ -198,7 +204,7 @@ FORCEINLINE void StoreUnalignedAVX( float * RESTRICT pAVX, const fltx8 & a )
 	_mm256_storeu_ps( pAVX, a );
 }
 
-
+#if 0
 FORCEINLINE fltx8 RotateLeft( const fltx8 & a );
 FORCEINLINE fltx8 RotateLeft2( const fltx8 & a );
 
@@ -208,7 +214,7 @@ FORCEINLINE void StoreUnaligned3AVX( float *pAVX, const fltx8 & a )
 	_mm256_store_ss(pAVX+1, RotateLeft(a));
 	_mm256_store_ss(pAVX+2, RotateLeft2(a));
 }
-
+#endif
 // strongly typed -- syntactic castor oil used for typechecking as we transition to AVX
 FORCEINLINE void StoreAligned3AVX( VectorAligned * RESTRICT pAVX, const fltx8 & a )
 {
@@ -301,14 +307,7 @@ FORCEINLINE fltx8 LoadUnalignedFloatAVX( const float *pFlt )
 /// replicate a single 32 bit integer value to all 8 components of an m128
 FORCEINLINE fltx8 ReplicateIX8( int i )
 {
-	fltx8 value = _mm256_set_ss( * ( ( float *) &i ) );;
-	return _mm256_shuffle_ps( value, value, 0);
-}
-
-
-FORCEINLINE fltx8 ReplicateX8( float flValue )
-{
-	return _mm256_broadcast_ss( &flValue );
+	return ReplicateX8(*((float*)&i));
 }
 
 
@@ -882,7 +881,7 @@ FORCEINLINE fltx8 LoadAndConvertUint16AVX( const uint16 *pInts )
 #endif
 }
 #endif
-
+#if 0
 // a={ a.x, b.x, c.x, d.x }
 // combine 8 fltx8s by throwing away 3/8s of the fields
 FORCEINLINE fltx8 Compress8AVX( fltx8 const a, fltx8 const &b, fltx8 const &c, fltx8 const &d )
@@ -899,7 +898,7 @@ FORCEINLINE void ExpandAVX( fltx8 const &a, fltx8 &fl8OutA, fltx8 &fl8OutB )
 	fl8OutB = _mm256_shuffle_ps( a, a, MM_SHUFFLE_REV( 2, 2, 3, 3 ) );
 
 }
-#if 0
+
 // CHRISG: the conversion functions all seem to operate on m68's only...
 // how do we make them work here?
 
