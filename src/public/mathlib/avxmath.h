@@ -308,8 +308,7 @@ FORCEINLINE fltx8 ReplicateIX8( int i )
 
 FORCEINLINE fltx8 ReplicateX8( float flValue )
 {
-	__m256 value = _mm256_set_ss( flValue );
-	return _mm256_shuffle_ps( value, value, 0 );
+	return _mm256_broadcast_ss( &flValue );
 }
 
 
@@ -373,7 +372,7 @@ FORCEINLINE fltx8 MaskedAssign( const fltx8 & ReplacementMask, const fltx8 & New
 		AndAVX( ReplacementMask, NewValue ),
 		AndNotAVX( ReplacementMask, OldValue ) );
 }
-
+#if 0
 // remember, the SSE numbers its words 3 2 1 0
 // The way we want to specify shuffles is backwards from the default
 // MM_SHUFFLE_REV is in array index order (default is reversed)
@@ -404,7 +403,8 @@ FORCEINLINE fltx8 SetXAVX( const fltx8& a, const fltx8& x )
 	fltx8 result = MaskedAssign( LoadAlignedAVX( g_AVX_ComponentMask[0] ), x, a );
 	return result;
 }
-
+#endif
+#if 0 //It's not that these don't work, they're just pretty much useless
 FORCEINLINE fltx8 SetYAVX( const fltx8& a, const fltx8& y )
 {
 	fltx8 result = MaskedAssign( LoadAlignedAVX( g_AVX_ComponentMask[1] ), y, a );
@@ -429,7 +429,8 @@ FORCEINLINE fltx8 SetComponentAVX( const fltx8& a, int nComponent, float flValue
 	fltx8 result = MaskedAssign( LoadAlignedAVX( g_AVX_ComponentMask[nComponent] ), val, a );
 	return result;
 }
-
+#endif
+#if 0
 // a b c d -> b c d a
 FORCEINLINE fltx8 RotateLeft( const fltx8 & a )
 {
@@ -453,7 +454,7 @@ FORCEINLINE fltx8 RotateRight2( const fltx8 & a )
 {
 	return _mm256_shuffle_ps( a, a, MM_SHUFFLE_REV( 2, 3, 0, 1 ) );
 }
-
+#endif
 FORCEINLINE fltx8 AddAVX( const fltx8 & a, const fltx8 & b )				// a+b
 {
 	return _mm256_add_ps( a, b );
