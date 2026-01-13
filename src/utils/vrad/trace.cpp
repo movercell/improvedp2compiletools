@@ -146,6 +146,28 @@ public:
 		// so ts(hitMask & onesMask == hitMask) != 0xF says go on
 		return 0xF != TestSignSIMD ( CmpEqSIMD ( AndSIMD( *pHitMask, onesMask ), *pHitMask ) );
 	}
+	virtual bool VisitTriangle_ShouldContinueAVX(const TriIntersectData_t& triangle, const EightRays& rays, fltx8* pHitMask, fltx8* b0, fltx8* b1, fltx8* b2, int32 hitID)
+	{
+		int sign = TestSignAVX(*pHitMask);
+		float addedCoverage[8];
+		for (int s = 0; s < 8; s++)
+		{
+			addedCoverage[s] = 0.0f;
+			if ((sign >> s) & 0x1)
+			{
+				addedCoverage[s] = ComputeCoverageFromTexture(b0->m256_f32[s], b1->m256_f32[s], b2->m256_f32[s], hitID);
+			}
+		}
+		m_coverage = AddAVX(m_coverage, LoadUnalignedAVX(addedCoverage));
+		m_coverage = MinAVX(m_coverage, Four_Ones);
+		fltx4 onesMask = CmpEqAVX(m_coverage, Four_Ones);
+
+		// we should continue if the ones that hit the triangle have onesMask set to zero
+		// so hitMask & onesMask != hitMask
+		// so hitMask & onesMask == hitMask means we're done
+		// so ts(hitMask & onesMask == hitMask) != 0xF says go on
+		return 0xFF != TestSignAVX(CmpEqAVX(AndAVX(*pHitMask, onesMask), *pHitMask));
+	}
 };
 
 void TestLine( const FourVectors& start, const FourVectors& stop,

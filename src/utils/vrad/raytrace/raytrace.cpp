@@ -344,6 +344,12 @@ struct NodeToVisit {
 	fltx4 TMax;
 };
 
+struct NodeToVisitAVX {
+	CacheOptimizedKDNode const* node;
+	fltx8 TMin;
+	fltx8 TMax;
+};
+
 
 const fltx4 FourEpsilons={1.0e-10,1.0e-10,1.0e-10,1.0e-10};
 const fltx4 FourZeros={1.0e-10,1.0e-10,1.0e-10,1.0e-10};
@@ -673,6 +679,270 @@ void RayTracingEnvironment::Trace4Rays(const FourRays &rays, fltx4 TMin, fltx4 T
 	}
 }
 
+
+void RayTracingEnvironment::Trace8Rays(const EightRays& rays, fltx8 TMin, fltx8 TMax,
+	RayTracingResultAVX* rslt_out,
+	int32 skip_id, ITransparentTriangleCallback* pCallback)
+{
+	int msk = rays.CalculateDirectionSignMask();
+	if (msk != -1)
+		Trace8Rays(rays, TMin, TMax, msk, rslt_out, skip_id, pCallback);
+	else
+	{
+
+	}
+}
+
+
+void RayTracingEnvironment::Trace8Rays(const EightRays& rays, fltx8 TMin, fltx8 TMax,
+	int DirectionSignMask, RayTracingResultAVX* rslt_out,
+	int32 skip_id, ITransparentTriangleCallback* pCallback)
+{
+	rays.Check();
+
+	memset(rslt_out->HitIds, 0xff, sizeof(rslt_out->HitIds));
+
+	rslt_out->HitDistance = ReplicateX8(1.0e23);
+
+	rslt_out->surface_normal.DuplicateVector(Vector(0., 0., 0.));
+	EightVectors OneOverRayDir = rays.direction;
+	OneOverRayDir.MakeReciprocalSaturate();
+
+	// now, clip rays against bounding box
+	for (int c = 0; c < 3; c++)
+	{
+		fltx8 isect_min_t =
+			MulAVX(SubAVX(ReplicateX8(m_MinBound[c]), rays.origin[c]), OneOverRayDir[c]);
+		fltx8 isect_max_t =
+			MulAVX(SubAVX(ReplicateX8(m_MaxBound[c]), rays.origin[c]), OneOverRayDir[c]);
+		TMin = MaxAVX(TMin, MinAVX(isect_min_t, isect_max_t));
+		TMax = MinAVX(TMax, MaxAVX(isect_min_t, isect_max_t));
+	}
+	fltx8 active = CmpLeAVX(TMin, TMax);					// mask of which rays are active
+	if (!IsAnyNegative(active))
+		return;												// missed bounding box
+
+	int32 mailboxids[MAILBOX_HASH_SIZE];					// used to avoid redundant triangle tests
+	memset(mailboxids, 0xff, sizeof(mailboxids));				// !!speed!! keep around?
+
+	int front_idx[3], back_idx[3];							// based on ray direction, whether to
+	// visit left or right node first
+
+	if (DirectionSignMask & 1)
+	{
+		back_idx[0] = 0;
+		front_idx[0] = 1;
+	}
+	else
+	{
+		back_idx[0] = 1;
+		front_idx[0] = 0;
+	}
+	if (DirectionSignMask & 2)
+	{
+		back_idx[1] = 0;
+		front_idx[1] = 1;
+	}
+	else
+	{
+		back_idx[1] = 1;
+		front_idx[1] = 0;
+	}
+	if (DirectionSignMask & 8)
+	{
+		back_idx[2] = 0;
+		front_idx[2] = 1;
+	}
+	else
+	{
+		back_idx[2] = 1;
+		front_idx[2] = 0;
+	}
+
+	NodeToVisitAVX NodeQueue[MAX_NODE_STACK_LEN];
+	CacheOptimizedKDNode const* CurNode = &(OptimizedKDTree[0]);
+	NodeToVisitAVX* stack_ptr = &NodeQueue[MAX_NODE_STACK_LEN];
+	while (1)
+	{
+		while (CurNode->NodeType() != KDNODE_STATE_LEAF)		// traverse until next leaf
+		{
+			int split_plane_number = CurNode->NodeType();
+			CacheOptimizedKDNode const* FrontChild = &(OptimizedKDTree[CurNode->LeftChild()]);
+
+			fltx8 dist_to_sep_plane =						// dist=(split-org)/dir
+				MulAVX(
+					SubAVX(ReplicateX8(CurNode->SplittingPlaneValue),
+						rays.origin[split_plane_number]), OneOverRayDir[split_plane_number]);
+			fltx8 active = CmpLeAVX(TMin, TMax);			// mask of which rays are active
+
+			// now, decide how to traverse children. can either do front,back, or do front and push
+			// back.
+			fltx8 hits_front = AndAVX(active, CmpGeAVX(dist_to_sep_plane, TMin));
+			if (!IsAnyNegative(hits_front))
+			{
+				// missed the front. only traverse back
+				//printf("only visit back %d\n",CurNode->LeftChild()+back_idx[split_plane_number]);
+				CurNode = FrontChild + back_idx[split_plane_number];
+				TMin = MaxAVX(TMin, dist_to_sep_plane);
+
+			}
+			else
+			{
+				fltx8 hits_back = AndAVX(active, CmpLeAVX(dist_to_sep_plane, TMax));
+				if (!IsAnyNegative(hits_back))
+				{
+					// missed the back - only need to traverse front node
+					//printf("only visit front %d\n",CurNode->LeftChild()+front_idx[split_plane_number]);
+					CurNode = FrontChild + front_idx[split_plane_number];
+					TMax = MinAVX(TMax, dist_to_sep_plane);
+				}
+				else
+				{
+					// at least some rays hit both nodes.
+					// must push far, traverse near
+					//printf("visit %d,%d\n",CurNode->LeftChild()+front_idx[split_plane_number],
+					//	   CurNode->LeftChild()+back_idx[split_plane_number]);
+					assert(stack_ptr > NodeQueue);
+					--stack_ptr;
+					stack_ptr->node = FrontChild + back_idx[split_plane_number];
+					stack_ptr->TMin = MaxAVX(TMin, dist_to_sep_plane);
+					stack_ptr->TMax = TMax;
+					CurNode = FrontChild + front_idx[split_plane_number];
+					TMax = MinAVX(TMax, dist_to_sep_plane);
+				}
+			}
+		}
+		// hit a leaf! must do intersection check
+		int ntris = CurNode->NumberOfTrianglesInLeaf();
+		if (ntris)
+		{
+			int32 const* tlist = &(TriangleIndexList[CurNode->TriangleIndexStart()]);
+			do
+			{
+				int tnum = *(tlist++);
+				//printf("try tri %d\n",tnum);
+				// check mailbox
+				int mbox_slot = tnum & (MAILBOX_HASH_SIZE - 1);
+				TriIntersectData_t const* tri = &(OptimizedTriangleList[tnum].m_Data.m_IntersectData);
+				if ((mailboxids[mbox_slot] != tnum) && (tri->m_nTriangleID != skip_id))
+				{
+					//n_intersection_calculations++;
+					mailboxids[mbox_slot] = tnum;
+					// compute plane intersection
+
+
+					EightVectors N;
+					N.x = ReplicateX8(tri->m_flNx);
+					N.y = ReplicateX8(tri->m_flNy);
+					N.z = ReplicateX8(tri->m_flNz);
+
+					fltx8 DDotN = rays.direction * N;
+					// mask off zero or near zero (ray parallel to surface)
+					fltx8 did_hit = OrAVX(CmpGtAVX(DDotN, EightEpsilons),
+						CmpLtAVX(DDotN, EightNegativeEpsilons));
+
+					fltx8 numerator = SubAVX(ReplicateX8(tri->m_flD), rays.origin * N);
+
+					fltx8 isect_t = DivAVX(numerator, DDotN);
+					// now, we have the distance to the plane. lets update our mask
+					did_hit = AndAVX(did_hit, CmpGtAVX(isect_t, EightZeros));
+					//did_hit=AndAVX(did_hit,CmpLtAVX(isect_t,TMax));
+					did_hit = AndAVX(did_hit, CmpLtAVX(isect_t, rslt_out->HitDistance));
+
+					if (!IsAnyNegative(did_hit))
+						continue;
+
+					// now, check 3 edges
+					fltx8 hitc1 = AddAVX(rays.origin[tri->m_nCoordSelect0],
+						MulAVX(isect_t, rays.direction[tri->m_nCoordSelect0]));
+					fltx8 hitc2 = AddAVX(rays.origin[tri->m_nCoordSelect1],
+						MulAVX(isect_t, rays.direction[tri->m_nCoordSelect1]));
+
+					// do barycentric coordinate check
+					fltx8 B0 = MulAVX(ReplicateX8(tri->m_ProjectedEdgeEquations[0]), hitc1);
+
+					B0 = AddAVX(
+						B0,
+						MulAVX(ReplicateX8(tri->m_ProjectedEdgeEquations[1]), hitc2));
+					B0 = AddAVX(
+						B0, ReplicateX8(tri->m_ProjectedEdgeEquations[2]));
+
+					did_hit = AndAVX(did_hit, CmpGeAVX(B0, EightZeros));
+
+					fltx8 B1 = MulAVX(ReplicateX8(tri->m_ProjectedEdgeEquations[3]), hitc1);
+					B1 = AddAVX(
+						B1,
+						MulAVX(ReplicateX8(tri->m_ProjectedEdgeEquations[4]), hitc2));
+
+					B1 = AddAVX(
+						B1, ReplicateX8(tri->m_ProjectedEdgeEquations[5]));
+
+					did_hit = AndAVX(did_hit, CmpGeAVX(B1, EightZeros));
+
+					fltx8 B2 = AddAVX(B1, B0);
+					did_hit = AndAVX(did_hit, CmpLeAVX(B2, Eight_Ones));
+
+					if (!IsAnyNegative(did_hit))
+						continue;
+
+					// if the triangle is transparent
+					if (tri->m_nFlags & FCACHETRI_TRANSPARENT)
+					{
+						if (pCallback)
+						{
+							// assuming a triangle indexed as v0, v1, v2
+							// the projected edge equations are set up such that the vert opposite the first
+							// equation is v2, and the vert opposite the second equation is v0
+							// Therefore we pass them back in 1, 2, 0 order
+							// Also B2 is currently B1 + B0 and needs to be 1 - (B1+B0) in order to be a real
+							// barycentric coordinate.  Compute that now and pass it to the callback
+							fltx8 b2 = SubAVX(Eight_Ones, B2);
+							if (pCallback->VisitTriangle_ShouldContinueAVX(*tri, rays, &did_hit, &B1, &b2, &B0, tnum))
+							{
+								did_hit = Eight_Zeros;
+							}
+						}
+					}
+					// now, set the hit_id and closest_hit fields for any enabled rays
+					fltx8 replicated_n = ReplicateIX8(tnum);
+					StoreAlignedAVX((float*)rslt_out->HitIds,
+						OrAVX(AndAVX(replicated_n, did_hit),
+							AndNotAVX(did_hit, LoadAlignedAVX(
+								(float*)rslt_out->HitIds))));
+					rslt_out->HitDistance = OrAVX(AndAVX(isect_t, did_hit),
+						AndNotAVX(did_hit, rslt_out->HitDistance));
+
+					rslt_out->surface_normal.x = OrAVX(
+						AndAVX(N.x, did_hit),
+						AndNotAVX(did_hit, rslt_out->surface_normal.x));
+					rslt_out->surface_normal.y = OrAVX(
+						AndAVX(N.y, did_hit),
+						AndNotAVX(did_hit, rslt_out->surface_normal.y));
+					rslt_out->surface_normal.z = OrAVX(
+						AndAVX(N.z, did_hit),
+						AndNotAVX(did_hit, rslt_out->surface_normal.z));
+
+				}
+			} while (--ntris);
+			// now, check if all rays have terminated
+			fltx8 raydone = CmpLeAVX(TMax, rslt_out->HitDistance);
+			if (!IsAnyNegative(raydone))
+			{
+				return;
+			}
+		}
+
+		if (stack_ptr == &NodeQueue[MAX_NODE_STACK_LEN])
+		{
+			return;
+		}
+		// pop stack!
+		CurNode = stack_ptr->node;
+		TMin = stack_ptr->TMin;
+		TMax = stack_ptr->TMax;
+		stack_ptr++;
+	}
+}
 
 int RayTracingEnvironment::MakeLeafNode(int first_tri, int last_tri)
 {

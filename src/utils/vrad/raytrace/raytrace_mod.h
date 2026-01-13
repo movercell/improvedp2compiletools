@@ -6,7 +6,6 @@
 
 #include <tier0/platform.h>
 #include <mathlib/vector.h>
-#include <mathlib/ssemath.h>
 #include <mathlib/avxmath.h>
 #include <mathlib/lightdesc.h>
 #include <assert.h>
@@ -234,6 +233,12 @@ struct RayTracingResult
 	fltx4 HitDistance;										// distance to intersection
 };
 
+struct RayTracingResultAVX
+{
+	EightVectors surface_normal;								// surface normal at intersection
+	ALIGN16 int32 HitIds[8] ALIGN16_POST;								// -1=no hit. otherwise, triangle index
+	fltx8 HitDistance;										// distance to intersection
+};
 
 class RayTraceLight
 {
@@ -277,6 +282,7 @@ class ITransparentTriangleCallback
 {
 public:
 	virtual bool VisitTriangle_ShouldContinue( const TriIntersectData_t &triangle, const FourRays &rays, fltx4 *hitMask, fltx4 *b0, fltx4 *b1, fltx4 *b2, int32 hitID ) = 0;
+	virtual bool VisitTriangle_ShouldContinueAVX(const TriIntersectData_t& triangle, const EightRays& rays, fltx8* hitMask, fltx8* b0, fltx8* b1, fltx8* b2, int32 hitID) = 0;
 };
 
 class RayTracingEnvironment
@@ -323,6 +329,17 @@ public:
 	// SetupAccelerationStructure to prepare for tracing
 	void SetupAccelerationStructure(void);
 
+	// lowest level intersection routine - fire 8 rays through the scene. all 8 rays must pass the
+	// Check() function, and t extents must be initialized. skipid can be set to exclude a
+	// particular id (such as the origin surface). This function finds the closest intersection.
+	void Trace8Rays(const EightRays& rays, fltx8 TMin, fltx8 TMax, int DirectionSignMask,
+		RayTracingResultAVX* rslt_out,
+		int32 skip_id = -1, ITransparentTriangleCallback* pCallback = NULL);
+
+	// higher level intersection routine that handles computing the mask and handling rays which do not match in direciton sign
+	void Trace8Rays(const EightRays& rays, fltx8 TMin, fltx8 TMax,
+		RayTracingResultAVX* rslt_out,
+		int32 skip_id = -1, ITransparentTriangleCallback* pCallback = NULL);
 
 	// lowest level intersection routine - fire 4 rays through the scene. all 4 rays must pass the
 	// Check() function, and t extents must be initialized. skipid can be set to exclude a
