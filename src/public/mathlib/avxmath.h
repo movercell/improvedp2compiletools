@@ -776,7 +776,6 @@ FORCEINLINE void TransposeAVX( fltx8 & x, fltx8 & y, fltx8 & z, fltx8 & w)
 {
 	_MM256_TRANSPOSE4_PS( x, y, z, w );
 }
-#endif
 FORCEINLINE fltx8 FindLowestAVX3( const fltx8 &a )
 {
 	// a is [x,y,z,G] (where G is garbage)
@@ -810,7 +809,7 @@ FORCEINLINE fltx8 FindHighestAVX3( const fltx8 &a )
 	return SplatXAVX( retval );
 	
 }
-
+#endif
 // ------------------------------------
 // INTEGER AVX OPERATIONS.
 // ------------------------------------
@@ -971,7 +970,7 @@ FORCEINLINE void ConvertStoreAsIntsAVX(intx8 * RESTRICT pDest, const fltx8 &vSrc
 
 	_mm256_empty();
 }
-#endif
+
 
 
 
@@ -982,7 +981,7 @@ FORCEINLINE void RotateLeftDoubleAVX( fltx8 &a, fltx8 &b )
 	a = SetWAVX( RotateLeft( a ), SplatXAVX( b ) );
 	b = RotateLeft( b );
 }
-
+#endif
 
 // // Some convenience operator overloads, which are just aliasing the functions above.
 // Unneccessary on 360, as you already have them from xboxmath.h
@@ -1650,7 +1649,7 @@ inline EightVectors minimum(const EightVectors &a, const EightVectors &b)
 	ret.z=MinAVX(a.z,b.z);
 	return ret;
 }
-
+#if 0
 FORCEINLINE EightVectors RotateLeft( const EightVectors &src )
 {
 	EightVectors ret;
@@ -1668,6 +1667,7 @@ FORCEINLINE EightVectors RotateRight( const EightVectors &src )
 	ret.z = RotateRight( src.z );
 	return ret;
 }
+#endif
 FORCEINLINE EightVectors MaskedAssign( const fltx8 & ReplacementMask, const EightVectors & NewValue, const EightVectors & OldValue )
 {
 	EightVectors ret;
@@ -1768,7 +1768,7 @@ FORCEINLINE void EightVectors::StoreAlignedVectorAVX( VectorAligned * RESTRICT o
 
 }
 #endif
-
+#if 0
 // Assume the given matrix is a rotation, and rotate these vectors by it.
 // If you have a long list of EightVectors structures that you all want 
 // to rotate by the same matrix, use EightVectors::RotateManyBy() instead.
@@ -1856,7 +1856,7 @@ void EightVectors::TransformBy(const matrix3x4_t& matrix)
 	y = AddAVX( outY, ReplicateX8( matrix[1][3] ));
 	 z = AddAVX( outZ, ReplicateX8( matrix[2][3] ));
 }
-
+#endif
 
 /// quick, low quality perlin-style noise() function suitable for real time use.
 /// return value is -1..1. Only reliable around +/- 1 million or so.

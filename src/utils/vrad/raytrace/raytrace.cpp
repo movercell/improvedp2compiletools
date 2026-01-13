@@ -981,10 +981,10 @@ void RayTracingEnvironment::RefineNode(int node_number,int32 const *tri_list,int
 
 void RayTracingEnvironment::SetupAccelerationStructure(void)
 {
-	//FourRays temp = FourRays();
-	//temp.direction.Load();
-	//EightRays temp2 = EightRays();
-	//temp2.direction.Load();
+	FourRays temp = FourRays();
+	temp.direction.Load(1, 0, 0, 0);
+	EightRays temp2 = EightRays();
+	temp2.direction.Load(1, 0, 0, 0);
 
 	CacheOptimizedKDNode root;
 	OptimizedKDTree.AddToTail(root);
