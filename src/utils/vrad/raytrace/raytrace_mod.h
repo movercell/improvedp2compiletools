@@ -60,6 +60,11 @@ public:
 		}
 #endif
 	}
+
+	inline void FromFour(const FourRays& in) {
+		origin.FromFour(in.origin);
+		direction.FromFour(in.direction);
+	}
 	// returns direction sign mask for 8 rays. returns -1 if the rays can not be traced as a
 	// bundle.
 	int CalculateDirectionSignMask(void) const;

@@ -1094,6 +1094,17 @@ public:
 		fltx4 zhalves[2];
 	};
 
+	FORCEINLINE void FromFour( const FourVectors& in )
+	{
+		xhalves[0] = in.x;
+		xhalves[1] = in.x;
+
+		yhalves[0] = in.y;
+		yhalves[1] = in.y;
+
+		zhalves[0] = in.z;
+		zhalves[1] = in.z;
+	}
 
 	EightVectors(void)
 	{
