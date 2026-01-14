@@ -375,7 +375,7 @@ void RayTracingEnvironment::Trace4Rays(const FourRays &rays, fltx4 TMin, fltx4 T
 	else
 	{
 		// sucky case - can't trace 4 rays at once. in the worst case, need to trace all 4
-		// separately, but usually we will still get 2x, Since our tracer only does 4 at a
+		// separately, but usually we will still get 2x. Since our tracer only does 4 at a
 		// time, we will have to cover up the undesired rays with the desired ray
 
 		//!! speed!! there is room for some sse-ization here
@@ -693,7 +693,61 @@ void RayTracingEnvironment::Trace8Rays(const EightRays& rays, fltx8 TMin, fltx8 
 		Trace8Rays(rays, TMin, TMax, msk, rslt_out, skip_id, pCallback);
 	else
 	{
+		// sucky case - can't trace 8 rays at once. in the worst case, need to trace all 8
+		// separately, but usually we will still get 2x. Since our tracer only does 8 at a
+		// time, we will have to cover up the undesired rays with the desired ray
 
+		//!! speed!! there is room for some sse-ization here
+		EightRays tmprays;
+		tmprays.origin = rays.origin;
+
+		uint8 need_trace[8] = { 1,1,1,1 };
+		for (int try_trace = 0; try_trace < 8; try_trace++)
+		{
+			if (need_trace[try_trace])
+			{
+				need_trace[try_trace] = 2;			// going to trace it
+				// replicate the ray being traced into all 8 rays
+				tmprays.direction.x = ReplicateX8(rays.direction.X(try_trace));
+				tmprays.direction.y = ReplicateX8(rays.direction.Y(try_trace));
+				tmprays.direction.z = ReplicateX8(rays.direction.Z(try_trace));
+				// now, see if any of the other remaining rays can be handled at the same time.
+				for (int try2 = try_trace + 1; try2 < 8; try2++)
+					if (need_trace[try2])
+					{
+						if (
+							SameSign(rays.direction.X(try2),
+								rays.direction.X(try_trace)) &&
+							SameSign(rays.direction.Y(try2),
+								rays.direction.Y(try_trace)) &&
+							SameSign(rays.direction.Z(try2),
+								rays.direction.Z(try_trace)))
+						{
+							need_trace[try2] = 2;
+							tmprays.direction.X(try2) = rays.direction.X(try2);
+							tmprays.direction.Y(try2) = rays.direction.Y(try2);
+							tmprays.direction.Z(try2) = rays.direction.Z(try2);
+						}
+					}
+				// ok, now trace between 1 and 3 rays, and output the results
+				RayTracingResultAVX tmpresults;
+				msk = tmprays.CalculateDirectionSignMask();
+				assert(msk != -1);
+				Trace8Rays(tmprays, TMin, TMax, msk, &tmpresults, skip_id, pCallback);
+				// now, move results to proper place
+				for (int i = 0; i < 8; i++)
+					if (need_trace[i] == 2)
+					{
+						need_trace[i] = 0;
+						rslt_out->HitIds[i] = tmpresults.HitIds[i];
+						SubFloat(rslt_out->HitDistance, i) = SubFloat(tmpresults.HitDistance, i);
+						rslt_out->surface_normal.X(i) = tmpresults.surface_normal.X(i);
+						rslt_out->surface_normal.Y(i) = tmpresults.surface_normal.Y(i);
+						rslt_out->surface_normal.Z(i) = tmpresults.surface_normal.Z(i);
+					}
+
+			}
+		}
 	}
 }
 

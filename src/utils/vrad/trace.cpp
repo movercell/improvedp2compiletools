@@ -171,6 +171,7 @@ public:
 	virtual bool VisitTriangle_ShouldContinue(const TriIntersectData_t& triangle, const FourRays& rays, fltx4* pHitMask, fltx4* b0, fltx4* b1, fltx4* b2, int32 hitID)
 	{
 		Error("Error: Wrong CCoverageCount instance!");
+		return false;
 	}
 
 	virtual bool VisitTriangle_ShouldContinueAVX(const TriIntersectData_t& triangle, const EightRays& rays, fltx8* pHitMask, fltx8* b0, fltx8* b1, fltx8* b2, int32 hitID)
@@ -208,6 +209,7 @@ public:
 	virtual bool VisitTriangle_ShouldContinue(const TriIntersectData_t& triangle, const FourRays& rays, fltx4* pHitMask, fltx4* b0, fltx4* b1, fltx4* b2, int32 hitID)
 	{
 		Error("Error: Wrong CCoverageCount instance!");
+		return false;
 	}
 	virtual bool VisitTriangle_ShouldContinueAVX(const TriIntersectData_t& triangle, const EightRays& rays, fltx8* pHitMask, fltx8* b0, fltx8* b1, fltx8* b2, int32 hitID)
 	{
@@ -247,7 +249,13 @@ void TestLine( const FourVectors& start, const FourVectors& stop,
 	CCoverageCountTexture coverageCallback;
 
 	g_RtEnv.Trace4Rays(myrays, Four_Zeros, len, &rt_result, TRACE_ID_STATICPROP | static_prop_index_to_ignore, g_bTextureShadows ? &coverageCallback : 0 );
-
+	/*
+	auto temprays = EightRays();
+	temprays.FromFour(myrays);
+	RayTracingResultAVX tempresult;
+	CCoverageCountTextureAVX coverageCallbackAVX;
+	g_RtEnv.Trace8Rays(temprays, Eight_Zeros, temprays.direction.length(), &tempresult, TRACE_ID_STATICPROP | static_prop_index_to_ignore, g_bTextureShadows ? &coverageCallbackAVX : 0);
+	*/
 	// Assume we can see the targets unless we get hits
 	float visibility[4];
 	for ( int i = 0; i < 4; i++ )

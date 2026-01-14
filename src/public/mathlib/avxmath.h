@@ -98,6 +98,17 @@ FORCEINLINE fltx8 ReplicateX8(float flValue)
 	return _mm256_broadcast_ss(&flValue);
 }
 
+FORCEINLINE fltx8 Replicate4to8(fltx4 flValue)
+{
+	union {
+		fltx8 full;
+		fltx4 halves[2];
+	};
+	halves[0] = flValue; halves[1] = flValue;
+
+	return full;
+}
+
 
 // useful constants in AVX packed float format:
 // (note: some of these aren't stored on the 360, 
