@@ -6,6 +6,8 @@
 #ifndef AVXMATH_H
 #define AVXMATH_H
 
+#define AVX_CLUSTER_SIZE
+
 #include <mathlib/vector.h>
 #include <mathlib/mathlib.h>
 #include <mathlib/ssemath.h>
