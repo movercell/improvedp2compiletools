@@ -243,6 +243,18 @@ struct RayTracingResultAVX
 	EightVectors surface_normal;								// surface normal at intersection
 	ALIGN16 int32 HitIds[8] ALIGN16_POST;								// -1=no hit. otherwise, triangle index
 	fltx8 HitDistance;										// distance to intersection
+
+	RayTracingResult ToFour()
+	{
+		RayTracingResult out;
+		out.surface_normal.x = surface_normal.xhalves[0];
+		out.surface_normal.y = surface_normal.yhalves[0];
+		out.surface_normal.z = surface_normal.zhalves[0];
+		memcpy(&(out.HitIds), &HitIds, sizeof(float[4]));
+		memcpy(&(out.HitDistance), &HitDistance, sizeof(float[4]));
+
+		return out;
+	}
 };
 
 class RayTraceLight
