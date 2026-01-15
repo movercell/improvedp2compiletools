@@ -1702,22 +1702,22 @@ void ExportDirectLightsToWorldLights()
 
 // Helper function - gathers light from sun (emit_skylight)
 void GatherSampleSkyLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum, 
-							 FourVectors const& pos, FourVectors *pNormals, int normalCount, int iThread,
+							 EightVectors const& pos, EightVectors *pNormals, int normalCount, int iThread,
 							 int nLFlags, int static_prop_index_to_ignore,
 							 float flEpsilon )
 {
 	bool bIgnoreNormals = ( nLFlags & GATHERLFLAGS_IGNORE_NORMALS ) != 0;
 	bool force_fast = ( nLFlags & GATHERLFLAGS_FORCE_FAST ) != 0;
 
-	fltx4 dot;
+	fltx8 dot;
 
 	if ( bIgnoreNormals )
-		dot = ReplicateX4( CONSTANT_DOT );
+		dot = ReplicateX8( CONSTANT_DOT );
 	else
-		dot = NegSIMD( pNormals[0] * dl->light.normal );
+		dot = NegAVX( pNormals[0] * dl->light.normal );
 
-	dot = MaxSIMD( dot, Four_Zeros );
-	int zeroMask = TestSignSIMD ( CmpEqSIMD( dot, Four_Zeros ) );
+	dot = MaxAVX( dot, Eight_Zeros );
+	int zeroMask = TestSignAVX ( CmpEqAVX( dot, Eight_Zeros ) );
 	if (zeroMask == 0xF)
 		return;
 
@@ -1730,11 +1730,11 @@ void GatherSampleSkyLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, i
 	{
 		nsamples = NSAMPLES_SUN_AREA_LIGHT;
 		if ( do_fast || force_fast )
-			nsamples /= 4;
+			nsamples /= 8;
 	}
 
-	fltx4 totalFractionVisible = Four_Zeros;
-	fltx4 fractionVisible = Four_Zeros;
+	fltx8 totalFractionVisible = Eight_Zeros;
+	fltx8 fractionVisible = Eight_Zeros;
 
 	DirectionalSampler_t sampler;
 
@@ -1751,27 +1751,27 @@ void GatherSampleSkyLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, i
 			ofs *= MAX_TRACE_LENGTH * flSkyLightAngularExtent;
 			delta += ofs;
 		}
-		FourVectors delta4;
-		delta4.DuplicateVector ( delta );
-		delta4 += pos;
+		EightVectors delta8;
+		delta8.DuplicateVector ( delta );
+		delta8 += pos;
 
-		TestLine_DoesHitSky ( pos, delta4, &fractionVisible, true, static_prop_index_to_ignore );
+		TestLine_DoesHitSky ( pos, delta8, &fractionVisible, true, static_prop_index_to_ignore );
 
-		totalFractionVisible = AddSIMD ( totalFractionVisible, fractionVisible );
+		totalFractionVisible = AddAVX ( totalFractionVisible, fractionVisible );
 	}
 
-	fltx4 seeAmount = MulSIMD ( totalFractionVisible, ReplicateX4 ( 1.0f / nsamples ) );
-	out.m_flDot[0] = MulSIMD ( dot, seeAmount );
-	out.m_flFalloff = Four_Ones;
-	out.m_flSunAmount = MulSIMD ( seeAmount, ReplicateX4( 10000.0f ) );
+	fltx8 seeAmount = MulAVX ( totalFractionVisible, ReplicateX8 ( 1.0f / nsamples ) );
+	out.m_flDot[0] = MulAVX ( dot, seeAmount );
+	out.m_flFalloff = Eight_Ones;
+	out.m_flSunAmount = MulAVX ( seeAmount, ReplicateX8( 10000.0f ) );
 	for ( int i = 1; i < normalCount; i++ )
 	{
 		if ( bIgnoreNormals )
-			out.m_flDot[i] = ReplicateX4 ( CONSTANT_DOT );
+			out.m_flDot[i] = ReplicateX8 ( CONSTANT_DOT );
 		else
 		{
-			out.m_flDot[i] = NegSIMD( pNormals[i] * dl->light.normal );
-			out.m_flDot[i] = MulSIMD( out.m_flDot[i], seeAmount );
+			out.m_flDot[i] = NegAVX( pNormals[i] * dl->light.normal );
+			out.m_flDot[i] = MulAVX( out.m_flDot[i], seeAmount );
 		}
 	}
 }

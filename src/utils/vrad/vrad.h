@@ -391,7 +391,10 @@ void TestLine( EightVectors const& start, EightVectors const& stop, fltx4 *pFrac
 
 // returns 1 if the ray sees the sky, 0 if it doesn't, and in-between values for partial coverage
 void TestLine_DoesHitSky( EightVectors const& start, EightVectors const& stop,
-                          fltx4 *pFractionVisible, bool canRecurse = true, int static_prop_to_skip=-1, bool bDoDebug = false );
+                          fltx8 *pFractionVisible, bool canRecurse = true, int static_prop_to_skip=-1, bool bDoDebug = false );
+
+void TestLine_DoesHitSky(FourVectors const& start, FourVectors const& stop,
+						  fltx4* pFractionVisible, bool canRecurse = true, int static_prop_to_skip = -1, bool bDoDebug = false);
 
 // converts any marked brush entities to triangles for shadow casting
 void ExtractBrushEntityShadowCasters ( void );
