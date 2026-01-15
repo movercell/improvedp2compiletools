@@ -2702,7 +2702,7 @@ bool PointsInWinding ( EightVectors const & point, winding_t *w, int &invalidBit
 		invalidMask = OrAVX( invalidMask, CmpLtAVX( dot, Eight_Zeros ) );
 
 		invalidBits = TestSignAVX ( invalidMask );
-		if ( invalidBits == 0xF )
+		if ( invalidBits == 0xFF )
 			return false;
 	}
 
@@ -2733,18 +2733,18 @@ static int SupersampleLightAtPoint( lightinfo_t& l, SSE_SampleInfo_t& info,
 
 	int subsampleCount = 0;
 
-	FourVectors superSampleNormal;
+	EightVectors superSampleNormal;
 	superSampleNormal.DuplicateVector( sample.normal );
 
-	FourVectors superSampleLightCoord;
-	FourVectors superSamplePosition;
+	EightVectors superSampleLightCoord;
+	EightVectors superSamplePosition;
 
 	if ( flags & NON_AMBIENT_ONLY )
 	{
 		float aRow[4];
 		for ( int coord = 0; coord < 4; ++coord )
 			aRow[coord] = csshift + coord * cscale;
-		fltx4 sseRow = LoadUnalignedSIMD( aRow );
+		fltx8 sseRow = LoadUnalignedAVX( aRow );
 
 		for (int s = 0; s < 4; ++s)
 		{
@@ -2752,8 +2752,8 @@ static int SupersampleLightAtPoint( lightinfo_t& l, SSE_SampleInfo_t& info,
 			// below use the number of samples used, not just numsamples and some of them
 			// will be skipped if they are not inside of the winding
 			superSampleLightCoord.DuplicateVector( sampleLightOrigin );
-			superSampleLightCoord.x = AddSIMD( superSampleLightCoord.x, ReplicateX4( aRow[s] ) );
-			superSampleLightCoord.y = AddSIMD( superSampleLightCoord.y, sseRow );
+			superSampleLightCoord.x = AddAVX( superSampleLightCoord.x, ReplicateX8( aRow[s] ) );
+			superSampleLightCoord.y = AddAVX( superSampleLightCoord.y, sseRow );
 
 			// Figure out where the supersample exists in the world, and make sure
 			// it lies within the sample winding
@@ -2788,9 +2788,11 @@ static int SupersampleLightAtPoint( lightinfo_t& l, SSE_SampleInfo_t& info,
 	}
 	else
 	{
-		FourVectors superSampleOffsets;
+		EightVectors superSampleOffsets;
 		superSampleOffsets.LoadAndSwizzle( Vector( csshift, csshift, 0 ), Vector( csshift, csshift + cscale, 0),
-		                                   Vector( csshift + cscale, csshift, 0 ), Vector( csshift + cscale, csshift + cscale, 0 ) );
+		                                   Vector( csshift + cscale, csshift, 0 ), Vector( csshift + cscale, csshift + cscale, 0 ), 0 );
+		superSampleOffsets.LoadAndSwizzle( Vector(csshift, csshift, 0), Vector(csshift, csshift + cscale, 0),
+										   Vector(csshift + cscale, csshift, 0), Vector(csshift + cscale, csshift + cscale, 0), 1 );
 		superSampleLightCoord.DuplicateVector( sampleLightOrigin );
 		superSampleLightCoord += superSampleOffsets;
 
@@ -3065,7 +3067,7 @@ static void InitSampleInfo( lightinfo_t const& l, int iThread, SSE_SampleInfo_t&
 	info.m_WarnFace = -1;
 
 	info.m_NumSamples = info.m_pFaceLight->numsamples;
-	info.m_NumSampleGroups = ( info.m_NumSamples & 0x3) ? ( info.m_NumSamples / 4 ) + 1 : ( info.m_NumSamples / 4 );
+	info.m_NumSampleGroups = ( info.m_NumSamples & 0b111) ? ( info.m_NumSamples / 8 ) + 1 : ( info.m_NumSamples / 8 );
 
 	// initialize normals if the surface is flat
 	if (l.isflat)
@@ -3148,21 +3150,21 @@ void BuildFacelights (int iThread, int facenum)
 	// sample the lights at each sample location
 	for ( int grp = 0; grp < numGroups; ++grp )
 	{
-		int nSample = 4 * grp;
+		int nSample = 8 * grp;
 
 		sample_t *sample = sampleInfo.m_pFaceLight->sample + nSample;
-		int numSamples = min ( 4, sampleInfo.m_pFaceLight->numsamples - nSample );
+		int numSamples = min ( 8, sampleInfo.m_pFaceLight->numsamples - nSample );
 
-		FourVectors positions;
-		FourVectors normals;
+		EightVectors positions;
+		EightVectors normals;
 
-		for ( int i = 0; i < 4; i++ )
+		for ( int i = 0; i < 8; i++ )
 		{
 			v[i] = ( i < numSamples ) ? sample[i].pos : sample[numSamples - 1].pos;
 			n[i] = ( i < numSamples ) ? sample[i].normal : sample[numSamples - 1].normal;
 		}
-		positions.LoadAndSwizzle( v[0], v[1], v[2], v[3] );
-		normals.LoadAndSwizzle( n[0], n[1], n[2], n[3] );
+		positions.LoadAndSwizzle( v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7]);
+		normals.LoadAndSwizzle(   n[0], n[1], n[2], n[3], n[4], n[5], n[6], n[7]);
 
 		ComputeIlluminationPointAndNormalsSSE( l, positions, normals, &sampleInfo, numSamples );
 
@@ -3174,7 +3176,7 @@ void BuildFacelights (int iThread, int facenum)
 		}
 
 		// Iterate over all the lights and add their contribution to this group of spots
-		GatherSampleLightAt4Points( sampleInfo, nSample, numSamples );
+		GatherSampleLightAt8Points( sampleInfo, nSample, numSamples );
 	}
 	
 	// Tell the incremental light manager that we're done with this face.
