@@ -1208,7 +1208,7 @@ void ComputeDirectLightingAtPoint( Vector &position, Vector &normal, Vector &out
 		else 
 		{
 			// push out along normal
-			adjusted_pos += 8.0 * normal;
+			adjusted_pos += 4.0 * normal;
 //			flEpsilon = 1.0;
 		}
 
