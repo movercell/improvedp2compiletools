@@ -387,10 +387,10 @@ inline byte PVSCheck( const byte *pvs, int iCluster )
 }
 
 // outputs 1 in fractionVisible if no occlusion, 0 if full occlusion, and in-between values
-void TestLine( FourVectors const& start, FourVectors const& stop, fltx4 *pFractionVisible, int static_prop_index_to_ignore=-1);
+void TestLine( EightVectors const& start, EightVectors const& stop, fltx4 *pFractionVisible, int static_prop_index_to_ignore=-1);
 
 // returns 1 if the ray sees the sky, 0 if it doesn't, and in-between values for partial coverage
-void TestLine_DoesHitSky( FourVectors const& start, FourVectors const& stop,
+void TestLine_DoesHitSky( EightVectors const& start, EightVectors const& stop,
                           fltx4 *pFractionVisible, bool canRecurse = true, int static_prop_to_skip=-1, bool bDoDebug = false );
 
 // converts any marked brush entities to triangles for shadow casting
@@ -425,7 +425,7 @@ void WriteWinding (FileHandle_t out, winding_t *w, Vector& color );
 void WriteNormal( FileHandle_t out, Vector const &nPos, Vector const &nDir, 
 				  float length, Vector const &color );
 void WriteLine( FileHandle_t out, const Vector &vecPos1, const Vector &vecPos2, const Vector &color );
-void WriteTrace( const char *pFileName, const FourRays &rays, const RayTracingResult& result );
+void WriteTrace( const char *pFileName, const EightRays &rays, const RayTracingResult& result );
 
 #ifdef STATIC_FOG
 qboolean IsFog( dface_t * f );
@@ -448,9 +448,9 @@ float TraceLeafBrushes( int leafIndex, const Vector &start, const Vector &end, C
 
 struct SSE_sampleLightOutput_t
 {
-	fltx4 m_flDot[NUM_BUMP_VECTS+1];
-	fltx4 m_flFalloff;
-	fltx4 m_flSunAmount;
+	fltx8 m_flDot[NUM_BUMP_VECTS+1];
+	fltx8 m_flFalloff;
+	fltx8 m_flSunAmount;
 };
 
 #define GATHERLFLAGS_FORCE_FAST 1
@@ -458,22 +458,22 @@ struct SSE_sampleLightOutput_t
 
 // SSE Gather light stuff
 void GatherSampleLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum, 
-					   FourVectors const& pos, FourVectors *pNormals, int normalCount, int iThread,
+					   EightVectors const& pos, EightVectors *pNormals, int normalCount, int iThread,
 					   int nLFlags = 0,					// GATHERLFLAGS_xxx
 					   int static_prop_to_skip=-1,
 					   float flEpsilon = 0.0 );
 //void GatherSampleSkyLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum, 
-//							 FourVectors const& pos, FourVectors *pNormals, int normalCount, int iThread,
+//							 EightVectors const& pos, EightVectors *pNormals, int normalCount, int iThread,
 //							 int nLFlags = 0,
 //							 int static_prop_to_skip=-1,
 //							 float flEpsilon = 0.0 );
 //void GatherSampleAmbientSkySSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum, 
-//						  FourVectors const& pos, FourVectors *pNormals, int normalCount, int iThread,
+//						  EightVectors const& pos, EightVectors *pNormals, int normalCount, int iThread,
 //						  int nLFlags = 0,					// GATHERLFLAGS_xxx
 //						  int static_prop_to_skip=-1,
 //						  float flEpsilon = 0.0 );
 //void GatherSampleStandardLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum, 
-//						  FourVectors const& pos, FourVectors *pNormals, int normalCount, int iThread,
+//						  EightVectors const& pos, EightVectors *pNormals, int normalCount, int iThread,
 //						  int nLFlags = 0,					// GATHERLFLAGS_xxx
 //						  int static_prop_to_skip=-1,
 //						  float flEpsilon = 0.0 );

@@ -126,9 +126,9 @@ struct SSE_SampleInfo_t
 
 	int          m_NumSamples;
 	int          m_NumSampleGroups;
-	int	        m_Clusters[4];
-	FourVectors	m_Points;
-	FourVectors	m_PointNormals[ NUM_BUMP_VECTS + 1 ];
+	int	        m_Clusters[8];
+	EightVectors	m_Points;
+	EightVectors	m_PointNormals[ NUM_BUMP_VECTS + 1 ];
 };
 
 extern void InitLightinfo( lightinfo_t *l, int facenum );
