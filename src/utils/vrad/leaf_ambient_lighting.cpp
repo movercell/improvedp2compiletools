@@ -91,10 +91,10 @@ float Engine_WorldLightDistanceFalloff( const dworldlight_t *wl, const Vector& d
 
 void AddEmitSurfaceLights( const Vector &vStart, Vector lightBoxColor[6] )
 {
-	fltx4 fractionVisible;
+	fltx8 fractionVisible;
 
-	FourVectors vStart4, wlOrigin4;
-	vStart4.DuplicateVector ( vStart );
+	EightVectors vStart8, wlOrigin8;
+	vStart8.DuplicateVector ( vStart );
 
 	for ( int iLight=0; iLight < *pNumworldlights; iLight++ )
 	{
@@ -107,9 +107,9 @@ void AddEmitSurfaceLights( const Vector &vStart, Vector lightBoxColor[6] )
 		Assert( wl->type == emit_surface );
 
 		// Can this light see the point?
-		wlOrigin4.DuplicateVector ( wl->origin );
-		TestLine ( vStart4, wlOrigin4, &fractionVisible );
-		if ( !TestSignSIMD ( CmpGtSIMD ( fractionVisible, Four_Zeros ) ) )
+		wlOrigin8.DuplicateVector ( wl->origin );
+		TestLine ( vStart8, wlOrigin8, &fractionVisible );
+		if ( !TestSignAVX ( CmpGtAVX ( fractionVisible, Eight_Zeros ) ) )
 			continue;
 
 		// Add this light's contribution.

@@ -118,15 +118,15 @@ FORCEINLINE fltx8 Replicate4to8(fltx4 flValue)
 // instructions, saving a load and possible L2
 // miss.)
 #ifndef _X360
-const fltx8 Eight_Zeros	   = ReplicateX8( 0 );									// 0 0 0 0  0 0 0 0
-const fltx8 Eight_Ones     = ReplicateX8( 1 );									// 1 1 1 1  1 1 1 1
-const fltx8 Eight_Twos     = ReplicateX8( 2 );									// 2 2 2 2  2 2 2 2
-const fltx8 Eight_Threes   = ReplicateX8( 3 );									// 3 3 3 3  3 3 3 3
-const fltx8 Eight_Eights   = ReplicateX8( 8 );									// guess.
-extern const fltx8 Eight_Point225s;								// .225 .225 .225 .225
-extern const fltx8 Eight_PointFives;								// .5 .5 .5 .5
-extern const fltx8 Eight_Thirds;									// 1/3
-extern const fltx8 Eight_TwoThirds;								// 2/3
+const fltx8 Eight_Zeros	     = ReplicateX8( 0 );									// 0 0 0 0  0 0 0 0
+const fltx8 Eight_Ones       = ReplicateX8( 1 );									// 1 1 1 1  1 1 1 1
+const fltx8 Eight_Twos       = ReplicateX8( 2 );									// 2 2 2 2  2 2 2 2
+const fltx8 Eight_Threes     = ReplicateX8( 3 );									// 3 3 3 3  3 3 3 3
+const fltx8 Eight_Eights     = ReplicateX8( 8 );									// guess.
+const fltx8 Eight_Point225s  = ReplicateX8( 0.225f );								// .225 .225 .225 .225
+const fltx8 Eight_PointFives = ReplicateX8( 0.5f );								// .5 .5 .5 .5
+const fltx8 Eight_Thirds	 = ReplicateX8( 1.0f / 3.0f );									// 1/3
+const fltx8 Eight_TwoThirds  = ReplicateX8( 2.0f / 3.0f );								// 2/3
 const fltx8 Eight_Epsilons = ReplicateX8( FLT_EPSILON );								// FLT_EPSILON FLT_EPSILON FLT_EPSILON FLT_EPSILON
 extern const fltx8 Eight_2ToThe21s;								// (1<<21)..
 extern const fltx8 Eight_2ToThe22s;								// (1<<22)..
@@ -1919,7 +1919,7 @@ inline fltx8 fnegate( const fltx8 & x )
 	return XorAVX( x, LoadAlignedAVX( g_AVX_signmask ) );
 }
 
-
+#if 0
 fltx8 Pow_FixedPoint_Exponent_AVX( const fltx8 & x, int exponent);
 
 // PowAVX - raise a AVX register to a power.  This is analogous to the C pow() function, with some
@@ -1932,7 +1932,7 @@ inline fltx8 PowAVX( const fltx8 & x, float exponent )
 {
 	return Pow_FixedPoint_Exponent_AVX(x,(int) (8.0*exponent));
 }
-
+#endif
 
 
 // random number generation - generate 8 random numbers quickly.

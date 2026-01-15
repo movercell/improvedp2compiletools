@@ -221,13 +221,13 @@ static void ComputeMaxDirectLighting( DetailObjectLump_t& prop, Vector* maxcolor
 		dl = lights[j];
 
 		SSE_sampleLightOutput_t out;
-		FourVectors origin4;
-		FourVectors normal4;
-		origin4.DuplicateVector( origin );
-		normal4.DuplicateVector( normal );
+		EightVectors origin8;
+		EightVectors normal8;
+		origin8.DuplicateVector( origin );
+		normal8.DuplicateVector( normal );
 
-		GatherSampleLightSSE ( out, dl, -1, origin4, &normal4, 1, iThread );
-		VectorMA( maxcolor[dl->light.style], out.m_flFalloff.m128_f32[0] * out.m_flDot[0].m128_f32[0], dl->light.intensity, maxcolor[dl->light.style] );
+		GatherSampleLightSSE ( out, dl, -1, origin8, &normal8, 1, iThread );
+		VectorMA( maxcolor[dl->light.style], out.m_flFalloff.m256_f32[0] * out.m_flDot[0].m256_f32[0], dl->light.intensity, maxcolor[dl->light.style] );
 	}
 }
 
