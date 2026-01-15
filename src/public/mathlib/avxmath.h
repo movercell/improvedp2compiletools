@@ -164,7 +164,10 @@ extern const ALIGN16 int32 g_AVX_clear_signmask[] ALIGN16_POST;			// 0x7fffffff 
 extern const ALIGN16 int32 g_AVX_signmask[] ALIGN16_POST;				// 0x80000000 x 8
 extern const ALIGN16 int32 g_AVX_lsbmask[] ALIGN16_POST;				// 0xfffffffe x 8
 extern const ALIGN16 int32 g_AVX_clear_wmask[] ALIGN16_POST;			// -1 -1 -1 0
-extern const ALIGN16 int32 g_AVX_ComponentMask[8][8] ALIGN16_POST;		// [0xFFFFFFFF 0 0 0], [0 0xFFFFFFFF 0 0], [0 0 0xFFFFFFFF 0], [0 0 0 0xFFFFFFFF]
+const ALIGN16 int32 g_AVX_ComponentMask[8][8] ALIGN16_POST = { { 0xFFFFFFFF, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0xFFFFFFFF, 0, 0, 0, 0, 0, 0 },
+															   { 0, 0, 0xFFFFFFFF, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0xFFFFFFFF, 0, 0, 0, 0 }, 
+															   { 0, 0, 0, 0, 0xFFFFFFFF, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0xFFFFFFFF, 0, 0 },
+															   { 0, 0, 0, 0, 0, 0, 0xFFFFFFFF, 0 }, { 0, 0, 0, 0, 0, 0, 0, 0xFFFFFFFF } };
 extern const ALIGN16 int32 g_AVX_AllOnesMask[] ALIGN16_POST;			// ~0,~0,~0,~0
 extern const ALIGN16 int32 g_AVX_Low16BitsMask[] ALIGN16_POST;			// 0xffff x 8
 
@@ -434,14 +437,14 @@ FORCEINLINE fltx8 SetWAVX( const fltx8& a, const fltx8& w )
 	fltx8 result = MaskedAssign( LoadAlignedAVX( g_AVX_ComponentMask[3] ), w, a );
 	return result;
 }
-
+#endif
 FORCEINLINE fltx8 SetComponentAVX( const fltx8& a, int nComponent, float flValue )
 {
 	fltx8 val = ReplicateX8( flValue );
 	fltx8 result = MaskedAssign( LoadAlignedAVX( g_AVX_ComponentMask[nComponent] ), val, a );
 	return result;
 }
-#endif
+
 #if 0
 // a b c d -> b c d a
 FORCEINLINE fltx8 RotateLeft( const fltx8 & a )
