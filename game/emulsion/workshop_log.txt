@@ -1,8 +1,9 @@
 
-Workshop Log Initiated: (01/07/2026 - 12:51:44)
+Workshop Log Initiated: (01/15/2026 - 13:54:18)
 -----------------------------------------------------
 [BaseModPanel] Querying for subscribed files
 [BaseModPanel] Querying for published files
+[BaseModPanel] Added query for published file 3641570455
 [BaseModPanel] Added query for published file 2780341819
 [BaseModPanel] Added query for published file 2775489514
 [BaseModPanel] Added query for published file 3626396270
@@ -52,8 +53,8 @@ Workshop Log Initiated: (01/07/2026 - 12:51:44)
 [BaseModPanel] Added query for published file 3321919023
 [BaseModPanel] Added query for published file 3278507293
 [BaseModPanel] Added query for published file 3277327812
-[BaseModPanel] Added query for published file 3269256630
 [BaseModPanel] Querying for subscribed files
+[BaseModPanel] Added query for published file 3269256630
 [BaseModPanel] Added query for published file 3272528323
 [BaseModPanel] Added query for published file 3267629066
 [BaseModPanel] Added query for published file 3270353034
@@ -94,7 +95,7 @@ Workshop Log Initiated: (01/07/2026 - 12:51:44)
 [BaseModPanel] Added query for published file 2903498498
 [BaseModPanel] Added query for published file 2909986925
 [BaseModPanel] Queue complete.
-[BaseModPanel] Querying for details of published file: 2780341819
+[BaseModPanel] Querying for details of published file: 3641570455
 [BaseModPanel] Added query for published file 2746131265
 [BaseModPanel] Added query for published file 2913976736
 [BaseModPanel] Added query for published file 3429173657
@@ -105,18 +106,14 @@ Workshop Log Initiated: (01/07/2026 - 12:51:44)
 [BaseModPanel] Added query for published file 2914772410
 [BaseModPanel] Added query for published file 2774997114
 [BaseModPanel] Added query for published file 2913550842
-[BaseModPanel] Added file information for 2780341819
-[BaseModPanel] Added voting info query for 2780341819
-[CUGCFileRequestManager] Inserted Download: 1814394089121850821	Priority:2	Timestamp:0
-[CUGCFileRequestManager] Inserted Download: 1814394089121849883	Priority:1	Timestamp:1
-[BaseModPanel] File request (2780341819) finished.[UGC] File maps\workshop\1814394089121849883\thumb2780341819.jpg already in sync on client. (Duration: 4.804277 seconds)
-[UGC] File maps\workshop\1814394089121849883\thumb2780341819.jpg (1814394089121850821) finished all operations! (Duration: 4.804277 seconds)
-[CUGCRequestManager] Beginning download of 1814394089121850821
-[BaseModPanel] Querying for details of published file: 2775489514
-[CWorkshopFileInfoManager] Querying for voting details of published file: 2780341819
-[UGC] File maps\workshop\1814394089121849883\sp_momentum.bsp already in sync on client. (Duration: 4.834742 seconds)
-[UGC] File maps\workshop\1814394089121849883\sp_momentum.bsp (1814394089121849883) finished all operations! (Duration: 4.834742 seconds)
-[CUGCRequestManager] Beginning download of 1814394089121849883
+[BaseModPanel] Added file information for 3641570455
+[BaseModPanel] Added voting info query for 3641570455
+[CUGCFileRequestManager] Inserted Download: 16893112333011072198	Priority:2	Timestamp:0
+[CUGCFileRequestManager] Inserted Download: 10002092743605931815	Priority:1	Timestamp:1
+[BaseModPanel] File request (3641570455) finished.[UGC] Beginning download of maps\workshop\10002092743605931815\thumb3641570455.jpg. (1.959966)
+[CUGCRequestManager] Beginning download of 16893112333011072198
+[BaseModPanel] Querying for details of published file: 2780341819
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3641570455
 [BaseModPanel] Added query for published file 3433850791
 [BaseModPanel] Added query for published file 2904954520
 [BaseModPanel] Added query for published file 3427633670
@@ -167,18 +164,12 @@ Workshop Log Initiated: (01/07/2026 - 12:51:44)
 [BaseModPanel] Added query for published file 3191467658
 [BaseModPanel] Added query for published file 3188397930
 [BaseModPanel] Added query for published file 3170224084
-[BaseModPanel] Added file information for 2775489514
-[BaseModPanel] Added voting info query for 2775489514
-[CUGCFileRequestManager] Inserted Download: 1814393398432048886	Priority:2	Timestamp:2
-[CUGCFileRequestManager] Inserted Download: 1814393398432048673	Priority:1	Timestamp:3
-[BaseModPanel] File request (2775489514) finished.[UGC] File maps\workshop\1814393398432048673\thumb2775489514.jpg already in sync on client. (Duration: 5.125130 seconds)
-[UGC] File maps\workshop\1814393398432048673\thumb2775489514.jpg (1814393398432048886) finished all operations! (Duration: 5.125130 seconds)
-[CUGCRequestManager] Beginning download of 1814393398432048886
-[BaseModPanel] Querying for details of published file: 3626396270
-[CWorkshopFileInfoManager] Querying for voting details of published file: 2775489514
-[UGC] File maps\workshop\1814393398432048673\sp_first.bsp already in sync on client. (Duration: 5.149580 seconds)
-[UGC] File maps\workshop\1814393398432048673\sp_first.bsp (1814393398432048673) finished all operations! (Duration: 5.149580 seconds)
-[CUGCRequestManager] Beginning download of 1814393398432048673
+[BaseModPanel] Added file information for 2780341819
+[BaseModPanel] Added voting info query for 2780341819
+[CUGCFileRequestManager] Inserted Download: 1814394089121850821	Priority:2	Timestamp:2
+[CUGCFileRequestManager] Inserted Download: 1814394089121849883	Priority:1	Timestamp:3
+[BaseModPanel] File request (2780341819) finished.[BaseModPanel] Querying for details of published file: 2775489514
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2780341819
 [BaseModPanel] Added query for published file 3188174738
 [BaseModPanel] Added query for published file 2965026421
 [BaseModPanel] Added query for published file 3163690464
@@ -229,18 +220,6 @@ Workshop Log Initiated: (01/07/2026 - 12:51:44)
 [BaseModPanel] Added query for published file 2209176243
 [BaseModPanel] Added query for published file 95149455
 [BaseModPanel] Added query for published file 3071396052
-[BaseModPanel] Added file information for 3626396270
-[BaseModPanel] Added voting info query for 3626396270
-[CUGCFileRequestManager] Inserted Download: 13482634748495060362	Priority:2	Timestamp:4
-[CUGCFileRequestManager] Inserted Download: 15345934228518430002	Priority:1	Timestamp:5
-[BaseModPanel] File request (3626396270) finished.[UGC] File maps\workshop\15345934228518430002\thumb3626396270.jpg already in sync on client. (Duration: 5.509175 seconds)
-[UGC] File maps\workshop\15345934228518430002\thumb3626396270.jpg (13482634748495060362) finished all operations! (Duration: 5.509175 seconds)
-[CUGCRequestManager] Beginning download of 13482634748495060362
-[BaseModPanel] Querying for details of published file: 3625730923
-[CWorkshopFileInfoManager] Querying for voting details of published file: 3626396270
-[UGC] File maps\workshop\15345934228518430002\staticwatcher.bsp already in sync on client. (Duration: 5.571005 seconds)
-[UGC] File maps\workshop\15345934228518430002\staticwatcher.bsp (15345934228518430002) finished all operations! (Duration: 5.571005 seconds)
-[CUGCRequestManager] Beginning download of 15345934228518430002
 [BaseModPanel] Added query for published file 3050928553
 [BaseModPanel] Added query for published file 3034669703
 [BaseModPanel] Added query for published file 99649190
@@ -291,18 +270,12 @@ Workshop Log Initiated: (01/07/2026 - 12:51:44)
 [BaseModPanel] Added query for published file 3013814376
 [BaseModPanel] Added query for published file 3013815657
 [BaseModPanel] Added query for published file 3013815919
-[BaseModPanel] Added file information for 3625730923
-[BaseModPanel] Added voting info query for 3625730923
-[CUGCFileRequestManager] Inserted Download: 17690355163763991150	Priority:2	Timestamp:6
-[CUGCFileRequestManager] Inserted Download: 11924335361477327584	Priority:1	Timestamp:7
-[BaseModPanel] File request (3625730923) finished.[UGC] File maps\workshop\11924335361477327584\thumb3625730923.jpg already in sync on client. (Duration: 5.841154 seconds)
-[UGC] File maps\workshop\11924335361477327584\thumb3625730923.jpg (17690355163763991150) finished all operations! (Duration: 5.841154 seconds)
-[CUGCRequestManager] Beginning download of 17690355163763991150
-[BaseModPanel] Querying for details of published file: 3596865389
-[CWorkshopFileInfoManager] Querying for voting details of published file: 3625730923
-[UGC] File maps\workshop\11924335361477327584\1765744796.bsp already in sync on client. (Duration: 5.907533 seconds)
-[UGC] File maps\workshop\11924335361477327584\1765744796.bsp (11924335361477327584) finished all operations! (Duration: 5.907533 seconds)
-[CUGCRequestManager] Beginning download of 11924335361477327584
+[BaseModPanel] Added file information for 2775489514
+[BaseModPanel] Added voting info query for 2775489514
+[CUGCFileRequestManager] Inserted Download: 1814393398432048886	Priority:2	Timestamp:4
+[CUGCFileRequestManager] Inserted Download: 1814393398432048673	Priority:1	Timestamp:5
+[BaseModPanel] File request (2775489514) finished.[BaseModPanel] Querying for details of published file: 3626396270
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2775489514
 [BaseModPanel] Added query for published file 3013819671
 [BaseModPanel] Added query for published file 3013821269
 [BaseModPanel] Added query for published file 3013821384
@@ -353,18 +326,17 @@ Workshop Log Initiated: (01/07/2026 - 12:51:44)
 [BaseModPanel] Added query for published file 2998377583
 [BaseModPanel] Added query for published file 2718933105
 [BaseModPanel] Added query for published file 2967511647
-[BaseModPanel] Added file information for 3596865389
-[BaseModPanel] Added voting info query for 3596865389
-[CUGCFileRequestManager] Inserted Download: 13893944550127723631	Priority:2	Timestamp:8
-[CUGCFileRequestManager] Inserted Download: 15010766261841559690	Priority:1	Timestamp:9
-[BaseModPanel] File request (3596865389) finished.[UGC] File maps\workshop\15010766261841559690\thumb3596865389.jpg already in sync on client. (Duration: 6.208034 seconds)
-[UGC] File maps\workshop\15010766261841559690\thumb3596865389.jpg (13893944550127723631) finished all operations! (Duration: 6.208034 seconds)
-[CUGCRequestManager] Beginning download of 13893944550127723631
-[BaseModPanel] Querying for details of published file: 3603651225
-[CWorkshopFileInfoManager] Querying for voting details of published file: 3596865389
-[UGC] File maps\workshop\15010766261841559690\testchmb_schizo.bsp already in sync on client. (Duration: 6.236308 seconds)
-[UGC] File maps\workshop\15010766261841559690\testchmb_schizo.bsp (15010766261841559690) finished all operations! (Duration: 6.236308 seconds)
-[CUGCRequestManager] Beginning download of 15010766261841559690
+[BaseModPanel] Added file information for 3626396270
+[BaseModPanel] Added voting info query for 3626396270
+[CUGCFileRequestManager] Inserted Download: 13482634748495060362	Priority:2	Timestamp:6
+[CUGCFileRequestManager] Inserted Download: 15345934228518430002	Priority:1	Timestamp:7
+[BaseModPanel] File request (3626396270) finished.[BaseModPanel] Querying for details of published file: 3625730923
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3626396270
+[UGC] Read cloud file maps\workshop\10002092743605931815\thumb3641570455.jpg (16893112333011072198) (3.403363)
+[UGC] Async write started for maps\workshop\10002092743605931815\thumb3641570455.jpg (16893112333011072198) (3.398220)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\1814394089121849883\thumb2780341819.jpg. (3.398220)
+[CUGCRequestManager] Beginning download of 1814394089121850821
 [BaseModPanel] Added query for published file 3004270581
 [BaseModPanel] Added query for published file 3002706343
 [BaseModPanel] Added query for published file 2906289232
@@ -415,18 +387,12 @@ Workshop Log Initiated: (01/07/2026 - 12:51:44)
 [BaseModPanel] Added query for published file 2934779072
 [BaseModPanel] Added query for published file 2939447443
 [BaseModPanel] Added query for published file 2449100407
-[BaseModPanel] Added file information for 3603651225
-[BaseModPanel] Added voting info query for 3603651225
-[CUGCFileRequestManager] Inserted Download: 12834465016256195902	Priority:2	Timestamp:10
-[CUGCFileRequestManager] Inserted Download: 15555697955431105945	Priority:1	Timestamp:11
-[BaseModPanel] File request (3603651225) finished.[UGC] File maps\workshop\15555697955431105945\thumb3603651225.jpg already in sync on client. (Duration: 6.527814 seconds)
-[UGC] File maps\workshop\15555697955431105945\thumb3603651225.jpg (12834465016256195902) finished all operations! (Duration: 6.527814 seconds)
-[CUGCRequestManager] Beginning download of 12834465016256195902
-[BaseModPanel] Querying for details of published file: 3439012224
-[CWorkshopFileInfoManager] Querying for voting details of published file: 3603651225
-[UGC] File maps\workshop\15555697955431105945\sp_a4_laser_catapult_redux.bsp already in sync on client. (Duration: 6.564974 seconds)
-[UGC] File maps\workshop\15555697955431105945\sp_a4_laser_catapult_redux.bsp (15555697955431105945) finished all operations! (Duration: 6.564974 seconds)
-[CUGCRequestManager] Beginning download of 15555697955431105945
+[BaseModPanel] Added file information for 3625730923
+[BaseModPanel] Added voting info query for 3625730923
+[CUGCFileRequestManager] Inserted Download: 17690355163763991150	Priority:2	Timestamp:8
+[CUGCFileRequestManager] Inserted Download: 11924335361477327584	Priority:1	Timestamp:9
+[BaseModPanel] File request (3625730923) finished.[BaseModPanel] Querying for details of published file: 3596865389
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3625730923
 [BaseModPanel] Added query for published file 2617861105
 [BaseModPanel] Added query for published file 2940275657
 [BaseModPanel] Added query for published file 2902383826
@@ -477,18 +443,17 @@ Workshop Log Initiated: (01/07/2026 - 12:51:44)
 [BaseModPanel] Added query for published file 317110558
 [BaseModPanel] Added query for published file 362949743
 [BaseModPanel] Added query for published file 479082194
-[BaseModPanel] Added file information for 3439012224
-[BaseModPanel] Added voting info query for 3439012224
-[CUGCFileRequestManager] Inserted Download: 22059582716535176	Priority:2	Timestamp:12
-[CUGCFileRequestManager] Inserted Download: 22059582716535140	Priority:1	Timestamp:13
-[BaseModPanel] File request (3439012224) finished.[UGC] File maps\workshop\22059582716535140\thumb3439012224.jpg already in sync on client. (Duration: 6.930163 seconds)
-[UGC] File maps\workshop\22059582716535140\thumb3439012224.jpg (22059582716535176) finished all operations! (Duration: 6.930163 seconds)
-[CUGCRequestManager] Beginning download of 22059582716535176
-[BaseModPanel] Querying for details of published file: 3532712689
-[CWorkshopFileInfoManager] Querying for voting details of published file: 3439012224
-[UGC] File maps\workshop\22059582716535140\1741039889.bsp already in sync on client. (Duration: 6.957100 seconds)
-[UGC] File maps\workshop\22059582716535140\1741039889.bsp (22059582716535140) finished all operations! (Duration: 6.957100 seconds)
-[CUGCRequestManager] Beginning download of 22059582716535140
+[BaseModPanel] Added file information for 3596865389
+[BaseModPanel] Added voting info query for 3596865389
+[CUGCFileRequestManager] Inserted Download: 13893944550127723631	Priority:2	Timestamp:10
+[CUGCFileRequestManager] Inserted Download: 9847840423943214868	Priority:1	Timestamp:11
+[BaseModPanel] File request (3596865389) finished.[BaseModPanel] Querying for details of published file: 3603651225
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3596865389
+[UGC] Read cloud file maps\workshop\1814394089121849883\thumb2780341819.jpg (1814394089121850821) (4.122376)
+[UGC] Async write started for maps\workshop\1814394089121849883\thumb2780341819.jpg (1814394089121850821) (4.121653)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\1814393398432048673\thumb2775489514.jpg. (4.121653)
+[CUGCRequestManager] Beginning download of 1814393398432048886
 [BaseModPanel] Added query for published file 479555519
 [BaseModPanel] Added query for published file 486052638
 [BaseModPanel] Added query for published file 657486031
@@ -539,18 +504,12 @@ Workshop Log Initiated: (01/07/2026 - 12:51:44)
 [BaseModPanel] Added query for published file 2398633196
 [BaseModPanel] Added query for published file 2398557305
 [BaseModPanel] Added query for published file 2398547606
-[BaseModPanel] Added file information for 3532712689
-[BaseModPanel] Added voting info query for 3532712689
-[CUGCFileRequestManager] Inserted Download: 11626552538112131571	Priority:2	Timestamp:14
-[CUGCFileRequestManager] Inserted Download: 12120893358765180765	Priority:1	Timestamp:15
-[BaseModPanel] File request (3532712689) finished.[UGC] File maps\workshop\12120893358765180765\thumb3532712689.jpg already in sync on client. (Duration: 7.294877 seconds)
-[UGC] File maps\workshop\12120893358765180765\thumb3532712689.jpg (11626552538112131571) finished all operations! (Duration: 7.294877 seconds)
-[CUGCRequestManager] Beginning download of 11626552538112131571
-[BaseModPanel] Querying for details of published file: 3431285111
-[CWorkshopFileInfoManager] Querying for voting details of published file: 3532712689
-[UGC] File maps\workshop\12120893358765180765\1753291224.bsp already in sync on client. (Duration: 7.317386 seconds)
-[UGC] File maps\workshop\12120893358765180765\1753291224.bsp (12120893358765180765) finished all operations! (Duration: 7.317386 seconds)
-[CUGCRequestManager] Beginning download of 12120893358765180765
+[BaseModPanel] Added file information for 3603651225
+[BaseModPanel] Added voting info query for 3603651225
+[CUGCFileRequestManager] Inserted Download: 12834465016256195902	Priority:2	Timestamp:12
+[CUGCFileRequestManager] Inserted Download: 15555697955431105945	Priority:1	Timestamp:13
+[BaseModPanel] File request (3603651225) finished.[BaseModPanel] Querying for details of published file: 3439012224
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3603651225
 [BaseModPanel] Added query for published file 2401942576
 [BaseModPanel] Added query for published file 555632015
 [BaseModPanel] Added query for published file 2555950841
@@ -601,18 +560,17 @@ Workshop Log Initiated: (01/07/2026 - 12:51:44)
 [BaseModPanel] Added query for published file 2858031904
 [BaseModPanel] Added query for published file 2858207028
 [BaseModPanel] Added query for published file 2857601754
-[BaseModPanel] Added file information for 3431285111
-[BaseModPanel] Added voting info query for 3431285111
-[CUGCFileRequestManager] Inserted Download: 10194948471053458249	Priority:2	Timestamp:16
-[CUGCFileRequestManager] Inserted Download: 16806533903948734862	Priority:1	Timestamp:17
-[BaseModPanel] File request (3431285111) finished.[UGC] File maps\workshop\16806533903948734862\thumb3431285111.jpg already in sync on client. (Duration: 7.637650 seconds)
-[UGC] File maps\workshop\16806533903948734862\thumb3431285111.jpg (10194948471053458249) finished all operations! (Duration: 7.637650 seconds)
-[CUGCRequestManager] Beginning download of 10194948471053458249
-[BaseModPanel] Querying for details of published file: 3530725008
-[CWorkshopFileInfoManager] Querying for voting details of published file: 3431285111
-[UGC] File maps\workshop\16806533903948734862\1740106113.bsp already in sync on client. (Duration: 7.643506 seconds)
-[UGC] File maps\workshop\16806533903948734862\1740106113.bsp (16806533903948734862) finished all operations! (Duration: 7.643506 seconds)
-[CUGCRequestManager] Beginning download of 16806533903948734862
+[BaseModPanel] Added file information for 3439012224
+[BaseModPanel] Added voting info query for 3439012224
+[CUGCFileRequestManager] Inserted Download: 22059582716535176	Priority:2	Timestamp:14
+[CUGCFileRequestManager] Inserted Download: 22059582716535140	Priority:1	Timestamp:15
+[BaseModPanel] File request (3439012224) finished.[BaseModPanel] Querying for details of published file: 3532712689
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3439012224
+[UGC] Read cloud file maps\workshop\1814393398432048673\thumb2775489514.jpg (1814393398432048886) (4.844069)
+[UGC] Async write started for maps\workshop\1814393398432048673\thumb2775489514.jpg (1814393398432048886) (4.843029)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\15345934228518430002\thumb3626396270.jpg. (4.843029)
+[CUGCRequestManager] Beginning download of 13482634748495060362
 [BaseModPanel] Added query for published file 2855933919
 [BaseModPanel] Added query for published file 2856441963
 [BaseModPanel] Added query for published file 2855768509
@@ -663,6 +621,12 @@ Workshop Log Initiated: (01/07/2026 - 12:51:44)
 [BaseModPanel] Added query for published file 432676706
 [BaseModPanel] Added query for published file 225706472
 [BaseModPanel] Added query for published file 172382322
+[BaseModPanel] Added file information for 3532712689
+[BaseModPanel] Added voting info query for 3532712689
+[CUGCFileRequestManager] Inserted Download: 11626552538112131571	Priority:2	Timestamp:16
+[CUGCFileRequestManager] Inserted Download: 12120893358765180765	Priority:1	Timestamp:17
+[BaseModPanel] File request (3532712689) finished.[BaseModPanel] Querying for details of published file: 3431285111
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3532712689
 [BaseModPanel] Added query for published file 2303972506
 [BaseModPanel] Added query for published file 2569632590
 [BaseModPanel] Added query for published file 2746189073
@@ -714,360 +678,764 @@ Workshop Log Initiated: (01/07/2026 - 12:51:44)
 [BaseModPanel] Added query for published file 2442781896
 [BaseModPanel] Added query for published file 2418919385
 [BaseModPanel] Queue history complete.
+[BaseModPanel] Added file information for 3431285111
+[BaseModPanel] Added voting info query for 3431285111
+[CUGCFileRequestManager] Inserted Download: 10194948471053458249	Priority:2	Timestamp:18
+[CUGCFileRequestManager] Inserted Download: 16806533903948734862	Priority:1	Timestamp:19
+[BaseModPanel] File request (3431285111) finished.[BaseModPanel] Querying for details of published file: 3530725008
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3431285111
+[UGC] Read cloud file maps\workshop\15345934228518430002\thumb3626396270.jpg (13482634748495060362) (5.635214)
+[UGC] Async write started for maps\workshop\15345934228518430002\thumb3626396270.jpg (13482634748495060362) (5.634535)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\11924335361477327584\thumb3625730923.jpg. (5.634535)
+[CUGCRequestManager] Beginning download of 17690355163763991150
 [BaseModPanel] Added file information for 3530725008
 [BaseModPanel] Added voting info query for 3530725008
-[CUGCFileRequestManager] Inserted Download: 10894562636549477080	Priority:2	Timestamp:18
-[CUGCFileRequestManager] Inserted Download: 17308514829837254100	Priority:1	Timestamp:19
-[BaseModPanel] File request (3530725008) finished.[UGC] File maps\workshop\17308514829837254100\thumb3530725008.jpg already in sync on client. (Duration: 8.024570 seconds)
-[UGC] File maps\workshop\17308514829837254100\thumb3530725008.jpg (10894562636549477080) finished all operations! (Duration: 8.024570 seconds)
-[CUGCRequestManager] Beginning download of 10894562636549477080
-[BaseModPanel] Querying for details of published file: 2906858811
+[CUGCFileRequestManager] Inserted Download: 10894562636549477080	Priority:2	Timestamp:20
+[CUGCFileRequestManager] Inserted Download: 17308514829837254100	Priority:1	Timestamp:21
+[BaseModPanel] File request (3530725008) finished.[BaseModPanel] Querying for details of published file: 2906858811
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3530725008
-[UGC] File maps\workshop\17308514829837254100\1740109620.bsp already in sync on client. (Duration: 8.059751 seconds)
-[UGC] File maps\workshop\17308514829837254100\1740109620.bsp (17308514829837254100) finished all operations! (Duration: 8.059751 seconds)
-[CUGCRequestManager] Beginning download of 17308514829837254100
+[UGC] Read cloud file maps\workshop\11924335361477327584\thumb3625730923.jpg (17690355163763991150) (6.240910)
+[UGC] Async write started for maps\workshop\11924335361477327584\thumb3625730923.jpg (17690355163763991150) (6.238708)
 [BaseModPanel] Added file information for 2906858811
 [BaseModPanel] Added voting info query for 2906858811
-[CUGCFileRequestManager] Inserted Download: 5124565030454529665	Priority:2	Timestamp:20
-[CUGCFileRequestManager] Inserted Download: 2058742755820090679	Priority:1	Timestamp:21
-[BaseModPanel] File request (2906858811) finished.[UGC] File maps\workshop\2058742755820090679\thumb2906858811.jpg already in sync on client. (Duration: 8.407051 seconds)
-[UGC] File maps\workshop\2058742755820090679\thumb2906858811.jpg (5124565030454529665) finished all operations! (Duration: 8.407051 seconds)
-[CUGCRequestManager] Beginning download of 5124565030454529665
+[CUGCFileRequestManager] Inserted Download: 5124565030454529665	Priority:2	Timestamp:22
+[CUGCFileRequestManager] Inserted Download: 2058742755820090679	Priority:1	Timestamp:23
+[BaseModPanel] File request (2906858811) finished.[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\9847840423943214868\thumb3596865389.jpg. (6.238708)
+[CUGCRequestManager] Beginning download of 13893944550127723631
 [BaseModPanel] Querying for details of published file: 2906799574
 [CWorkshopFileInfoManager] Querying for voting details of published file: 2906858811
-[UGC] File maps\workshop\2058742755820090679\project_capture_4.bsp already in sync on client. (Duration: 8.429966 seconds)
-[UGC] File maps\workshop\2058742755820090679\project_capture_4.bsp (2058742755820090679) finished all operations! (Duration: 8.429966 seconds)
-[CUGCRequestManager] Beginning download of 2058742755820090679
 [BaseModPanel] Added file information for 2906799574
 [BaseModPanel] Added voting info query for 2906799574
-[CUGCFileRequestManager] Inserted Download: 5124565030454482803	Priority:2	Timestamp:22
-[CUGCFileRequestManager] Inserted Download: 2058742755819923619	Priority:1	Timestamp:23
-[BaseModPanel] File request (2906799574) finished.[UGC] File maps\workshop\2058742755819923619\thumb2906799574.jpg already in sync on client. (Duration: 8.765191 seconds)
-[UGC] File maps\workshop\2058742755819923619\thumb2906799574.jpg (5124565030454482803) finished all operations! (Duration: 8.765191 seconds)
-[CUGCRequestManager] Beginning download of 5124565030454482803
-[BaseModPanel] Querying for details of published file: 3443892404
+[CUGCFileRequestManager] Inserted Download: 5124565030454482803	Priority:2	Timestamp:24
+[CUGCFileRequestManager] Inserted Download: 2058742755819923619	Priority:1	Timestamp:25
+[BaseModPanel] File request (2906799574) finished.[BaseModPanel] Querying for details of published file: 3443892404
 [CWorkshopFileInfoManager] Querying for voting details of published file: 2906799574
-[UGC] Beginning download of maps\workshop\2058742755819923619\project_capture_3.bsp. (8.791467)
-[CUGCRequestManager] Beginning download of 2058742755819923619
-[UGC] Read cloud file maps\workshop\2058742755819923619\project_capture_3.bsp (2058742755819923619) (9.519648)
-[UGC] Async write started for maps\workshop\2058742755819923619\project_capture_3.bsp (2058742755819923619) (8.993052)
+[UGC] Read cloud file maps\workshop\9847840423943214868\thumb3596865389.jpg (13893944550127723631) (6.749656)
+[UGC] Async write started for maps\workshop\9847840423943214868\thumb3596865389.jpg (13893944550127723631) (6.747522)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\15555697955431105945\thumb3603651225.jpg. (6.747522)
+[CUGCRequestManager] Beginning download of 12834465016256195902
 [BaseModPanel] Added file information for 3443892404
 [BaseModPanel] Added voting info query for 3443892404
-[CUGCFileRequestManager] Inserted Download: 7423600155045700	Priority:2	Timestamp:24
-[CUGCFileRequestManager] Inserted Download: 7423600155044997	Priority:1	Timestamp:25
-[BaseModPanel] File request (3443892404) finished.[UGC] File maps\workshop\7423600155044997\thumb3443892404.jpg already in sync on client. (Duration: 8.993052 seconds)
-[UGC] File maps\workshop\7423600155044997\thumb3443892404.jpg (7423600155045700) finished all operations! (Duration: 8.993052 seconds)
-[CUGCRequestManager] Beginning download of 7423600155045700
-[BaseModPanel] Querying for details of published file: 1413969999
+[CUGCFileRequestManager] Inserted Download: 7423600155045700	Priority:2	Timestamp:26
+[CUGCFileRequestManager] Inserted Download: 7423600155044997	Priority:1	Timestamp:27
+[BaseModPanel] File request (3443892404) finished.[BaseModPanel] Querying for details of published file: 1413969999
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3443892404
-[UGC] Async write completed for maps\workshop\2058742755819923619\project_capture_3.bsp (2058742755819923619) (9.556035)
-[UGC] File maps\workshop\2058742755819923619\project_capture_3.bsp (2058742755819923619) finished all operations! (Duration: 0.764568 seconds)
-[CUGCRequestManager] Finished downloading 2058742755819923619
-[UGC] Beginning download of maps\workshop\7423600155044997\pmamcomp_sheperdscrook.bsp. (9.556035)
-[CUGCRequestManager] Beginning download of 7423600155044997
+[UGC] Read cloud file maps\workshop\15555697955431105945\thumb3603651225.jpg (12834465016256195902) (7.277889)
+[UGC] Async write started for maps\workshop\15555697955431105945\thumb3603651225.jpg (12834465016256195902) (7.277029)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\22059582716535140\thumb3439012224.jpg. (7.277029)
+[CUGCRequestManager] Beginning download of 22059582716535176
 [BaseModPanel] Added file information for 1413969999
 [BaseModPanel] Added voting info query for 1413969999
-[CUGCFileRequestManager] Inserted Download: 920305200171133507	Priority:2	Timestamp:26
-[CUGCFileRequestManager] Inserted Download: 1010437031293590681	Priority:1	Timestamp:27
-[BaseModPanel] File request (1413969999) finished.[UGC] File maps\workshop\1010437031293590681\thumb1413969999.jpg already in sync on client. (Duration: 9.712819 seconds)
-[UGC] File maps\workshop\1010437031293590681\thumb1413969999.jpg (920305200171133507) finished all operations! (Duration: 9.712819 seconds)
-[CUGCRequestManager] Beginning download of 920305200171133507
-[BaseModPanel] Querying for details of published file: 3443325041
+[CUGCFileRequestManager] Inserted Download: 920305200171133507	Priority:2	Timestamp:28
+[CUGCFileRequestManager] Inserted Download: 1010437031293590681	Priority:1	Timestamp:29
+[BaseModPanel] File request (1413969999) finished.[BaseModPanel] Querying for details of published file: 3443325041
 [CWorkshopFileInfoManager] Querying for voting details of published file: 1413969999
 [BaseModPanel] Added file information for 3443325041
 [BaseModPanel] Added voting info query for 3443325041
-[CUGCFileRequestManager] Inserted Download: 28815698381809348	Priority:2	Timestamp:28
-[CUGCFileRequestManager] Inserted Download: 28815698381808701	Priority:1	Timestamp:29
-[BaseModPanel] File request (3443325041) finished.[UGC] File maps\workshop\28815698381808701\thumb3443325041.jpg already in sync on client. (Duration: 9.976496 seconds)
-[UGC] File maps\workshop\28815698381808701\thumb3443325041.jpg (28815698381809348) finished all operations! (Duration: 9.976496 seconds)
-[CUGCRequestManager] Beginning download of 28815698381809348
-[BaseModPanel] Querying for details of published file: 2272641968
+[CUGCFileRequestManager] Inserted Download: 28815698381809348	Priority:2	Timestamp:30
+[CUGCFileRequestManager] Inserted Download: 28815698381808701	Priority:1	Timestamp:31
+[BaseModPanel] File request (3443325041) finished.[BaseModPanel] Querying for details of published file: 2272641968
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3443325041
 [BaseModPanel] Added file information for 2272641968
 [BaseModPanel] Added voting info query for 2272641968
-[CUGCFileRequestManager] Inserted Download: 1674736956652066144	Priority:2	Timestamp:30
-[CUGCFileRequestManager] Inserted Download: 1674736956652065634	Priority:1	Timestamp:31
-[BaseModPanel] File request (2272641968) finished.[UGC] File maps\workshop\1674736956652065634\thumb2272641968.jpg already in sync on client. (Duration: 10.174410 seconds)
-[UGC] File maps\workshop\1674736956652065634\thumb2272641968.jpg (1674736956652066144) finished all operations! (Duration: 10.174410 seconds)
-[CUGCRequestManager] Beginning download of 1674736956652066144
-[BaseModPanel] Querying for details of published file: 2827213462
-[CWorkshopFileInfoManager] Querying for voting details of published file: 2272641968
+[CUGCFileRequestManager] Inserted Download: 1674736956652066144	Priority:2	Timestamp:32
+[CUGCFileRequestManager] Inserted Download: 1674736956652065634	Priority:1	Timestamp:33
+[BaseModPanel] File request (2272641968) finished.[BaseModPanel] Querying for details of published file: 2827213462
+[UGC] Read cloud file maps\workshop\22059582716535140\thumb3439012224.jpg (22059582716535176) (9.573873)
+[UGC] Async write started for maps\workshop\22059582716535140\thumb3439012224.jpg (22059582716535176) (8.205061)
 [BaseModPanel] Added file information for 2827213462
 [BaseModPanel] Added voting info query for 2827213462
-[CUGCFileRequestManager] Inserted Download: 5096417937025685597	Priority:2	Timestamp:32
-[CUGCFileRequestManager] Inserted Download: 5096417937025684719	Priority:1	Timestamp:33
-[BaseModPanel] File request (2827213462) finished.[UGC] File maps\workshop\5096417937025684719\thumb2827213462.jpg already in sync on client. (Duration: 10.342107 seconds)
-[UGC] File maps\workshop\5096417937025684719\thumb2827213462.jpg (5096417937025685597) finished all operations! (Duration: 10.342107 seconds)
-[CUGCRequestManager] Beginning download of 5096417937025685597
+[CUGCFileRequestManager] Inserted Download: 5096417937025685597	Priority:2	Timestamp:34
+[CUGCFileRequestManager] Inserted Download: 5096417937025684719	Priority:1	Timestamp:35
+[BaseModPanel] File request (2827213462) finished.[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\12120893358765180765\thumb3532712689.jpg. (8.205061)
+[CUGCRequestManager] Beginning download of 11626552538112131571
 [BaseModPanel] Querying for details of published file: 3430625365
-[CWorkshopFileInfoManager] Querying for voting details of published file: 2827213462
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2272641968
 [BaseModPanel] Added file information for 3430625365
 [BaseModPanel] Added voting info query for 3430625365
-[CUGCFileRequestManager] Inserted Download: 22058949869524262	Priority:2	Timestamp:34
-[CUGCFileRequestManager] Inserted Download: 22058949869524222	Priority:1	Timestamp:35
-[BaseModPanel] File request (3430625365) finished.[UGC] File maps\workshop\22058949869524222\thumb3430625365.jpg already in sync on client. (Duration: 10.540448 seconds)
-[UGC] File maps\workshop\22058949869524222\thumb3430625365.jpg (22058949869524262) finished all operations! (Duration: 10.540448 seconds)
-[CUGCRequestManager] Beginning download of 22058949869524262
-[BaseModPanel] Querying for details of published file: 3403493352
+[CUGCFileRequestManager] Inserted Download: 22058949869524262	Priority:2	Timestamp:36
+[CUGCFileRequestManager] Inserted Download: 22058949869524222	Priority:1	Timestamp:37
+[BaseModPanel] File request (3430625365) finished.[BaseModPanel] Querying for details of published file: 3403493352
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2827213462
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3430625365
 [BaseModPanel] Added file information for 3403493352
 [BaseModPanel] Added voting info query for 3403493352
-[CUGCFileRequestManager] Inserted Download: 13212095613533734381	Priority:2	Timestamp:36
-[CUGCFileRequestManager] Inserted Download: 13872468261891936210	Priority:1	Timestamp:37
-[BaseModPanel] File request (3403493352) finished.[UGC] File maps\workshop\13872468261891936210\thumb3403493352.jpg already in sync on client. (Duration: 10.832001 seconds)
-[UGC] File maps\workshop\13872468261891936210\thumb3403493352.jpg (13212095613533734381) finished all operations! (Duration: 10.832001 seconds)
-[CUGCRequestManager] Beginning download of 13212095613533734381
-[BaseModPanel] Querying for details of published file: 3429434672
+[CUGCFileRequestManager] Inserted Download: 13212095613533734381	Priority:2	Timestamp:38
+[CUGCFileRequestManager] Inserted Download: 13872468261891936210	Priority:1	Timestamp:39
+[BaseModPanel] File request (3403493352) finished.[BaseModPanel] Querying for details of published file: 3429434672
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3403493352
+[UGC] Read cloud file maps\workshop\12120893358765180765\thumb3532712689.jpg (11626552538112131571) (10.740068)
+[UGC] Async write started for maps\workshop\12120893358765180765\thumb3532712689.jpg (11626552538112131571) (8.924717)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\16806533903948734862\thumb3431285111.jpg. (8.924717)
+[CUGCRequestManager] Beginning download of 10194948471053458249
 [BaseModPanel] Added file information for 3429434672
 [BaseModPanel] Added voting info query for 3429434672
-[CUGCFileRequestManager] Inserted Download: 32190875276117674	Priority:2	Timestamp:38
-[CUGCFileRequestManager] Inserted Download: 32190875276117497	Priority:1	Timestamp:39
-[BaseModPanel] File request (3429434672) finished.[UGC] File maps\workshop\32190875276117497\thumb3429434672.jpg already in sync on client. (Duration: 11.334220 seconds)
-[UGC] File maps\workshop\32190875276117497\thumb3429434672.jpg (32190875276117674) finished all operations! (Duration: 11.334220 seconds)
-[CUGCRequestManager] Beginning download of 32190875276117674
-[BaseModPanel] Querying for details of published file: 3433027917
+[CUGCFileRequestManager] Inserted Download: 32190875276117674	Priority:2	Timestamp:40
+[CUGCFileRequestManager] Inserted Download: 32190875276117497	Priority:1	Timestamp:41
+[BaseModPanel] File request (3429434672) finished.[BaseModPanel] Querying for details of published file: 3433027917
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3429434672
 [BaseModPanel] Added file information for 3433027917
 [BaseModPanel] Added voting info query for 3433027917
-[CUGCFileRequestManager] Inserted Download: 38946813289022534	Priority:2	Timestamp:40
-[CUGCFileRequestManager] Inserted Download: 15807224400510623346	Priority:1	Timestamp:41
-[BaseModPanel] File request (3433027917) finished.[UGC] File maps\workshop\15807224400510623346\thumb3433027917.jpg already in sync on client. (Duration: 12.272157 seconds)
-[UGC] File maps\workshop\15807224400510623346\thumb3433027917.jpg (38946813289022534) finished all operations! (Duration: 12.272157 seconds)
-[CUGCRequestManager] Beginning download of 38946813289022534
+[CUGCFileRequestManager] Inserted Download: 38946813289022534	Priority:2	Timestamp:42
+[CUGCFileRequestManager] Inserted Download: 15807224400510623346	Priority:1	Timestamp:43
+[BaseModPanel] File request (3433027917) finished.[UGC] Read cloud file maps\workshop\16806533903948734862\thumb3431285111.jpg (10194948471053458249) (11.478753)
+[UGC] Async write started for maps\workshop\16806533903948734862\thumb3431285111.jpg (10194948471053458249) (9.062025)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\17308514829837254100\thumb3530725008.jpg. (9.062025)
+[CUGCRequestManager] Beginning download of 10894562636549477080
 [BaseModPanel] Querying for details of published file: 3433850791
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3433027917
 [BaseModPanel] Added file information for 3433850791
 [BaseModPanel] Added voting info query for 3433850791
-[CUGCFileRequestManager] Inserted Download: 28813714128482951	Priority:2	Timestamp:42
-[CUGCFileRequestManager] Inserted Download: 28813714128582316	Priority:1	Timestamp:43
-[BaseModPanel] File request (3433850791) finished.[UGC] File maps\workshop\28813714128582316\thumb3433850791.jpg already in sync on client. (Duration: 12.715308 seconds)
-[UGC] File maps\workshop\28813714128582316\thumb3433850791.jpg (28813714128482951) finished all operations! (Duration: 12.715308 seconds)
-[CUGCRequestManager] Beginning download of 28813714128482951
-[BaseModPanel] Querying for details of published file: 2922429982
+[CUGCFileRequestManager] Inserted Download: 28813714128482951	Priority:2	Timestamp:44
+[CUGCFileRequestManager] Inserted Download: 28813714128582316	Priority:1	Timestamp:45
+[BaseModPanel] File request (3433850791) finished.[BaseModPanel] Querying for details of published file: 2922429982
+[UGC] Read cloud file maps\workshop\17308514829837254100\thumb3530725008.jpg (10894562636549477080) (12.228521)
+[UGC] Async write started for maps\workshop\17308514829837254100\thumb3530725008.jpg (10894562636549477080) (9.764795)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\2058742755820090679\thumb2906858811.jpg. (9.764795)
+[CUGCRequestManager] Beginning download of 5124565030454529665
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3433850791
 [BaseModPanel] Added file information for 2922429982
 [BaseModPanel] Added voting info query for 2922429982
-[CUGCFileRequestManager] Inserted Download: 2039601822333623468	Priority:2	Timestamp:44
-[CUGCFileRequestManager] Inserted Download: 2039601822333858208	Priority:1	Timestamp:45
-[BaseModPanel] File request (2922429982) finished.[UGC] File maps\workshop\2039601822333858208\thumb2922429982.jpg already in sync on client. (Duration: 13.235173 seconds)
-[UGC] File maps\workshop\2039601822333858208\thumb2922429982.jpg (2039601822333623468) finished all operations! (Duration: 13.235173 seconds)
-[CUGCRequestManager] Beginning download of 2039601822333623468
-[BaseModPanel] Querying for details of published file: 3151628628
+[CUGCFileRequestManager] Inserted Download: 2039601822333623468	Priority:2	Timestamp:46
+[CUGCFileRequestManager] Inserted Download: 2039601822333858208	Priority:1	Timestamp:47
+[BaseModPanel] File request (2922429982) finished.[BaseModPanel] Querying for details of published file: 3151628628
 [CWorkshopFileInfoManager] Querying for voting details of published file: 2922429982
 [BaseModPanel] Added file information for 3151628628
 [BaseModPanel] Added voting info query for 3151628628
-[CUGCFileRequestManager] Inserted Download: 2333495943803463203	Priority:2	Timestamp:46
-[CUGCFileRequestManager] Inserted Download: 2333495943820575872	Priority:1	Timestamp:47
-[BaseModPanel] File request (3151628628) finished.[UGC] File maps\workshop\2333495943820575872\thumb3151628628.jpg already in sync on client. (Duration: 13.592757 seconds)
-[UGC] File maps\workshop\2333495943820575872\thumb3151628628.jpg (2333495943803463203) finished all operations! (Duration: 13.592757 seconds)
-[CUGCRequestManager] Beginning download of 2333495943803463203
-[BaseModPanel] Querying for details of published file: 3431374220
+[CUGCFileRequestManager] Inserted Download: 2333495943803463203	Priority:2	Timestamp:48
+[CUGCFileRequestManager] Inserted Download: 2333495943820575872	Priority:1	Timestamp:49
+[BaseModPanel] File request (3151628628) finished.[BaseModPanel] Querying for details of published file: 3431374220
+[UGC] Read cloud file maps\workshop\2058742755820090679\thumb2906858811.jpg (5124565030454529665) (12.957147)
+[UGC] Async write started for maps\workshop\2058742755820090679\thumb2906858811.jpg (5124565030454529665) (10.542706)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\2058742755819923619\thumb2906799574.jpg. (10.542706)
+[CUGCRequestManager] Beginning download of 5124565030454482803
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3151628628
 [BaseModPanel] Added file information for 3431374220
 [BaseModPanel] Added voting info query for 3431374220
-[CUGCFileRequestManager] Inserted Download: 37820913374803301	Priority:2	Timestamp:48
-[CUGCFileRequestManager] Inserted Download: 37820913374803167	Priority:1	Timestamp:49
-[BaseModPanel] File request (3431374220) finished.[UGC] File maps\workshop\37820913374803167\thumb3431374220.jpg already in sync on client. (Duration: 14.085938 seconds)
-[UGC] File maps\workshop\37820913374803167\thumb3431374220.jpg (37820913374803301) finished all operations! (Duration: 14.085938 seconds)
-[CUGCRequestManager] Beginning download of 37820913374803301
-[BaseModPanel] Querying for details of published file: 3368895516
+[CUGCFileRequestManager] Inserted Download: 37820913374803301	Priority:2	Timestamp:50
+[CUGCFileRequestManager] Inserted Download: 37820913374803167	Priority:1	Timestamp:51
+[BaseModPanel] File request (3431374220) finished.[BaseModPanel] Querying for details of published file: 3368895516
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3431374220
+[UGC] Read cloud file maps\workshop\2058742755819923619\thumb2906799574.jpg (5124565030454482803) (13.509073)
+[UGC] Async write started for maps\workshop\2058742755819923619\thumb2906799574.jpg (5124565030454482803) (11.094896)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\7423600155044997\thumb3443892404.jpg. (11.094896)
+[CUGCRequestManager] Beginning download of 7423600155045700
 [BaseModPanel] Added file information for 3368895516
 [BaseModPanel] Added voting info query for 3368895516
-[CUGCFileRequestManager] Inserted Download: 22050070728022822	Priority:2	Timestamp:50
-[CUGCFileRequestManager] Inserted Download: 22050070728022810	Priority:1	Timestamp:51
-[BaseModPanel] File request (3368895516) finished.[UGC] File maps\workshop\22050070728022810\thumb3368895516.jpg already in sync on client. (Duration: 14.512101 seconds)
-[UGC] File maps\workshop\22050070728022810\thumb3368895516.jpg (22050070728022822) finished all operations! (Duration: 14.512101 seconds)
-[CUGCRequestManager] Beginning download of 22050070728022822
-[BaseModPanel] Querying for details of published file: 3368902251
+[CUGCFileRequestManager] Inserted Download: 22050070728022822	Priority:2	Timestamp:52
+[CUGCFileRequestManager] Inserted Download: 22050070728022810	Priority:1	Timestamp:53
+[BaseModPanel] File request (3368895516) finished.[BaseModPanel] Querying for details of published file: 3368902251
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3368895516
 [BaseModPanel] Added file information for 3368902251
 [BaseModPanel] Added voting info query for 3368902251
-[CUGCFileRequestManager] Inserted Download: 22050070728048614	Priority:2	Timestamp:52
-[CUGCFileRequestManager] Inserted Download: 22050070728048586	Priority:1	Timestamp:53
-[BaseModPanel] File request (3368902251) finished.[UGC] File maps\workshop\22050070728048586\thumb3368902251.jpg already in sync on client. (Duration: 14.971597 seconds)
-[UGC] File maps\workshop\22050070728048586\thumb3368902251.jpg (22050070728048614) finished all operations! (Duration: 14.971597 seconds)
-[CUGCRequestManager] Beginning download of 22050070728048614
-[BaseModPanel] Querying for details of published file: 3427633670
+[CUGCFileRequestManager] Inserted Download: 22050070728048614	Priority:2	Timestamp:54
+[CUGCFileRequestManager] Inserted Download: 22050070728048586	Priority:1	Timestamp:55
+[BaseModPanel] File request (3368902251) finished.[BaseModPanel] Querying for details of published file: 3427633670
+[UGC] Read cloud file maps\workshop\7423600155044997\thumb3443892404.jpg (7423600155045700) (14.363199)
+[UGC] Async write started for maps\workshop\7423600155044997\thumb3443892404.jpg (7423600155045700) (11.948493)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\1010437031293590681\thumb1413969999.jpg. (11.948493)
+[CUGCRequestManager] Beginning download of 920305200171133507
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3368902251
 [BaseModPanel] Added file information for 3427633670
 [BaseModPanel] Added voting info query for 3427633670
-[CUGCFileRequestManager] Inserted Download: 41198075129116518	Priority:2	Timestamp:54
-[CUGCFileRequestManager] Inserted Download: 41198613096751007	Priority:1	Timestamp:55
-[BaseModPanel] File request (3427633670) finished.[UGC] File maps\workshop\41198613096751007\thumb3427633670.jpg already in sync on client. (Duration: 15.376801 seconds)
-[UGC] File maps\workshop\41198613096751007\thumb3427633670.jpg (41198075129116518) finished all operations! (Duration: 15.376801 seconds)
-[CUGCRequestManager] Beginning download of 41198075129116518
-[BaseModPanel] Querying for details of published file: 3424530267
+[CUGCFileRequestManager] Inserted Download: 41198075129116518	Priority:2	Timestamp:56
+[CUGCFileRequestManager] Inserted Download: 41198613096751007	Priority:1	Timestamp:57
+[BaseModPanel] File request (3427633670) finished.[BaseModPanel] Querying for details of published file: 3424530267
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3427633670
+[UGC] Read cloud file maps\workshop\1010437031293590681\thumb1413969999.jpg (920305200171133507) (14.896783)
+[UGC] Async write started for maps\workshop\1010437031293590681\thumb1413969999.jpg (920305200171133507) (12.482395)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\28815698381808701\thumb3443325041.jpg. (12.482395)
+[CUGCRequestManager] Beginning download of 28815698381809348
 [BaseModPanel] Added file information for 3424530267
 [BaseModPanel] Added voting info query for 3424530267
-[CUGCFileRequestManager] Inserted Download: 19805246639610207	Priority:2	Timestamp:56
-[CUGCFileRequestManager] Inserted Download: 19805246639694684	Priority:1	Timestamp:57
-[BaseModPanel] File request (3424530267) finished.[UGC] File maps\workshop\19805246639694684\thumb3424530267.jpg already in sync on client. (Duration: 15.785738 seconds)
-[UGC] File maps\workshop\19805246639694684\thumb3424530267.jpg (19805246639610207) finished all operations! (Duration: 15.785738 seconds)
-[CUGCRequestManager] Beginning download of 19805246639610207
-[BaseModPanel] Querying for details of published file: 3389479998
+[CUGCFileRequestManager] Inserted Download: 19805246639610207	Priority:2	Timestamp:58
+[CUGCFileRequestManager] Inserted Download: 19805246639694684	Priority:1	Timestamp:59
+[BaseModPanel] File request (3424530267) finished.[BaseModPanel] Querying for details of published file: 3389479998
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3424530267
 [BaseModPanel] Added file information for 3389479998
 [BaseModPanel] Added voting info query for 3389479998
-[CUGCFileRequestManager] Inserted Download: 12077727500128907085	Priority:2	Timestamp:58
-[CUGCFileRequestManager] Inserted Download: 32187155755843319	Priority:1	Timestamp:59
-[BaseModPanel] File request (3389479998) finished.[UGC] File maps\workshop\32187155755843319\thumb3389479998.jpg already in sync on client. (Duration: 16.232420 seconds)
-[UGC] File maps\workshop\32187155755843319\thumb3389479998.jpg (12077727500128907085) finished all operations! (Duration: 16.232420 seconds)
-[CUGCRequestManager] Beginning download of 12077727500128907085
-[BaseModPanel] Querying for details of published file: 3428258588
+[CUGCFileRequestManager] Inserted Download: 12077727500128907085	Priority:2	Timestamp:60
+[CUGCFileRequestManager] Inserted Download: 32187155755843319	Priority:1	Timestamp:61
+[BaseModPanel] File request (3389479998) finished.[BaseModPanel] Querying for details of published file: 3428258588
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3389479998
+[UGC] Read cloud file maps\workshop\28815698381808701\thumb3443325041.jpg (28815698381809348) (15.718048)
+[UGC] Async write started for maps\workshop\28815698381808701\thumb3443325041.jpg (28815698381809348) (13.294416)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\1674736956652065634\thumb2272641968.jpg. (13.294416)
+[CUGCRequestManager] Beginning download of 1674736956652066144
 [BaseModPanel] Added file information for 3428258588
 [BaseModPanel] Added voting info query for 3428258588
-[CUGCFileRequestManager] Inserted Download: 42323975030731879	Priority:2	Timestamp:60
-[CUGCFileRequestManager] Inserted Download: 42323975031987280	Priority:1	Timestamp:61
-[BaseModPanel] File request (3428258588) finished.[UGC] File maps\workshop\42323975031987280\thumb3428258588.jpg already in sync on client. (Duration: 16.779745 seconds)
-[UGC] File maps\workshop\42323975031987280\thumb3428258588.jpg (42323975030731879) finished all operations! (Duration: 16.779745 seconds)
-[CUGCRequestManager] Beginning download of 42323975030731879
-[BaseModPanel] Querying for details of published file: 3429494610
+[CUGCFileRequestManager] Inserted Download: 42323975030731879	Priority:2	Timestamp:62
+[CUGCFileRequestManager] Inserted Download: 42323975031987280	Priority:1	Timestamp:63
+[BaseModPanel] File request (3428258588) finished.[BaseModPanel] Querying for details of published file: 3429494610
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3428258588
+[UGC] Read cloud file maps\workshop\1674736956652065634\thumb2272641968.jpg (1674736956652066144) (16.271394)
+[UGC] Async write started for maps\workshop\1674736956652065634\thumb2272641968.jpg (1674736956652066144) (13.856893)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\5096417937025684719\thumb2827213462.jpg. (13.856893)
+[CUGCRequestManager] Beginning download of 5096417937025685597
 [BaseModPanel] Added file information for 3429494610
 [BaseModPanel] Added voting info query for 3429494610
-[CUGCFileRequestManager] Inserted Download: 49079375391950348	Priority:2	Timestamp:62
-[CUGCFileRequestManager] Inserted Download: 49079375392212095	Priority:1	Timestamp:63
-[BaseModPanel] File request (3429494610) finished.[UGC] File maps\workshop\49079375392212095\thumb3429494610.jpg already in sync on client. (Duration: 17.186892 seconds)
-[UGC] File maps\workshop\49079375392212095\thumb3429494610.jpg (49079375391950348) finished all operations! (Duration: 17.186892 seconds)
-[CUGCRequestManager] Beginning download of 49079375391950348
-[BaseModPanel] Querying for details of published file: 3429173657
+[CUGCFileRequestManager] Inserted Download: 49079375391950348	Priority:2	Timestamp:64
+[CUGCFileRequestManager] Inserted Download: 49079375392212095	Priority:1	Timestamp:65
+[BaseModPanel] File request (3429494610) finished.[BaseModPanel] Querying for details of published file: 3429173657
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3429494610
 [BaseModPanel] Added file information for 3429173657
 [BaseModPanel] Added voting info query for 3429173657
-[CUGCFileRequestManager] Inserted Download: 37821548559285949	Priority:2	Timestamp:64
-[CUGCFileRequestManager] Inserted Download: 37821548559285750	Priority:1	Timestamp:65
-[BaseModPanel] File request (3429173657) finished.[UGC] File maps\workshop\37821548559285750\thumb3429173657.jpg already in sync on client. (Duration: 17.611567 seconds)
-[UGC] File maps\workshop\37821548559285750\thumb3429173657.jpg (37821548559285949) finished all operations! (Duration: 17.611567 seconds)
-[CUGCRequestManager] Beginning download of 37821548559285949
-[BaseModPanel] Querying for details of published file: 3140259337
+[CUGCFileRequestManager] Inserted Download: 37821548559285949	Priority:2	Timestamp:66
+[CUGCFileRequestManager] Inserted Download: 37821548559285750	Priority:1	Timestamp:67
+[BaseModPanel] File request (3429173657) finished.[BaseModPanel] Querying for details of published file: 3140259337
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3429173657
 [BaseModPanel] Added file information for 3140259337
 [BaseModPanel] Added voting info query for 3140259337
-[CUGCFileRequestManager] Inserted Download: 2309850239040100099	Priority:2	Timestamp:66
-[CUGCFileRequestManager] Inserted Download: 2547430415528017744	Priority:1	Timestamp:67
-[BaseModPanel] File request (3140259337) finished.[UGC] File maps\workshop\2547430415528017744\thumb3140259337.jpg already in sync on client. (Duration: 18.056950 seconds)
-[UGC] File maps\workshop\2547430415528017744\thumb3140259337.jpg (2309850239040100099) finished all operations! (Duration: 18.056950 seconds)
-[CUGCRequestManager] Beginning download of 2309850239040100099
-[BaseModPanel] Querying for details of published file: 3422328878
+[CUGCFileRequestManager] Inserted Download: 2309850239040100099	Priority:2	Timestamp:68
+[CUGCFileRequestManager] Inserted Download: 2547430415528017744	Priority:1	Timestamp:69
+[BaseModPanel] File request (3140259337) finished.[BaseModPanel] Querying for details of published file: 3422328878
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3140259337
 [BaseModPanel] Added file information for 3422328878
 [BaseModPanel] Added voting info query for 3422328878
-[CUGCFileRequestManager] Inserted Download: 10798047374167302	Priority:2	Timestamp:68
-[CUGCFileRequestManager] Inserted Download: 10798047374167259	Priority:1	Timestamp:69
-[BaseModPanel] File request (3422328878) finished.[UGC] Read cloud file maps\workshop\7423600155044997\pmamcomp_sheperdscrook.bsp (7423600155044997) (22.177059)
-[UGC] Async write started for maps\workshop\7423600155044997\pmamcomp_sheperdscrook.bsp (7423600155044997) (18.498249)
-[UGC] File maps\workshop\10798047374167259\thumb3422328878.jpg already in sync on client. (Duration: 18.498249 seconds)
-[UGC] File maps\workshop\10798047374167259\thumb3422328878.jpg (10798047374167302) finished all operations! (Duration: 18.498249 seconds)
-[CUGCRequestManager] Beginning download of 10798047374167302
+[CUGCFileRequestManager] Inserted Download: 10798047374167302	Priority:2	Timestamp:70
+[CUGCFileRequestManager] Inserted Download: 10798047374167259	Priority:1	Timestamp:71
+[BaseModPanel] File request (3422328878) finished.[UGC] Read cloud file maps\workshop\5096417937025684719\thumb2827213462.jpg (5096417937025685597) (17.569229)
+[UGC] Async write started for maps\workshop\5096417937025684719\thumb2827213462.jpg (5096417937025685597) (15.153243)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\22058949869524222\thumb3430625365.jpg. (15.153243)
+[CUGCRequestManager] Beginning download of 22058949869524262
 [BaseModPanel] Querying for details of published file: 3405433192
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3422328878
-[UGC] Async write completed for maps\workshop\7423600155044997\pmamcomp_sheperdscrook.bsp (7423600155044997) (18.884277)
-[UGC] File maps\workshop\7423600155044997\pmamcomp_sheperdscrook.bsp (7423600155044997) finished all operations! (Duration: 9.328242 seconds)
-[CUGCRequestManager] Finished downloading 7423600155044997
-[UGC] Beginning download of maps\workshop\1010437031293590681\i_will_kms.bsp. (18.884277)
-[CUGCRequestManager] Beginning download of 1010437031293590681
 [BaseModPanel] Added file information for 3405433192
 [BaseModPanel] Added voting info query for 3405433192
-[CUGCFileRequestManager] Inserted Download: 36691208549511990	Priority:2	Timestamp:70
-[CUGCFileRequestManager] Inserted Download: 36691208549511386	Priority:1	Timestamp:71
-[BaseModPanel] File request (3405433192) finished.[UGC] File maps\workshop\36691208549511386\thumb3405433192.jpg already in sync on client. (Duration: 19.205891 seconds)
-[UGC] File maps\workshop\36691208549511386\thumb3405433192.jpg (36691208549511990) finished all operations! (Duration: 19.205891 seconds)
-[CUGCRequestManager] Beginning download of 36691208549511990
-[BaseModPanel] Querying for details of published file: 115869888
+[CUGCFileRequestManager] Inserted Download: 36691208549511990	Priority:2	Timestamp:72
+[CUGCFileRequestManager] Inserted Download: 36691208549511386	Priority:1	Timestamp:73
+[BaseModPanel] File request (3405433192) finished.[BaseModPanel] Querying for details of published file: 115869888
+[UGC] Read cloud file maps\workshop\22058949869524222\thumb3430625365.jpg (22058949869524262) (18.069213)
+[UGC] Async write started for maps\workshop\22058949869524222\thumb3430625365.jpg (22058949869524262) (15.650899)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\13872468261891936210\thumb3403493352.jpg. (15.650899)
+[CUGCRequestManager] Beginning download of 13212095613533734381
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3405433192
 [BaseModPanel] Added file information for 115869888
 [BaseModPanel] Added voting info query for 115869888
-[CUGCFileRequestManager] Inserted Download: 594738669333555502	Priority:2	Timestamp:72
-[CUGCFileRequestManager] Inserted Download: 613885499245125173	Priority:1	Timestamp:73
-[BaseModPanel] File request (115869888) finished.[UGC] File maps\workshop\613885499245125173\thumb115869888.jpg already in sync on client. (Duration: 19.627672 seconds)
-[UGC] File maps\workshop\613885499245125173\thumb115869888.jpg (594738669333555502) finished all operations! (Duration: 19.627672 seconds)
-[CUGCRequestManager] Beginning download of 594738669333555502
-[BaseModPanel] Querying for details of published file: 96704281
+[CUGCFileRequestManager] Inserted Download: 594738669333555502	Priority:2	Timestamp:74
+[CUGCFileRequestManager] Inserted Download: 613885499245125173	Priority:1	Timestamp:75
+[BaseModPanel] File request (115869888) finished.[BaseModPanel] Querying for details of published file: 96704281
 [CWorkshopFileInfoManager] Querying for voting details of published file: 115869888
 [BaseModPanel] Added file information for 96704281
 [BaseModPanel] Added voting info query for 96704281
-[CUGCFileRequestManager] Inserted Download: 595856084047259469	Priority:2	Timestamp:74
-[CUGCFileRequestManager] Inserted Download: 594730048530814099	Priority:1	Timestamp:75
-[BaseModPanel] File request (96704281) finished.[UGC] File maps\workshop\594730048530814099\thumb96704281.jpg already in sync on client. (Duration: 20.059906 seconds)
-[UGC] File maps\workshop\594730048530814099\thumb96704281.jpg (595856084047259469) finished all operations! (Duration: 20.059906 seconds)
-[CUGCRequestManager] Beginning download of 595856084047259469
+[CUGCFileRequestManager] Inserted Download: 595856084047259469	Priority:2	Timestamp:76
+[CUGCFileRequestManager] Inserted Download: 594730048530814099	Priority:1	Timestamp:77
+[BaseModPanel] File request (96704281) finished.[UGC] Read cloud file maps\workshop\13872468261891936210\thumb3403493352.jpg (13212095613533734381) (18.824221)
+[UGC] Async write started for maps\workshop\13872468261891936210\thumb3403493352.jpg (13212095613533734381) (16.409273)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\32190875276117497\thumb3429434672.jpg. (16.409273)
+[CUGCRequestManager] Beginning download of 32190875276117674
 [BaseModPanel] Querying for details of published file: 91038223
 [CWorkshopFileInfoManager] Querying for voting details of published file: 96704281
 [BaseModPanel] Added file information for 91038223
 [BaseModPanel] Added voting info query for 91038223
-[CUGCFileRequestManager] Inserted Download: 595853149579410411	Priority:2	Timestamp:76
-[CUGCFileRequestManager] Inserted Download: 596984281130013835	Priority:1	Timestamp:77
-[BaseModPanel] File request (91038223) finished.[UGC] File maps\workshop\596984281130013835\thumb91038223.jpg already in sync on client. (Duration: 20.486919 seconds)
-[UGC] File maps\workshop\596984281130013835\thumb91038223.jpg (595853149579410411) finished all operations! (Duration: 20.486919 seconds)
-[CUGCRequestManager] Beginning download of 595853149579410411
-[BaseModPanel] Querying for details of published file: 3372535880
+[CUGCFileRequestManager] Inserted Download: 595853149579410411	Priority:2	Timestamp:78
+[CUGCFileRequestManager] Inserted Download: 596984281130013835	Priority:1	Timestamp:79
+[BaseModPanel] File request (91038223) finished.[BaseModPanel] Querying for details of published file: 3372535880
 [CWorkshopFileInfoManager] Querying for voting details of published file: 91038223
 [BaseModPanel] Added file information for 3372535880
 [BaseModPanel] Added voting info query for 3372535880
-[CUGCFileRequestManager] Inserted Download: 8539271860957116	Priority:2	Timestamp:78
-[CUGCFileRequestManager] Inserted Download: 8539905825843835	Priority:1	Timestamp:79
-[BaseModPanel] File request (3372535880) finished.[UGC] File maps\workshop\8539905825843835\thumb3372535880.jpg already in sync on client. (Duration: 20.869745 seconds)
-[UGC] File maps\workshop\8539905825843835\thumb3372535880.jpg (8539271860957116) finished all operations! (Duration: 20.869745 seconds)
-[CUGCRequestManager] Beginning download of 8539271860957116
+[CUGCFileRequestManager] Inserted Download: 8539271860957116	Priority:2	Timestamp:80
+[CUGCFileRequestManager] Inserted Download: 8539905825843835	Priority:1	Timestamp:81
+[BaseModPanel] File request (3372535880) finished.[UGC] Read cloud file maps\workshop\32190875276117497\thumb3429434672.jpg (32190875276117674) (19.713919)
+[UGC] Async write started for maps\workshop\32190875276117497\thumb3429434672.jpg (32190875276117674) (17.299253)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\15807224400510623346\thumb3433027917.jpg. (17.299253)
+[CUGCRequestManager] Beginning download of 38946813289022534
 [BaseModPanel] Querying for details of published file: 3372411760
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3372535880
 [BaseModPanel] Added file information for 3372411760
 [BaseModPanel] Added voting info query for 3372411760
-[CUGCFileRequestManager] Inserted Download: 19798904883271712	Priority:2	Timestamp:80
-[CUGCFileRequestManager] Inserted Download: 19798904883271666	Priority:1	Timestamp:81
-[BaseModPanel] File request (3372411760) finished.[UGC] File maps\workshop\19798904883271666\thumb3372411760.jpg already in sync on client. (Duration: 21.426546 seconds)
-[UGC] File maps\workshop\19798904883271666\thumb3372411760.jpg (19798904883271712) finished all operations! (Duration: 21.426546 seconds)
-[CUGCRequestManager] Beginning download of 19798904883271712
-[BaseModPanel] Querying for details of published file: 3366154996
+[CUGCFileRequestManager] Inserted Download: 19798904883271712	Priority:2	Timestamp:82
+[CUGCFileRequestManager] Inserted Download: 19798904883271666	Priority:1	Timestamp:83
+[BaseModPanel] File request (3372411760) finished.[BaseModPanel] Querying for details of published file: 3366154996
+[UGC] Read cloud file maps\workshop\15807224400510623346\thumb3433027917.jpg (38946813289022534) (20.185909)
+[UGC] Async write started for maps\workshop\15807224400510623346\thumb3433027917.jpg (38946813289022534) (17.767530)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\28813714128582316\thumb3433850791.jpg. (17.767530)
+[CUGCRequestManager] Beginning download of 28813714128482951
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3372411760
 [BaseModPanel] Added file information for 3366154996
 [BaseModPanel] Added voting info query for 3366154996
-[CUGCFileRequestManager] Inserted Download: 15503084644893579144	Priority:2	Timestamp:82
-[CUGCFileRequestManager] Inserted Download: 12561196379819771286	Priority:1	Timestamp:83
-[BaseModPanel] File request (3366154996) finished.[UGC] File maps\workshop\12561196379819771286\thumb3366154996.jpg already in sync on client. (Duration: 21.802216 seconds)
-[UGC] File maps\workshop\12561196379819771286\thumb3366154996.jpg (15503084644893579144) finished all operations! (Duration: 21.802216 seconds)
-[CUGCRequestManager] Beginning download of 15503084644893579144
-[BaseModPanel] Querying for details of published file: 3358392706
+[CUGCFileRequestManager] Inserted Download: 15503084644893579144	Priority:2	Timestamp:84
+[CUGCFileRequestManager] Inserted Download: 12561196379819771286	Priority:1	Timestamp:85
+[BaseModPanel] File request (3366154996) finished.[BaseModPanel] Querying for details of published file: 3358392706
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3366154996
 [BaseModPanel] Added file information for 3358392706
 [BaseModPanel] Added voting info query for 3358392706
-[CUGCFileRequestManager] Inserted Download: 2447236565336528904	Priority:2	Timestamp:84
-[CUGCFileRequestManager] Inserted Download: 28813714128550773	Priority:1	Timestamp:85
-[BaseModPanel] File request (3358392706) finished.[UGC] File maps\workshop\28813714128550773\thumb3358392706.jpg already in sync on client. (Duration: 22.212421 seconds)
-[UGC] File maps\workshop\28813714128550773\thumb3358392706.jpg (2447236565336528904) finished all operations! (Duration: 22.212421 seconds)
-[CUGCRequestManager] Beginning download of 2447236565336528904
+[CUGCFileRequestManager] Inserted Download: 2447236565336528904	Priority:2	Timestamp:86
+[CUGCFileRequestManager] Inserted Download: 28813714128550773	Priority:1	Timestamp:87
+[BaseModPanel] File request (3358392706) finished.[UGC] Read cloud file maps\workshop\28813714128582316\thumb3433850791.jpg (28813714128482951) (20.987467)
+[UGC] Async write started for maps\workshop\28813714128582316\thumb3433850791.jpg (28813714128482951) (18.572857)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\2039601822333858208\thumb2922429982.jpg. (18.572857)
+[CUGCRequestManager] Beginning download of 2039601822333623468
 [BaseModPanel] Querying for details of published file: 3340767449
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3358392706
 [BaseModPanel] Added file information for 3340767449
 [BaseModPanel] Added voting info query for 3340767449
-[CUGCFileRequestManager] Inserted Download: 28815941970446436	Priority:2	Timestamp:86
-[CUGCFileRequestManager] Inserted Download: 28815941970780429	Priority:1	Timestamp:87
-[BaseModPanel] File request (3340767449) finished.[UGC] File maps\workshop\28815941970780429\thumb3340767449.jpg already in sync on client. (Duration: 22.628902 seconds)
-[UGC] File maps\workshop\28815941970780429\thumb3340767449.jpg (28815941970446436) finished all operations! (Duration: 22.628902 seconds)
-[CUGCRequestManager] Beginning download of 28815941970446436
-[BaseModPanel] Querying for details of published file: 151250994
+[CUGCFileRequestManager] Inserted Download: 28815941970446436	Priority:2	Timestamp:88
+[CUGCFileRequestManager] Inserted Download: 28815941970780429	Priority:1	Timestamp:89
+[BaseModPanel] File request (3340767449) finished.[BaseModPanel] Querying for details of published file: 151250994
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3340767449
+[UGC] Read cloud file maps\workshop\2039601822333858208\thumb2922429982.jpg (2039601822333623468) (21.629224)
+[UGC] Async write started for maps\workshop\2039601822333858208\thumb2922429982.jpg (2039601822333623468) (19.214598)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\2333495943820575872\thumb3151628628.jpg. (19.214598)
+[CUGCRequestManager] Beginning download of 2333495943803463203
 [BaseModPanel] Added file information for 151250994
 [BaseModPanel] Added voting info query for 151250994
-[CUGCFileRequestManager] Inserted Download: 597005871328432230	Priority:2	Timestamp:88
-[CUGCFileRequestManager] Inserted Download: 595880509474442386	Priority:1	Timestamp:89
-[BaseModPanel] File request (151250994) finished.[UGC] File maps\workshop\595880509474442386\thumb151250994.jpg already in sync on client. (Duration: 23.070803 seconds)
-[UGC] File maps\workshop\595880509474442386\thumb151250994.jpg (597005871328432230) finished all operations! (Duration: 23.070803 seconds)
-[CUGCRequestManager] Beginning download of 597005871328432230
-[BaseModPanel] Querying for details of published file: 3055298144
+[CUGCFileRequestManager] Inserted Download: 597005871328432230	Priority:2	Timestamp:90
+[CUGCFileRequestManager] Inserted Download: 595880509474442386	Priority:1	Timestamp:91
+[BaseModPanel] File request (151250994) finished.[BaseModPanel] Querying for details of published file: 3055298144
 [CWorkshopFileInfoManager] Querying for voting details of published file: 151250994
 [BaseModPanel] Added file information for 3055298144
 [BaseModPanel] Added voting info query for 3055298144
-[CUGCFileRequestManager] Inserted Download: 2147712943094177624	Priority:2	Timestamp:90
-[CUGCFileRequestManager] Inserted Download: 2147712943094176697	Priority:1	Timestamp:91
-[BaseModPanel] File request (3055298144) finished.[UGC] File maps\workshop\2147712943094176697\thumb3055298144.jpg already in sync on client. (Duration: 23.484247 seconds)
-[UGC] File maps\workshop\2147712943094176697\thumb3055298144.jpg (2147712943094177624) finished all operations! (Duration: 23.484247 seconds)
-[CUGCRequestManager] Beginning download of 2147712943094177624
-[BaseModPanel] Querying for details of published file: 3321919023
+[CUGCFileRequestManager] Inserted Download: 2147712943094177624	Priority:2	Timestamp:92
+[CUGCFileRequestManager] Inserted Download: 2147712943094176697	Priority:1	Timestamp:93
+[BaseModPanel] File request (3055298144) finished.[BaseModPanel] Querying for details of published file: 3321919023
 [CWorkshopFileInfoManager] Querying for voting details of published file: 3055298144
+[UGC] Read cloud file maps\workshop\2333495943820575872\thumb3151628628.jpg (2333495943803463203) (22.423904)
+[UGC] Async write started for maps\workshop\2333495943820575872\thumb3151628628.jpg (2333495943803463203) (19.996645)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\37820913374803167\thumb3431374220.jpg. (19.996645)
+[CUGCRequestManager] Beginning download of 37820913374803301
 [BaseModPanel] Error: Failed to retrieve data for 3321919023 (Error: 15)
 [BaseModPanel] Failed to download file request (3321919023).[BaseModPanel] Querying for details of published file: 3278507293
+[BaseModPanel] Added file information for 3278507293
+[BaseModPanel] Added voting info query for 3278507293
+[CUGCFileRequestManager] Inserted Download: 2553059914884065939	Priority:2	Timestamp:94
+[CUGCFileRequestManager] Inserted Download: 2553059914884489940	Priority:1	Timestamp:95
+[BaseModPanel] File request (3278507293) finished.[BaseModPanel] Querying for details of published file: 3277327812
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3278507293
+[UGC] Read cloud file maps\workshop\37820913374803167\thumb3431374220.jpg (37820913374803301) (23.232272)
+[UGC] Async write started for maps\workshop\37820913374803167\thumb3431374220.jpg (37820913374803301) (20.813778)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\22050070728022810\thumb3368895516.jpg. (20.813778)
+[CUGCRequestManager] Beginning download of 22050070728022822
+[BaseModPanel] Added file information for 3277327812
+[BaseModPanel] Added voting info query for 3277327812
+[CUGCFileRequestManager] Inserted Download: 2553059914874616578	Priority:2	Timestamp:96
+[CUGCFileRequestManager] Inserted Download: 2553059914874616352	Priority:1	Timestamp:97
+[BaseModPanel] File request (3277327812) finished.[BaseModPanel] Querying for details of published file: 3269256630
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3277327812
+[BaseModPanel] Added file information for 3269256630
+[BaseModPanel] Added voting info query for 3269256630
+[CUGCFileRequestManager] Inserted Download: 2491134159030827664	Priority:2	Timestamp:98
+[CUGCFileRequestManager] Inserted Download: 2491134159030827514	Priority:1	Timestamp:99
+[BaseModPanel] File request (3269256630) finished.[BaseModPanel] Querying for details of published file: 3272528323
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3269256630
+[UGC] Read cloud file maps\workshop\22050070728022810\thumb3368895516.jpg (22050070728022822) (24.041070)
+[UGC] Async write started for maps\workshop\22050070728022810\thumb3368895516.jpg (22050070728022822) (21.608454)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\22050070728048586\thumb3368902251.jpg. (21.608454)
+[CUGCRequestManager] Beginning download of 22050070728048614
+[BaseModPanel] Added file information for 3272528323
+[BaseModPanel] Added voting info query for 3272528323
+[CUGCFileRequestManager] Inserted Download: 13050481770096544	Priority:2	Timestamp:100
+[CUGCFileRequestManager] Inserted Download: 13050481770096302	Priority:1	Timestamp:101
+[BaseModPanel] File request (3272528323) finished.[BaseModPanel] Querying for details of published file: 3267629066
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3272528323
+[BaseModPanel] Added file information for 3267629066
+[BaseModPanel] Added voting info query for 3267629066
+[CUGCFileRequestManager] Inserted Download: 2505770857731929334	Priority:2	Timestamp:102
+[CUGCFileRequestManager] Inserted Download: 2500141895076478008	Priority:1	Timestamp:103
+[BaseModPanel] File request (3267629066) finished.[BaseModPanel] Querying for details of published file: 3270353034
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3267629066
+[UGC] Read cloud file maps\workshop\22050070728048586\thumb3368902251.jpg (22050070728048614) (24.786533)
+[UGC] Async write started for maps\workshop\22050070728048586\thumb3368902251.jpg (22050070728048614) (22.371227)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\41198613096751007\thumb3427633670.jpg. (22.371227)
+[CUGCRequestManager] Beginning download of 41198075129116518
+[BaseModPanel] Added file information for 3270353034
+[BaseModPanel] Added voting info query for 3270353034
+[CUGCFileRequestManager] Inserted Download: 2476497735413454733	Priority:2	Timestamp:104
+[CUGCFileRequestManager] Inserted Download: 2476497735413454435	Priority:1	Timestamp:105
+[BaseModPanel] File request (3270353034) finished.[BaseModPanel] Querying for details of published file: 2958159298
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3270353034
+[BaseModPanel] Added file information for 2958159298
+[BaseModPanel] Added voting info query for 2958159298
+[CUGCFileRequestManager] Inserted Download: 2024972097480579910	Priority:2	Timestamp:106
+[CUGCFileRequestManager] Inserted Download: 2024972097481288106	Priority:1	Timestamp:107
+[BaseModPanel] File request (2958159298) finished.[BaseModPanel] Querying for details of published file: 3071223302
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2958159298
+[UGC] Read cloud file maps\workshop\41198613096751007\thumb3427633670.jpg (41198075129116518) (25.589492)
+[UGC] Async write started for maps\workshop\41198613096751007\thumb3427633670.jpg (41198075129116518) (23.175011)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\19805246639694684\thumb3424530267.jpg. (23.175011)
+[CUGCRequestManager] Beginning download of 19805246639610207
+[BaseModPanel] Added file information for 3071223302
+[BaseModPanel] Added voting info query for 3071223302
+[CUGCFileRequestManager] Inserted Download: 2160099523431729424	Priority:2	Timestamp:108
+[CUGCFileRequestManager] Inserted Download: 2182617746151538241	Priority:1	Timestamp:109
+[BaseModPanel] File request (3071223302) finished.[BaseModPanel] Querying for details of published file: 3245214176
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3071223302
+[BaseModPanel] Added file information for 3245214176
+[BaseModPanel] Added voting info query for 3245214176
+[CUGCFileRequestManager] Inserted Download: 2506893405302155186	Priority:2	Timestamp:110
+[CUGCFileRequestManager] Inserted Download: 2506893405302151828	Priority:1	Timestamp:111
+[BaseModPanel] File request (3245214176) finished.[BaseModPanel] Querying for details of published file: 3249453624
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3245214176
+[BaseModPanel] Added file information for 3249453624
+[BaseModPanel] Added voting info query for 3249453624
+[CUGCFileRequestManager] Inserted Download: 2442717831255612874	Priority:2	Timestamp:112
+[CUGCFileRequestManager] Inserted Download: 2442717831256678980	Priority:1	Timestamp:113
+[BaseModPanel] File request (3249453624) finished.[BaseModPanel] Querying for details of published file: 3242187307
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3249453624
+[UGC] Read cloud file maps\workshop\19805246639694684\thumb3424530267.jpg (19805246639610207) (26.920219)
+[UGC] Async write started for maps\workshop\19805246639694684\thumb3424530267.jpg (19805246639610207) (24.503160)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\32187155755843319\thumb3389479998.jpg. (24.503160)
+[CUGCRequestManager] Beginning download of 12077727500128907085
+[BaseModPanel] Added file information for 3242187307
+[BaseModPanel] Added voting info query for 3242187307
+[CUGCFileRequestManager] Inserted Download: 2502389805652787156	Priority:2	Timestamp:114
+[CUGCFileRequestManager] Inserted Download: 2502389805669047343	Priority:1	Timestamp:115
+[BaseModPanel] File request (3242187307) finished.[BaseModPanel] Querying for details of published file: 3234709372
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3242187307
+[UGC] Read cloud file maps\workshop\32187155755843319\thumb3389479998.jpg (12077727500128907085) (27.397936)
+[UGC] Async write started for maps\workshop\32187155755843319\thumb3389479998.jpg (12077727500128907085) (24.977032)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\42323975031987280\thumb3428258588.jpg. (24.977032)
+[CUGCRequestManager] Beginning download of 42323975030731879
+[BaseModPanel] Added file information for 3234709372
+[BaseModPanel] Added voting info query for 3234709372
+[CUGCFileRequestManager] Inserted Download: 2479870614165652387	Priority:2	Timestamp:116
+[CUGCFileRequestManager] Inserted Download: 2484374771520527439	Priority:1	Timestamp:117
+[BaseModPanel] File request (3234709372) finished.[BaseModPanel] Querying for details of published file: 3237969892
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3234709372
+[BaseModPanel] Added file information for 3237969892
+[BaseModPanel] Added voting info query for 3237969892
+[CUGCFileRequestManager] Inserted Download: 2499020350023512847	Priority:2	Timestamp:118
+[CUGCFileRequestManager] Inserted Download: 2499020350023512459	Priority:1	Timestamp:119
+[BaseModPanel] File request (3237969892) finished.[BaseModPanel] Querying for details of published file: 3168179485
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3237969892
+[UGC] Read cloud file maps\workshop\42323975031987280\thumb3428258588.jpg (42323975030731879) (28.118344)
+[UGC] Async write started for maps\workshop\42323975031987280\thumb3428258588.jpg (42323975030731879) (25.703829)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\49079375392212095\thumb3429494610.jpg. (25.703829)
+[CUGCRequestManager] Beginning download of 49079375391950348
+[BaseModPanel] Added file information for 3168179485
+[BaseModPanel] Added voting info query for 3168179485
+[CUGCFileRequestManager] Inserted Download: 5938629525088492220	Priority:2	Timestamp:120
+[CUGCFileRequestManager] Inserted Download: 5938629525083838855	Priority:1	Timestamp:121
+[BaseModPanel] File request (3168179485) finished.[BaseModPanel] Querying for details of published file: 2309883635
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3168179485
+[BaseModPanel] Added file information for 2309883635
+[BaseModPanel] Added voting info query for 2309883635
+[CUGCFileRequestManager] Inserted Download: 2459601168708735500	Priority:2	Timestamp:122
+[CUGCFileRequestManager] Inserted Download: 23178672180546260	Priority:1	Timestamp:123
+[BaseModPanel] File request (2309883635) finished.[BaseModPanel] Querying for details of published file: 3049287089
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2309883635
+[UGC] Read cloud file maps\workshop\49079375392212095\thumb3429494610.jpg (49079375391950348) (28.993386)
+[UGC] Async write started for maps\workshop\49079375392212095\thumb3429494610.jpg (49079375391950348) (26.576965)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\37821548559285750\thumb3429173657.jpg. (26.576965)
+[CUGCRequestManager] Beginning download of 37821548559285949
+[BaseModPanel] Added file information for 3049287089
+[BaseModPanel] Added voting info query for 3049287089
+[CUGCFileRequestManager] Inserted Download: 2134201509321435218	Priority:2	Timestamp:124
+[CUGCFileRequestManager] Inserted Download: 2134201596178324482	Priority:1	Timestamp:125
+[BaseModPanel] File request (3049287089) finished.[BaseModPanel] Querying for details of published file: 3170224084
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3049287089
+[BaseModPanel] Added file information for 3170224084
+[BaseModPanel] Added voting info query for 3170224084
+[CUGCFileRequestManager] Inserted Download: 2466354670981902832	Priority:2	Timestamp:126
+[CUGCFileRequestManager] Inserted Download: 2466354670981902548	Priority:1	Timestamp:127
+[BaseModPanel] File request (3170224084) finished.[UGC] Read cloud file maps\workshop\37821548559285750\thumb3429173657.jpg (37821548559285949) (29.680496)
+[UGC] Async write started for maps\workshop\37821548559285750\thumb3429173657.jpg (37821548559285949) (27.256210)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\2547430415528017744\thumb3140259337.jpg. (27.256210)
+[CUGCRequestManager] Beginning download of 2309850239040100099
+[BaseModPanel] Querying for details of published file: 3188174738
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3170224084
+[BaseModPanel] Added file information for 3188174738
+[BaseModPanel] Added voting info query for 3188174738
+[CUGCFileRequestManager] Inserted Download: 2426949702253619548	Priority:2	Timestamp:128
+[CUGCFileRequestManager] Inserted Download: 2426949988311900010	Priority:1	Timestamp:129
+[BaseModPanel] File request (3188174738) finished.[BaseModPanel] Querying for details of published file: 3188960099
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3188174738
+[UGC] Read cloud file maps\workshop\2547430415528017744\thumb3140259337.jpg (2309850239040100099) (30.154844)
+[UGC] Async write started for maps\workshop\2547430415528017744\thumb3140259337.jpg (2309850239040100099) (27.740292)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\10798047374167259\thumb3422328878.jpg. (27.740292)
+[CUGCRequestManager] Beginning download of 10798047374167302
+[BaseModPanel] Added file information for 3188960099
+[BaseModPanel] Added voting info query for 3188960099
+[CUGCFileRequestManager] Inserted Download: 2424697902442366978	Priority:2	Timestamp:130
+[CUGCFileRequestManager] Inserted Download: 2459617657710158197	Priority:1	Timestamp:131
+[BaseModPanel] File request (3188960099) finished.[BaseModPanel] Querying for details of published file: 2904954520
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3188960099
+[UGC] Read cloud file maps\workshop\10798047374167259\thumb3422328878.jpg (10798047374167302) (30.622196)
+[UGC] Async write started for maps\workshop\10798047374167259\thumb3422328878.jpg (10798047374167302) (28.199900)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\36691208549511386\thumb3405433192.jpg. (28.199900)
+[CUGCRequestManager] Beginning download of 36691208549511990
+[BaseModPanel] Added file information for 2904954520
+[BaseModPanel] Added voting info query for 2904954520
+[CUGCFileRequestManager] Inserted Download: 2102676946841339747	Priority:2	Timestamp:132
+[CUGCFileRequestManager] Inserted Download: 2102676946841337761	Priority:1	Timestamp:133
+[BaseModPanel] File request (2904954520) finished.[BaseModPanel] Querying for details of published file: 689442571
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2904954520
+[BaseModPanel] Added file information for 689442571
+[BaseModPanel] Added voting info query for 689442571
+[CUGCFileRequestManager] Inserted Download: 275095970488480833	Priority:2	Timestamp:134
+[CUGCFileRequestManager] Inserted Download: 275095970488480490	Priority:1	Timestamp:135
+[BaseModPanel] File request (689442571) finished.[BaseModPanel] Querying for details of published file: 3179414648
+[CWorkshopFileInfoManager] Querying for voting details of published file: 689442571
+[BaseModPanel] Added file information for 3179414648
+[BaseModPanel] Added voting info query for 3179414648
+[CUGCFileRequestManager] Inserted Download: 2441585505606299870	Priority:2	Timestamp:136
+[CUGCFileRequestManager] Inserted Download: 2497884302571541382	Priority:1	Timestamp:137
+[BaseModPanel] File request (3179414648) finished.[BaseModPanel] Querying for details of published file: 3178188840
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3179414648
+[UGC] Read cloud file maps\workshop\36691208549511386\thumb3405433192.jpg (36691208549511990) (31.761955)
+[UGC] Async write started for maps\workshop\36691208549511386\thumb3405433192.jpg (36691208549511990) (29.345997)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\613885499245125173\thumb115869888.jpg. (29.345997)
+[CUGCRequestManager] Beginning download of 594738669333555502
+[BaseModPanel] Added file information for 3178188840
+[BaseModPanel] Added voting info query for 3178188840
+[CUGCFileRequestManager] Inserted Download: 2417941607559596259	Priority:2	Timestamp:138
+[CUGCFileRequestManager] Inserted Download: 2417942241311542690	Priority:1	Timestamp:139
+[BaseModPanel] File request (3178188840) finished.[BaseModPanel] Querying for details of published file: 3180144939
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3178188840
+[BaseModPanel] Added file information for 3180144939
+[BaseModPanel] Added voting info query for 3180144939
+[CUGCFileRequestManager] Inserted Download: 2415689807753481590	Priority:2	Timestamp:140
+[CUGCFileRequestManager] Inserted Download: 2415689807753480843	Priority:1	Timestamp:141
+[BaseModPanel] File request (3180144939) finished.[BaseModPanel] Querying for details of published file: 2786607985
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3180144939
+[UGC] Read cloud file maps\workshop\613885499245125173\thumb115869888.jpg (594738669333555502) (32.725765)
+[UGC] Async write started for maps\workshop\613885499245125173\thumb115869888.jpg (594738669333555502) (30.311171)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\594730048530814099\thumb96704281.jpg. (30.311171)
+[CUGCRequestManager] Beginning download of 595856084047259469
+[BaseModPanel] Added file information for 2786607985
+[BaseModPanel] Added voting info query for 2786607985
+[CUGCFileRequestManager] Inserted Download: 1805387372520982593	Priority:2	Timestamp:142
+[CUGCFileRequestManager] Inserted Download: 1805387372521155325	Priority:1	Timestamp:143
+[BaseModPanel] File request (2786607985) finished.[BaseModPanel] Querying for details of published file: 3122453735
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2786607985
+[BaseModPanel] Added file information for 3122453735
+[BaseModPanel] Added voting info query for 3122453735
+[CUGCFileRequestManager] Inserted Download: 2298589242645320622	Priority:2	Timestamp:144
+[CUGCFileRequestManager] Inserted Download: 2298589242645320285	Priority:1	Timestamp:145
+[BaseModPanel] File request (3122453735) finished.[UGC] Read cloud file maps\workshop\594730048530814099\thumb96704281.jpg (595856084047259469) (33.158519)
+[UGC] Async write started for maps\workshop\594730048530814099\thumb96704281.jpg (595856084047259469) (30.725105)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\596984281130013835\thumb91038223.jpg. (30.725105)
+[CUGCRequestManager] Beginning download of 595853149579410411
+[BaseModPanel] Querying for details of published file: 3119957038
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3122453735
+[BaseModPanel] Added file information for 3119957038
+[BaseModPanel] Added voting info query for 3119957038
+[CUGCFileRequestManager] Inserted Download: 32190145611717984	Priority:2	Timestamp:146
+[CUGCFileRequestManager] Inserted Download: 2319983877138108771	Priority:1	Timestamp:147
+[BaseModPanel] File request (3119957038) finished.[BaseModPanel] Querying for details of published file: 3033724945
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3119957038
+[UGC] Read cloud file maps\workshop\596984281130013835\thumb91038223.jpg (595853149579410411) (33.615112)
+[UGC] Async write started for maps\workshop\596984281130013835\thumb91038223.jpg (595853149579410411) (31.200453)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\8539905825843835\thumb3372535880.jpg. (31.200453)
+[CUGCRequestManager] Beginning download of 8539271860957116
+[BaseModPanel] Added file information for 3033724945
+[BaseModPanel] Added voting info query for 3033724945
+[CUGCFileRequestManager] Inserted Download: 2012601243310974585	Priority:2	Timestamp:148
+[CUGCFileRequestManager] Inserted Download: 2012601243310974062	Priority:1	Timestamp:149
+[BaseModPanel] File request (3033724945) finished.[BaseModPanel] Querying for details of published file: 2940301432
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3033724945
+[UGC] Read cloud file maps\workshop\8539905825843835\thumb3372535880.jpg (8539271860957116) (34.315911)
+[UGC] Async write started for maps\workshop\8539905825843835\thumb3372535880.jpg (8539271860957116) (31.901169)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\19798904883271666\thumb3372411760.jpg. (31.901169)
+[CUGCRequestManager] Beginning download of 19798904883271712
+[BaseModPanel] Added file information for 2940301432
+[BaseModPanel] Added voting info query for 2940301432
+[CUGCFileRequestManager] Inserted Download: 2009206331482697530	Priority:2	Timestamp:150
+[CUGCFileRequestManager] Inserted Download: 2009206331478992784	Priority:1	Timestamp:151
+[BaseModPanel] File request (2940301432) finished.[BaseModPanel] Querying for details of published file: 3018000709
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2940301432
+[BaseModPanel] Added file information for 3018000709
+[BaseModPanel] Added voting info query for 3018000709
+[CUGCFileRequestManager] Inserted Download: 2012598700588199186	Priority:2	Timestamp:152
+[CUGCFileRequestManager] Inserted Download: 10000542502833659052	Priority:1	Timestamp:153
+[BaseModPanel] File request (3018000709) finished.[BaseModPanel] Querying for details of published file: 3015093059
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3018000709
+[UGC] Read cloud file maps\workshop\19798904883271666\thumb3372411760.jpg (19798904883271712) (35.007931)
+[UGC] Async write started for maps\workshop\19798904883271666\thumb3372411760.jpg (19798904883271712) (32.593304)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\12561196379819771286\thumb3366154996.jpg. (32.593304)
+[CUGCRequestManager] Beginning download of 15503084644893579144
+[BaseModPanel] Added file information for 3015093059
+[BaseModPanel] Added voting info query for 3015093059
+[CUGCFileRequestManager] Inserted Download: 2012597977350401661	Priority:2	Timestamp:154
+[CUGCFileRequestManager] Inserted Download: 2012599970460323595	Priority:1	Timestamp:155
+[BaseModPanel] File request (3015093059) finished.[BaseModPanel] Querying for details of published file: 3011780239
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3015093059
+[BaseModPanel] Added file information for 3011780239
+[BaseModPanel] Added voting info query for 3011780239
+[CUGCFileRequestManager] Inserted Download: 2045248441051925279	Priority:2	Timestamp:156
+[CUGCFileRequestManager] Inserted Download: 2045248441051923506	Priority:1	Timestamp:157
+[BaseModPanel] File request (3011780239) finished.[BaseModPanel] Querying for details of published file: 2645478950
+[CWorkshopFileInfoManager] Querying for voting details of published file: 3011780239
+[UGC] Read cloud file maps\workshop\12561196379819771286\thumb3366154996.jpg (15503084644893579144) (35.829414)
+[UGC] Async write started for maps\workshop\12561196379819771286\thumb3366154996.jpg (15503084644893579144) (33.415020)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\28813714128550773\thumb3358392706.jpg. (33.415020)
+[CUGCRequestManager] Beginning download of 2447236565336528904
+[BaseModPanel] Added file information for 2645478950
+[BaseModPanel] Added voting info query for 2645478950
+[CUGCFileRequestManager] Inserted Download: 1780604890178635367	Priority:2	Timestamp:158
+[CUGCFileRequestManager] Inserted Download: 1780604890179752704	Priority:1	Timestamp:159
+[BaseModPanel] File request (2645478950) finished.[BaseModPanel] Querying for details of published file: 362780974
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2645478950
+[BaseModPanel] Added file information for 362780974
+[BaseModPanel] Added voting info query for 362780974
+[CUGCFileRequestManager] Inserted Download: 53247407228055889	Priority:2	Timestamp:160
+[CUGCFileRequestManager] Inserted Download: 53247938654329108	Priority:1	Timestamp:161
+[BaseModPanel] File request (362780974) finished.[BaseModPanel] Querying for details of published file: 152877456
+[CWorkshopFileInfoManager] Querying for voting details of published file: 362780974
+[UGC] Read cloud file maps\workshop\28813714128550773\thumb3358392706.jpg (2447236565336528904) (36.708978)
+[UGC] Async write started for maps\workshop\28813714128550773\thumb3358392706.jpg (2447236565336528904) (34.294609)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\28815941970780429\thumb3340767449.jpg. (34.294609)
+[CUGCRequestManager] Beginning download of 28815941970446436
+[BaseModPanel] Added file information for 152877456
+[BaseModPanel] Added voting info query for 152877456
+[CUGCFileRequestManager] Inserted Download: 631909306506776309	Priority:2	Timestamp:162
+[CUGCFileRequestManager] Inserted Download: 631909837441426112	Priority:1	Timestamp:163
+[BaseModPanel] File request (152877456) finished.[BaseModPanel] Querying for details of published file: 140534764
+[CWorkshopFileInfoManager] Querying for voting details of published file: 152877456
+[UGC] Read cloud file maps\workshop\28815941970780429\thumb3340767449.jpg (28815941970446436) (37.391594)
+[UGC] Async write started for maps\workshop\28815941970780429\thumb3340767449.jpg (28815941970446436) (34.977226)
+[BaseModPanel] Added file information for 140534764
+[BaseModPanel] Added voting info query for 140534764
+[CUGCFileRequestManager] Inserted Download: 595875439252661120	Priority:2	Timestamp:164
+[CUGCFileRequestManager] Inserted Download: 597003151664103241	Priority:1	Timestamp:165
+[BaseModPanel] File request (140534764) finished.[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\595880509474442386\thumb151250994.jpg. (34.977226)
+[CUGCRequestManager] Beginning download of 597005871328432230
+[BaseModPanel] Querying for details of published file: 2831824378
+[CWorkshopFileInfoManager] Querying for voting details of published file: 140534764
+[BaseModPanel] Added file information for 2831824378
+[BaseModPanel] Added voting info query for 2831824378
+[CUGCFileRequestManager] Inserted Download: 1854936243690348585	Priority:2	Timestamp:166
+[CUGCFileRequestManager] Inserted Download: 1854936859130391463	Priority:1	Timestamp:167
+[BaseModPanel] File request (2831824378) finished.[BaseModPanel] Querying for details of published file: 2999472569
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2831824378
+[UGC] Read cloud file maps\workshop\595880509474442386\thumb151250994.jpg (597005871328432230) (38.124727)
+[UGC] Async write started for maps\workshop\595880509474442386\thumb151250994.jpg (597005871328432230) (35.710281)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\2147712943094176697\thumb3055298144.jpg. (35.710281)
+[CUGCRequestManager] Beginning download of 2147712943094177624
+[BaseModPanel] Added file information for 2999472569
+[BaseModPanel] Added voting info query for 2999472569
+[CUGCFileRequestManager] Inserted Download: 2012595138552707346	Priority:2	Timestamp:168
+[CUGCFileRequestManager] Inserted Download: 2012595138557258897	Priority:1	Timestamp:169
+[BaseModPanel] File request (2999472569) finished.[BaseModPanel] Querying for details of published file: 2666161418
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2999472569
+[BaseModPanel] Added file information for 2666161418
+[BaseModPanel] Added voting info query for 2666161418
+[CUGCFileRequestManager] Inserted Download: 1839160661423538676	Priority:2	Timestamp:170
+[CUGCFileRequestManager] Inserted Download: 1839160661424110052	Priority:1	Timestamp:171
+[BaseModPanel] File request (2666161418) finished.[BaseModPanel] Querying for details of published file: 2934902806
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2666161418
+[UGC] Read cloud file maps\workshop\2147712943094176697\thumb3055298144.jpg (2147712943094177624) (38.977795)
+[UGC] Async write started for maps\workshop\2147712943094176697\thumb3055298144.jpg (2147712943094177624) (36.557381)
+[BaseModPanel] Added file information for 2934902806
+[BaseModPanel] Added voting info query for 2934902806
+[CUGCFileRequestManager] Inserted Download: 2058744845450800251	Priority:2	Timestamp:172
+[CUGCFileRequestManager] Inserted Download: 2058744845458263140	Priority:1	Timestamp:173
+[BaseModPanel] File request (2934902806) finished.[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\2553059914884489940\thumb3278507293.jpg. (36.557381)
+[CUGCRequestManager] Beginning download of 2553059914884065939
+[BaseModPanel] Querying for details of published file: 2903498498
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2934902806
+[BaseModPanel] Added file information for 2903498498
+[BaseModPanel] Added voting info query for 2903498498
+[CUGCFileRequestManager] Inserted Download: 5078403134250132461	Priority:2	Timestamp:174
+[CUGCFileRequestManager] Inserted Download: 5078403134313284029	Priority:1	Timestamp:175
+[BaseModPanel] File request (2903498498) finished.[BaseModPanel] Querying for details of published file: 2909986925
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2903498498
+[UGC] Read cloud file maps\workshop\2553059914884489940\thumb3278507293.jpg (2553059914884065939) (39.524198)
+[UGC] Async write started for maps\workshop\2553059914884489940\thumb3278507293.jpg (2553059914884065939) (37.090237)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\2553059914874616352\thumb3277327812.jpg. (37.090237)
+[CUGCRequestManager] Beginning download of 2553059914874616578
+[BaseModPanel] Added file information for 2909986925
+[BaseModPanel] Added voting info query for 2909986925
+[CUGCFileRequestManager] Inserted Download: 5105424732089666209	Priority:2	Timestamp:176
+[CUGCFileRequestManager] Inserted Download: 5105424732089929093	Priority:1	Timestamp:177
+[BaseModPanel] File request (2909986925) finished.[BaseModPanel] Querying for details of published file: 2746131265
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2909986925
+[BaseModPanel] Added file information for 2746131265
+[BaseModPanel] Added voting info query for 2746131265
+[CUGCFileRequestManager] Inserted Download: 1814392411751394010	Priority:2	Timestamp:178
+[CUGCFileRequestManager] Inserted Download: 1814392411751393683	Priority:3	Timestamp:179
+[BaseModPanel] File request (2746131265) finished.[UGC] Beginning download of maps\workshop\1814392411751393683\1644237830.bsp. (37.818428)
+[CUGCRequestManager] Beginning download of 1814392411751393683
+[BaseModPanel] Querying for details of published file: 2913976736
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2746131265
+[UGC] Read cloud file maps\workshop\2553059914874616352\thumb3277327812.jpg (2553059914874616578) (40.370615)
+[UGC] Async write started for maps\workshop\2553059914874616352\thumb3277327812.jpg (2553059914874616578) (37.955780)
+[BaseModPanel] Added file information for 2913976736
+[BaseModPanel] Added voting info query for 2913976736
+[CUGCFileRequestManager] Inserted Download: 2039600735587250448	Priority:2	Timestamp:180
+[CUGCFileRequestManager] Inserted Download: 2039600735587250230	Priority:3	Timestamp:181
+[BaseModPanel] File request (2913976736) finished.[BaseModPanel] Querying for details of published file: 3429173657
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2913976736
+[BaseModPanel] Updated file information for 3429173657
+[BaseModPanel] File request (3429173657) finished.[BaseModPanel] Querying for details of published file: 2913609888
+[BaseModPanel] Added file information for 2913609888
+[BaseModPanel] Added voting info query for 2913609888
+[CUGCFileRequestManager] Inserted Download: 2039600735584445416	Priority:2	Timestamp:182
+[CUGCFileRequestManager] Inserted Download: 2039600735584445137	Priority:3	Timestamp:183
+[BaseModPanel] File request (2913609888) finished.[BaseModPanel] Querying for details of published file: 2998377583
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2913609888
+[BaseModPanel] Added file information for 2998377583
+[BaseModPanel] Added voting info query for 2998377583
+[CUGCFileRequestManager] Inserted Download: 2012595138542172406	Priority:2	Timestamp:184
+[CUGCFileRequestManager] Inserted Download: 2012595138542172132	Priority:3	Timestamp:185
+[BaseModPanel] File request (2998377583) finished.[BaseModPanel] Querying for details of published file: 2999472569
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2998377583
+[UGC] Read cloud file maps\workshop\1814392411751393683\1644237830.bsp (1814392411751393683) (41.977200)
+[UGC] Async write started for maps\workshop\1814392411751393683\1644237830.bsp (1814392411751393683) (39.536758)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\2039600735587250230\1673061836.bsp. (39.536758)
+[CUGCRequestManager] Beginning download of 2039600735587250230
+[BaseModPanel] Updated file information for 2999472569
+[BaseModPanel] File request (2999472569) finished.[BaseModPanel] Querying for details of published file: 2858464294
+[BaseModPanel] Added file information for 2858464294
+[BaseModPanel] Added voting info query for 2858464294
+[CUGCFileRequestManager] Inserted Download: 1843682554515888411	Priority:2	Timestamp:186
+[CUGCFileRequestManager] Inserted Download: 1843682554515888057	Priority:3	Timestamp:187
+[BaseModPanel] File request (2858464294) finished.[BaseModPanel] Querying for details of published file: 2914772410
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2858464294
+[UGC] Read cloud file maps\workshop\2039600735587250230\1673061836.bsp (2039600735587250230) (43.131062)
+[UGC] Async write started for maps\workshop\2039600735587250230\1673061836.bsp (2039600735587250230) (40.695499)
+[UGC] Unable to write file to disc!
+[UGC] Beginning download of maps\workshop\2039600735584445137\1672408136.bsp. (40.695499)
+[CUGCRequestManager] Beginning download of 2039600735584445137
+[BaseModPanel] Added file information for 2914772410
+[BaseModPanel] Added voting info query for 2914772410
+[CUGCFileRequestManager] Inserted Download: 2039600735594062844	Priority:2	Timestamp:188
+[CUGCFileRequestManager] Inserted Download: 2039600735594062624	Priority:3	Timestamp:189
+[BaseModPanel] File request (2914772410) finished.[BaseModPanel] Querying for details of published file: 2774997114
+[CWorkshopFileInfoManager] Querying for voting details of published file: 2914772410
