@@ -235,43 +235,35 @@ public:
 	}
 };
 
-void TestLine( const FourVectors& start, const FourVectors& stop,
-               fltx4 *pFractionVisible, int static_prop_index_to_ignore )
+void TestLine( const EightVectors& start, const EightVectors& stop,
+               fltx8 *pFractionVisible, int static_prop_index_to_ignore )
 {
-	FourRays myrays;
+	EightRays myrays;
 	myrays.origin = start;
 	myrays.direction = stop;
 	myrays.direction -= myrays.origin;
-	fltx4 len = myrays.direction.length();
-	myrays.direction *= ReciprocalSIMD( len );
+	fltx8 len = myrays.direction.length();
+	myrays.direction *= ReciprocalAVX( len );
 
-	RayTracingResult rt_result;
-	CCoverageCountTexture coverageCallback;
+	RayTracingResultAVX rt_result;
+	CCoverageCountTextureAVX coverageCallback;
 
-	g_RtEnv.Trace4Rays(myrays, Four_Zeros, len, &rt_result, TRACE_ID_STATICPROP | static_prop_index_to_ignore, g_bTextureShadows ? &coverageCallback : 0 );
-	
-	auto temprays = EightRays();
-	temprays.FromFour(myrays);
-	RayTracingResultAVX tempresult;
-	CCoverageCountTextureAVX coverageCallbackAVX;
-	g_RtEnv.Trace8Rays(temprays, Eight_Zeros, temprays.direction.length(), &tempresult, TRACE_ID_STATICPROP | static_prop_index_to_ignore, g_bTextureShadows ? &coverageCallbackAVX : 0);
-	
-	//rt_result = tempresult.ToFour();
+	g_RtEnv.Trace8Rays(myrays, Eight_Zeros, len, &rt_result, TRACE_ID_STATICPROP | static_prop_index_to_ignore, g_bTextureShadows ? &coverageCallback : 0 );
 
 	// Assume we can see the targets unless we get hits
-	float visibility[4];
-	for ( int i = 0; i < 4; i++ )
+	float visibility[8];
+	for ( int i = 0; i < 8; i++ )
 	{
 		visibility[i] = 1.0f;
 		if ( ( rt_result.HitIds[i] != -1 ) &&
-		     ( rt_result.HitDistance.m128_f32[i] < len.m128_f32[i] ) )
+		     ( rt_result.HitDistance.m256_f32[i] < len.m256_f32[i] ) )
 		{
 			visibility[i] = 0.0f;
 		}
 	}
-	*pFractionVisible = LoadUnalignedSIMD( visibility );
+	*pFractionVisible = LoadUnalignedAVX( visibility );
 	if ( g_bTextureShadows )
-		*pFractionVisible = MinSIMD( *pFractionVisible, coverageCallback.GetFractionVisible() );
+		*pFractionVisible = MinAVX( *pFractionVisible, coverageCallback.GetFractionVisible() );
 }
 
 
@@ -444,47 +436,47 @@ void DM_ClipBoxToBrush( CToolTrace *trace, const Vector& mins, const Vector& max
 	}
 }
 
-void TestLine_DoesHitSky( FourVectors const& start, FourVectors const& stop,
-	fltx4 *pFractionVisible, bool canRecurse, int static_prop_to_skip, bool bDoDebug )
+void TestLine_DoesHitSky( EightVectors const& start, EightVectors const& stop,
+	fltx8 *pFractionVisible, bool canRecurse, int static_prop_to_skip, bool bDoDebug )
 {
-	FourRays myrays;
+	EightRays myrays;
 	myrays.origin = start;
 	myrays.direction = stop;
 	myrays.direction -= myrays.origin;
-	fltx4 len = myrays.direction.length();
-	myrays.direction *= ReciprocalSIMD( len );
-	RayTracingResult rt_result;
-	CCoverageCountTexture coverageCallback;
+	fltx8 len = myrays.direction.length();
+	myrays.direction *= ReciprocalAVX( len );
+	RayTracingResultAVX rt_result;
+	CCoverageCountTextureAVX coverageCallback;
 
-	g_RtEnv.Trace4Rays(myrays, Four_Zeros, len, &rt_result, TRACE_ID_STATICPROP | static_prop_to_skip, g_bTextureShadows? &coverageCallback : 0);
+	g_RtEnv.Trace8Rays(myrays, Eight_Zeros, len, &rt_result, TRACE_ID_STATICPROP | static_prop_to_skip, g_bTextureShadows? &coverageCallback : 0);
 
 	if ( bDoDebug )
 	{
 		WriteTrace( "trace.txt", myrays, rt_result );
 	}
 
-	float aOcclusion[4];
-	for ( int i = 0; i < 4; i++ )
+	float aOcclusion[8];
+	for ( int i = 0; i < 8; i++ )
 	{
 		aOcclusion[i] = 0.0f;
 		if ( ( rt_result.HitIds[i] != -1 ) &&
-		     ( rt_result.HitDistance.m128_f32[i] < len.m128_f32[i] ) )
+		     ( rt_result.HitDistance.m256_f32[i] < len.m256_f32[i] ) )
 		{
 			int id = g_RtEnv.OptimizedTriangleList[rt_result.HitIds[i]].m_Data.m_IntersectData.m_nTriangleID;
 			if ( !( id & TRACE_ID_SKY ) )
 				aOcclusion[i] = 1.0f;
 		}
 	}
-	fltx4 occlusion = LoadUnalignedSIMD( aOcclusion );
+	fltx8 occlusion = LoadUnalignedAVX( aOcclusion );
 	if (g_bTextureShadows)
-		occlusion = MaxSIMD ( occlusion, coverageCallback.GetCoverage() );
+		occlusion = MaxAVX ( occlusion, coverageCallback.GetCoverage() );
 
-	bool fullyOccluded = ( TestSignSIMD( CmpGeSIMD( occlusion, Four_Ones ) ) == 0xF );
+	bool fullyOccluded = ( TestSignAVX( CmpGeAVX( occlusion, Eight_Ones ) ) == 0xF );
 
 	// if we hit sky, and we're not in a sky camera's area, try clipping into the 3D sky boxes
 	if ( (! fullyOccluded) && canRecurse && (! g_bNoSkyRecurse ) )
 	{
-		FourVectors dir = stop;
+		EightVectors dir = stop;
 		dir -= start;
 		dir.VectorNormalize();
 
@@ -500,7 +492,7 @@ void TestLine_DoesHitSky( FourVectors const& start, FourVectors const& stop,
 					int cam;
 					for (cam = 0; cam < num_sky_cameras; ++cam)
 					{
-						FourVectors skystart, skytrans, skystop;
+						EightVectors skystart, skytrans, skystop;
 						skystart.DuplicateVector( sky_cameras[cam].origin );
 						skystop = start;
 						skystop *= sky_cameras[cam].world_to_sky;
@@ -510,17 +502,17 @@ void TestLine_DoesHitSky( FourVectors const& start, FourVectors const& stop,
 						skystop *= MAX_TRACE_LENGTH;
 						skystop += skystart;
 						TestLine_DoesHitSky ( skystart, skystop, pFractionVisible, false, static_prop_to_skip, bDoDebug );
-						occlusion = AddSIMD ( occlusion, Four_Ones );
-						occlusion = SubSIMD ( occlusion, *pFractionVisible );
+						occlusion = AddAVX ( occlusion, Eight_Ones );
+						occlusion = SubAVX ( occlusion, *pFractionVisible );
 					}
 				}
 			}
 		}
 	}
 
-	occlusion = MaxSIMD( occlusion, Four_Zeros );
-	occlusion = MinSIMD( occlusion, Four_Ones );
-	*pFractionVisible = SubSIMD( Four_Ones, occlusion );
+	occlusion = MaxAVX( occlusion, Eight_Zeros );
+	occlusion = MinAVX( occlusion, Eight_Ones );
+	*pFractionVisible = SubAVX( Eight_Ones, occlusion );
 }
 
 

@@ -425,7 +425,7 @@ void WriteWinding (FileHandle_t out, winding_t *w, Vector& color );
 void WriteNormal( FileHandle_t out, Vector const &nPos, Vector const &nDir, 
 				  float length, Vector const &color );
 void WriteLine( FileHandle_t out, const Vector &vecPos1, const Vector &vecPos2, const Vector &color );
-void WriteTrace( const char *pFileName, const EightRays &rays, const RayTracingResult& result );
+void WriteTrace( const char *pFileName, const EightRays &rays, const RayTracingResultAVX& result );
 
 #ifdef STATIC_FOG
 qboolean IsFog( dface_t * f );
