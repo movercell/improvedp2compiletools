@@ -2670,7 +2670,7 @@ static void ResampleLightAt8Points( SSE_SampleInfo_t& info, int lightStyleIndex,
 	}
 }
 
-bool PointsInWinding ( EightVectors const & point, winding_t *w, int &invalidBits )
+bool PointsInWinding( EightVectors const& point, winding_t* w, int& invalidBits )
 {
 	EightVectors edge, toPt, cross, testCross, p0, p1;
 	fltx8 invalidMask;
@@ -2741,12 +2741,12 @@ static int SupersampleLightAtPoint( lightinfo_t& l, SSE_SampleInfo_t& info,
 
 	if ( flags & NON_AMBIENT_ONLY )
 	{
-		float aRow[4];
-		for ( int coord = 0; coord < 4; ++coord )
+		float aRow[8];
+		for ( int coord = 0; coord < 8; ++coord )
 			aRow[coord] = csshift + coord * cscale;
 		fltx8 sseRow = LoadUnalignedAVX( aRow );
 
-		for (int s = 0; s < 4; ++s)
+		for (int s = 0; s < 8; ++s)
 		{
 			// make sure the coordinate is inside of the sample's winding and when normalizing
 			// below use the number of samples used, not just numsamples and some of them

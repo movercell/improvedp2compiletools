@@ -1121,6 +1121,14 @@ public:
 		zhalves[0] = in.z;
 		zhalves[1] = in.z;
 	}
+	FORCEINLINE FourVectors ToFour()
+	{
+		FourVectors ret;
+		ret.x = xhalves[0];
+		ret.y = yhalves[0];
+		ret.z = zhalves[0];
+		return ret;
+	}
 
 	EightVectors(void)
 	{
