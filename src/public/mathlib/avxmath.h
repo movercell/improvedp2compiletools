@@ -1919,8 +1919,7 @@ inline fltx8 fnegate( const fltx8 & x )
 	return XorAVX( x, LoadAlignedAVX( g_AVX_signmask ) );
 }
 
-#if 0
-fltx8 Pow_FixedPoint_Exponent_AVX( const fltx8 & x, int exponent);
+
 
 // PowAVX - raise a AVX register to a power.  This is analogous to the C pow() function, with some
 // restictions: fractional exponents are only handled with 2 bits of precision. Basically,
@@ -1930,9 +1929,20 @@ fltx8 Pow_FixedPoint_Exponent_AVX( const fltx8 & x, int exponent);
 // numeric exceptions because it uses AVX--- This routine is O(log2(exponent)).
 inline fltx8 PowAVX( const fltx8 & x, float exponent )
 {
-	return Pow_FixedPoint_Exponent_AVX(x,(int) (8.0*exponent));
+	union {
+		fltx8 temp;
+		fltx4 xhalves[2];
+	};
+	union {
+		fltx8 result;
+		fltx4 resulthalves[2];
+	};
+	temp = x;
+	resulthalves[0] = Pow_FixedPoint_Exponent_SIMD(xhalves[0],(int) (8.0*exponent));
+	resulthalves[1] = Pow_FixedPoint_Exponent_SIMD(xhalves[1],(int) (8.0*exponent));
+	return result;
 }
-#endif
+
 
 
 // random number generation - generate 8 random numbers quickly.
