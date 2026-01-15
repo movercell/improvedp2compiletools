@@ -2601,7 +2601,7 @@ static void GatherSampleLightAt8Points( SSE_SampleInfo_t& info, int sampleIdx, i
 //-----------------------------------------------------------------------------
 // Iterates over all lights and computes lighting at a sample point
 //-----------------------------------------------------------------------------
-static void ResampleLightAt4Points( SSE_SampleInfo_t& info, int lightStyleIndex, int flags, LightingValue_t pLightmap[4][NUM_BUMP_VECTS+1] )
+static void ResampleLightAt8Points( SSE_SampleInfo_t& info, int lightStyleIndex, int flags, LightingValue_t pLightmap[4][NUM_BUMP_VECTS+1] )
 {
 	SSE_sampleLightOutput_t out;
 
@@ -2630,13 +2630,13 @@ static void ResampleLightAt4Points( SSE_SampleInfo_t& info, int lightStyleIndex,
 			continue;
 
 		// is this lights cluster visible?
-		fltx4 dotMask = Four_Zeros;
+		fltx8 dotMask = Eight_Zeros;
 		bool skipLight = true;
-		for( int s = 0; s < 4; s++ )
+		for( int s = 0; s < 8; s++ )
 		{
 			if( PVSCheck( dl->pvs, info.m_Clusters[s] ) )
 			{
-				dotMask = SetComponentSIMD( dotMask, s, 1.0f );
+				dotMask = SetComponentAVX( dotMask, s, 1.0f );
 				skipLight = false;
 			}
 		}
@@ -2650,11 +2650,11 @@ static void ResampleLightAt4Points( SSE_SampleInfo_t& info, int lightStyleIndex,
 		GatherSampleLightSSE( out, dl, info.m_FaceNum, info.m_Points, info.m_PointNormals, info.m_NormalCount, info.m_iThread );
 
 		// Apply the PVS check filter and compute falloff x dot
-		fltx4 fxdot[NUM_BUMP_VECTS + 1];
+		fltx8 fxdot[NUM_BUMP_VECTS + 1];
 		for ( int b = 0; b < info.m_NormalCount; b++ )
 		{
-			fxdot[b] = MulSIMD( out.m_flFalloff, out.m_flDot[b] );
-			fxdot[b] = MulSIMD( fxdot[b], dotMask );
+			fxdot[b] = MulAVX( out.m_flFalloff, out.m_flDot[b] );
+			fxdot[b] = MulAVX( fxdot[b], dotMask );
 		}
 
 		// Compute the contributions to each of the bumped lightmaps
@@ -2670,10 +2670,10 @@ static void ResampleLightAt4Points( SSE_SampleInfo_t& info, int lightStyleIndex,
 	}
 }
 
-bool PointsInWinding ( FourVectors const & point, winding_t *w, int &invalidBits )
+bool PointsInWinding ( EightVectors const & point, winding_t *w, int &invalidBits )
 {
-	FourVectors edge, toPt, cross, testCross, p0, p1;
-	fltx4 invalidMask;
+	EightVectors edge, toPt, cross, testCross, p0, p1;
+	fltx8 invalidMask;
 
 	//
 	// get the first normal to test
@@ -2698,10 +2698,10 @@ bool PointsInWinding ( FourVectors const & point, winding_t *w, int &invalidBits
 		cross = edge ^ toPt;
 		cross.VectorNormalizeFast();
 
-		fltx4 dot = cross * testCross;
-		invalidMask = OrSIMD( invalidMask, CmpLtSIMD( dot, Four_Zeros ) );
+		fltx8 dot = cross * testCross;
+		invalidMask = OrAVX( invalidMask, CmpLtAVX( dot, Eight_Zeros ) );
 
-		invalidBits = TestSignSIMD ( invalidMask );
+		invalidBits = TestSignAVX ( invalidMask );
 		if ( invalidBits == 0xF )
 			return false;
 	}
@@ -2770,7 +2770,7 @@ static int SupersampleLightAtPoint( lightinfo_t& l, SSE_SampleInfo_t& info,
 
 			// Resample the non-ambient light at this point...
 			LightingValue_t result[4][NUM_BUMP_VECTS+1];
-			ResampleLightAt4Points( info, lightStyleIndex, NON_AMBIENT_ONLY, result );
+			ResampleLightAt8Points( info, lightStyleIndex, NON_AMBIENT_ONLY, result );
 
 			// Got more subsamples
 			for ( int i = 0; i < 4; i++ )
@@ -2803,7 +2803,7 @@ static int SupersampleLightAtPoint( lightinfo_t& l, SSE_SampleInfo_t& info,
 		ComputeIlluminationPointAndNormalsSSE( l, superSamplePosition, superSampleNormal, &info, 4 );
 
 		LightingValue_t result[4][NUM_BUMP_VECTS+1];
-		ResampleLightAt4Points( info, lightStyleIndex, AMBIENT_ONLY, result );
+		ResampleLightAt8Points( info, lightStyleIndex, AMBIENT_ONLY, result );
 
 		// Got more subsamples
 		for ( int i = 0; i < 4; i++ )
