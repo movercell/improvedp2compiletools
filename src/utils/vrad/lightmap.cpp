@@ -2528,13 +2528,13 @@ static void GatherSampleLightAt8Points( SSE_SampleInfo_t& info, int sampleIdx, i
 	for (directlight_t *dl = activelights; dl != NULL; dl = dl->next)
 	{	    
 		// is this lights cluster visible?
-		fltx4 dotMask = Four_Zeros;
+		fltx8 dotMask = Eight_Zeros;
 		bool skipLight = true;
 		for( int s = 0; s < numSamples; s++ )
 		{
 			if( PVSCheck( dl->pvs, info.m_Clusters[s] ) )
 			{
-				dotMask = SetComponentSIMD( dotMask, s, 1.0f );
+				dotMask = SetComponentAVX( dotMask, s, 1.0f );
 				skipLight = false;
 			}
 		}
@@ -2544,12 +2544,12 @@ static void GatherSampleLightAt8Points( SSE_SampleInfo_t& info, int sampleIdx, i
 		GatherSampleLightSSE( out, dl, info.m_FaceNum, info.m_Points, info.m_PointNormals, info.m_NormalCount, info.m_iThread );
 		
 		// Apply the PVS check filter and compute falloff x dot
-		fltx4 fxdot[NUM_BUMP_VECTS + 1];
+		fltx8 fxdot[NUM_BUMP_VECTS + 1];
 		skipLight = true;
 		for ( int b = 0; b < info.m_NormalCount; b++ )
 		{
-			fxdot[b] = MulSIMD( out.m_flDot[b], dotMask );
-			fxdot[b] = MulSIMD( fxdot[b], out.m_flFalloff );
+			fxdot[b] = MulAVX( out.m_flDot[b], dotMask );
+			fxdot[b] = MulAVX( fxdot[b], out.m_flFalloff );
 			if ( !IsAllZeros( fxdot[b] ) )
 			{
 				skipLight = false;
@@ -2566,7 +2566,7 @@ static void GatherSampleLightAt8Points( SSE_SampleInfo_t& info, int sampleIdx, i
 			if (info.m_WarnFace != info.m_FaceNum)
 			{
 				Warning ("\nWARNING: Too many light styles on a face at (%f, %f, %f)\n",
-					info.m_Points.x.m128_f32[0], info.m_Points.y.m128_f32[0], info.m_Points.z.m128_f32[0] );
+					info.m_Points.x.m256_f32[0], info.m_Points.y.m256_f32[0], info.m_Points.z.m256_f32[0] );
 				info.m_WarnFace = info.m_FaceNum;
 			}
 			continue;
