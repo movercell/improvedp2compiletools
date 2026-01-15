@@ -2508,7 +2508,7 @@ static void ComputeIlluminationPointAndNormalsSSE( lightinfo_t const& l, EightVe
 		}
 		for ( int b = 0; b < NUM_BUMP_VECTS; ++b )
 		{
-			pInfo->m_PointNormals[b+1].LoadAndSwizzle( bv[0][b], bv[1][b], bv[2][b], bv[3][b], bv[8][b], bv[5][b], bv[6][b], bv[7][b]);
+			pInfo->m_PointNormals[b+1].LoadAndSwizzle( bv[0][b], bv[1][b], bv[2][b], bv[3][b], bv[4][b], bv[5][b], bv[6][b], bv[7][b]);
 		}
 	}
 
@@ -3100,7 +3100,7 @@ void BuildFacelights (int iThread, int facenum)
 	SSE_SampleInfo_t sampleInfo;
 	directlight_t *dl;
 	Vector spot;
-	Vector v[4], n[4];
+	Vector v[8], n[8];
 
 	if( g_bInterrupt )
 		return;
