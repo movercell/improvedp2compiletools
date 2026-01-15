@@ -531,7 +531,7 @@ void TestLine_DoesHitSky(FourVectors const& start, FourVectors const& stop,
 
 	if (bDoDebug)
 	{
-		WriteTrace("trace.txt", myrays, rt_result);
+		//WriteTrace("trace.txt", myrays, rt_result);
 	}
 
 	float aOcclusion[4];

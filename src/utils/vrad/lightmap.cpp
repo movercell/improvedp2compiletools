@@ -1778,7 +1778,7 @@ void GatherSampleSkyLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, i
 
 // Helper function - gathers light from ambient sky light
 void GatherSampleAmbientSkySSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum, 
-							   FourVectors const& pos, FourVectors *pNormals, int normalCount, int iThread,
+							   EightVectors const& pos, EightVectors *pNormals, int normalCount, int iThread,
 							   int nLFlags, int static_prop_index_to_ignore,
 							   float flEpsilon )
 {
@@ -1786,96 +1786,96 @@ void GatherSampleAmbientSkySSE( SSE_sampleLightOutput_t &out, directlight_t *dl,
 	bool bIgnoreNormals = ( nLFlags & GATHERLFLAGS_IGNORE_NORMALS ) != 0;
 	bool force_fast = ( nLFlags & GATHERLFLAGS_FORCE_FAST ) != 0;
 
-	fltx4 sumdot = Four_Zeros;
-	fltx4 ambient_intensity[NUM_BUMP_VECTS+1];
-	fltx4 possibleHitCount[NUM_BUMP_VECTS+1];
-	fltx4 dots[NUM_BUMP_VECTS+1];
+	fltx8 sumdot = Eight_Zeros;
+	fltx8 ambient_intensity[NUM_BUMP_VECTS+1];
+	fltx8 possibleHitCount[NUM_BUMP_VECTS+1];
+	fltx8 dots[NUM_BUMP_VECTS+1];
 
 	for ( int i = 0; i < normalCount; i++ )
 	{
-		ambient_intensity[i] = Four_Zeros;
-		possibleHitCount[i] = Four_Zeros;
+		ambient_intensity[i] = Eight_Zeros;
+		possibleHitCount[i] = Eight_Zeros;
 	}
 
 	DirectionalSampler_t sampler;
 	int nsky_samples = NUMVERTEXNORMALS;
 	if (do_fast || force_fast )
-		nsky_samples /= 4;
+		nsky_samples /= 8;
 	else
 		nsky_samples *= g_flSkySampleScale;
 
 	for (int j = 0; j < nsky_samples; j++)
 	{
-		FourVectors anorm;
+		EightVectors anorm;
 		anorm.DuplicateVector( sampler.NextValue() );
 
 		if ( bIgnoreNormals )
-			dots[0] = ReplicateX4( CONSTANT_DOT );
+			dots[0] = ReplicateX8( CONSTANT_DOT );
 		else
-			dots[0] = NegSIMD( pNormals[0] * anorm );
+			dots[0] = NegAVX( pNormals[0] * anorm );
 
-		fltx4 validity = CmpGtSIMD( dots[0], ReplicateX4( EQUAL_EPSILON ) );
+		fltx8 validity = CmpGtAVX( dots[0], ReplicateX8( EQUAL_EPSILON ) );
 
 		// No possibility of anybody getting lit
-		if ( !TestSignSIMD( validity ) )
+		if ( !TestSignAVX( validity ) )
 			continue;
 
-		dots[0] = AndSIMD( validity, dots[0] );
-		sumdot = AddSIMD( dots[0], sumdot );
-		possibleHitCount[0] = AddSIMD( AndSIMD( validity, Four_Ones ), possibleHitCount[0] );
+		dots[0] = AndAVX( validity, dots[0] );
+		sumdot = AddAVX( dots[0], sumdot );
+		possibleHitCount[0] = AddAVX( AndAVX( validity, Eight_Ones ), possibleHitCount[0] );
 
 		for ( int i = 1; i < normalCount; i++ )
 		{
 			if ( bIgnoreNormals )
-				dots[i] = ReplicateX4( CONSTANT_DOT );
+				dots[i] = ReplicateX8( CONSTANT_DOT );
 			else
-				dots[i] = NegSIMD( pNormals[i] * anorm );
-			fltx4 validity2 = CmpGtSIMD( dots[i], ReplicateX4 ( EQUAL_EPSILON ) );
-			dots[i] = AndSIMD( validity2, dots[i] );
-			possibleHitCount[i] = AddSIMD( AndSIMD( AndSIMD( validity, validity2 ), Four_Ones ), possibleHitCount[i] );
+				dots[i] = NegAVX( pNormals[i] * anorm );
+			fltx8 validity2 = CmpGtAVX( dots[i], ReplicateX8 ( EQUAL_EPSILON ) );
+			dots[i] = AndAVX( validity2, dots[i] );
+			possibleHitCount[i] = AddAVX( AndAVX( AndAVX( validity, validity2 ), Eight_Ones ), possibleHitCount[i] );
 		}
 
 		// search back to see if we can hit a sky brush
-		FourVectors delta = anorm;
+		EightVectors delta = anorm;
 		delta *= -MAX_TRACE_LENGTH;
 		delta += pos;
-		FourVectors surfacePos = pos;
-		FourVectors offset = anorm;
+		EightVectors surfacePos = pos;
+		EightVectors offset = anorm;
 		offset *= -flEpsilon;
 		surfacePos -= offset;
 
-		fltx4 fractionVisible = Four_Ones;
+		fltx8 fractionVisible = Eight_Ones;
 		TestLine_DoesHitSky( surfacePos, delta, &fractionVisible, true, static_prop_index_to_ignore );
 		for ( int i = 0; i < normalCount; i++ )
 		{
-			fltx4 addedAmount = MulSIMD( fractionVisible, dots[i] );
-			ambient_intensity[i] = AddSIMD( ambient_intensity[i], addedAmount );
+			fltx8 addedAmount = MulAVX( fractionVisible, dots[i] );
+			ambient_intensity[i] = AddAVX( ambient_intensity[i], addedAmount );
 		}
 
 	}
 
-	out.m_flFalloff = Four_Ones;
+	out.m_flFalloff = Eight_Ones;
 	for ( int i = 0; i < normalCount; i++ )
 	{
 		// now scale out the missing parts of the hemisphere of this bump basis vector
-		fltx4 factor = ReciprocalSIMD( possibleHitCount[0] );
-		factor = MulSIMD( factor, possibleHitCount[i] );
-		out.m_flDot[i] = MulSIMD( factor, sumdot );
-		out.m_flDot[i] = ReciprocalSIMD( out.m_flDot[i] );
-		out.m_flDot[i] = MulSIMD( ambient_intensity[i], out.m_flDot[i] );
+		fltx8 factor = ReciprocalAVX( possibleHitCount[0] );
+		factor = MulAVX( factor, possibleHitCount[i] );
+		out.m_flDot[i] = MulAVX( factor, sumdot );
+		out.m_flDot[i] = ReciprocalAVX( out.m_flDot[i] );
+		out.m_flDot[i] = MulAVX( ambient_intensity[i], out.m_flDot[i] );
 	}
 
 }
 
 // Helper function - gathers light from area lights, spot lights, and point lights
 void GatherSampleStandardLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum, 
-								  FourVectors const& pos, FourVectors *pNormals, int normalCount, int iThread,
+								  EightVectors const& pos, EightVectors *pNormals, int normalCount, int iThread,
 								  int nLFlags, int static_prop_index_to_ignore,
 								  float flEpsilon )
 {
 	bool bIgnoreNormals = ( nLFlags & GATHERLFLAGS_IGNORE_NORMALS ) != 0;
 
-	FourVectors src;
+	EightVectors src;
 	src.DuplicateVector( vec3_origin );
 
 	if (dl->facenum == -1)
@@ -1884,62 +1884,62 @@ void GatherSampleStandardLightSSE( SSE_sampleLightOutput_t &out, directlight_t *
 	}
 
 	// Find light vector
-	FourVectors delta;
+	EightVectors delta;
 	delta = src;
 	delta -= pos;
-	fltx4 dist2 = delta.length2();
-	fltx4 rpcDist = ReciprocalSqrtSIMD( dist2 );
+	fltx8 dist2 = delta.length2();
+	fltx8 rpcDist = ReciprocalSqrtAVX( dist2 );
 	delta *= rpcDist;
-	fltx4 dist = SqrtEstSIMD( dist2 );//delta.VectorNormalize();
+	fltx8 dist = SqrtEstAVX( dist2 );//delta.VectorNormalize();
 
 	// Compute dot
-	fltx4 dot = ReplicateX4( (float) CONSTANT_DOT );
+	fltx8 dot = ReplicateX8( (float) CONSTANT_DOT );
 	if ( !bIgnoreNormals )
 		dot = delta * pNormals[0];
-	dot = MaxSIMD( Four_Zeros, dot );
+	dot = MaxAVX( Eight_Zeros, dot );
 
 	// Affix dot to zero if past fade distz
 	bool bHasHardFalloff = ( dl->m_flEndFadeDistance > dl->m_flStartFadeDistance );
 	if ( bHasHardFalloff )
 	{
-		fltx4 notPastFadeDist = CmpLeSIMD ( dist, ReplicateX4 ( dl->m_flEndFadeDistance ) );
-		dot = AndSIMD( dot, notPastFadeDist );  // dot = 0 if past fade distance
-		if ( !TestSignSIMD ( notPastFadeDist ) )
+		fltx8 notPastFadeDist = CmpLeAVX ( dist, ReplicateX8 ( dl->m_flEndFadeDistance ) );
+		dot = AndAVX( dot, notPastFadeDist );  // dot = 0 if past fade distance
+		if ( !TestSignAVX ( notPastFadeDist ) )
 			return;
 	}
 
-	dist = MaxSIMD( dist, Four_Ones );
-	fltx4 falloffEvalDist = MinSIMD( dist, ReplicateX4( dl->m_flCapDist ) );
+	dist = MaxAVX( dist, Eight_Ones );
+	fltx8 falloffEvalDist = MinAVX( dist, ReplicateX8( dl->m_flCapDist ) );
 
-	fltx4 constant, linear, quadratic;
-	fltx4 dot2, inCone, inFringe, mult;
-	FourVectors offset;
+	fltx8 constant, linear, quadratic;
+	fltx8 dot2, inCone, inFringe, mult;
+	EightVectors offset;
 
 	switch (dl->light.type)
 	{
 	case emit_point:
-		constant  = ReplicateX4( dl->light.constant_attn );
-		linear    = ReplicateX4( dl->light.linear_attn );
-		quadratic = ReplicateX4( dl->light.quadratic_attn );
+		constant  = ReplicateX8( dl->light.constant_attn );
+		linear    = ReplicateX8( dl->light.linear_attn );
+		quadratic = ReplicateX8( dl->light.quadratic_attn );
 
-		out.m_flFalloff = MulSIMD( falloffEvalDist, falloffEvalDist );
-		out.m_flFalloff = MulSIMD( out.m_flFalloff, quadratic );
-		out.m_flFalloff = AddSIMD( out.m_flFalloff, MulSIMD( linear, falloffEvalDist ) );
-		out.m_flFalloff = AddSIMD( out.m_flFalloff, constant );
-		out.m_flFalloff = ReciprocalSIMD( out.m_flFalloff );
+		out.m_flFalloff = MulAVX( falloffEvalDist, falloffEvalDist );
+		out.m_flFalloff = MulAVX( out.m_flFalloff, quadratic );
+		out.m_flFalloff = AddAVX( out.m_flFalloff, MulAVX( linear, falloffEvalDist ) );
+		out.m_flFalloff = AddAVX( out.m_flFalloff, constant );
+		out.m_flFalloff = ReciprocalAVX( out.m_flFalloff );
 		break;
 
 	case emit_surface:
 		dot2 = delta * dl->light.normal;
-		dot2 = NegSIMD( dot2 );
+		dot2 = NegAVX( dot2 );
 
 		// Light behind surface yields zero dot
-		dot2 = MaxSIMD( Four_Zeros, dot2 );
-		if ( TestSignSIMD( CmpEqSIMD( Four_Zeros, dot ) ) == 0xF )
+		dot2 = MaxAVX( Eight_Zeros, dot2 );
+		if ( TestSignAVX( CmpEqAVX( Eight_Zeros, dot ) ) == 0xF )
 			return;
 
-		out.m_flFalloff = ReciprocalSIMD ( dist2 );
-		out.m_flFalloff = MulSIMD( out.m_flFalloff, dot2 );
+		out.m_flFalloff = ReciprocalAVX ( dist2 );
+		out.m_flFalloff = MulAVX( out.m_flFalloff, dot2 );
 
 		// move the endpoint away from the surface by epsilon to prevent hitting the surface with the trace
 		offset.DuplicateVector ( dl->light.normal );
@@ -1949,41 +1949,41 @@ void GatherSampleStandardLightSSE( SSE_sampleLightOutput_t &out, directlight_t *
 
 	case emit_spotlight:
 		dot2 = delta * dl->light.normal;
-		dot2 = NegSIMD( dot2 );
+		dot2 = NegAVX( dot2 );
 
 		// Affix dot2 to zero if outside light cone
-		inCone = CmpGtSIMD( dot2, ReplicateX4( dl->light.stopdot2 ) );
-		if ( !TestSignSIMD ( inCone ) )
+		inCone = CmpGtAVX( dot2, ReplicateX8( dl->light.stopdot2 ) );
+		if ( !TestSignAVX ( inCone ) )
 			return;
-		dot = AndSIMD( inCone, dot );
+		dot = AndAVX( inCone, dot );
 
-		constant  = ReplicateX4( dl->light.constant_attn );
-		linear    = ReplicateX4( dl->light.linear_attn );
-		quadratic = ReplicateX4( dl->light.quadratic_attn );
+		constant  = ReplicateX8( dl->light.constant_attn );
+		linear    = ReplicateX8( dl->light.linear_attn );
+		quadratic = ReplicateX8( dl->light.quadratic_attn );
 
-		out.m_flFalloff = MulSIMD( falloffEvalDist, falloffEvalDist );
-		out.m_flFalloff = MulSIMD( out.m_flFalloff, quadratic );
-		out.m_flFalloff = AddSIMD( out.m_flFalloff, MulSIMD( linear, falloffEvalDist ) );
-		out.m_flFalloff = AddSIMD( out.m_flFalloff, constant );
-		out.m_flFalloff = ReciprocalSIMD( out.m_flFalloff );
-		out.m_flFalloff = MulSIMD( out.m_flFalloff, dot2 );
+		out.m_flFalloff = MulAVX( falloffEvalDist, falloffEvalDist );
+		out.m_flFalloff = MulAVX( out.m_flFalloff, quadratic );
+		out.m_flFalloff = AddAVX( out.m_flFalloff, MulAVX( linear, falloffEvalDist ) );
+		out.m_flFalloff = AddAVX( out.m_flFalloff, constant );
+		out.m_flFalloff = ReciprocalAVX( out.m_flFalloff );
+		out.m_flFalloff = MulAVX( out.m_flFalloff, dot2 );
 
 		// outside the inner cone
-		inFringe = CmpLeSIMD( dot2, ReplicateX4( dl->light.stopdot ) );
-		mult = ReplicateX4( dl->light.stopdot - dl->light.stopdot2 );
-		mult = ReciprocalSIMD( mult );
-		mult = MulSIMD( mult, SubSIMD( dot2, ReplicateX4( dl->light.stopdot2 ) ) );
-		mult = MinSIMD( mult, Four_Ones );
-		mult = MaxSIMD( mult, Four_Zeros );
+		inFringe = CmpLeAVX( dot2, ReplicateX8( dl->light.stopdot ) );
+		mult = ReplicateX8( dl->light.stopdot - dl->light.stopdot2 );
+		mult = ReciprocalAVX( mult );
+		mult = MulAVX( mult, SubAVX( dot2, ReplicateX8( dl->light.stopdot2 ) ) );
+		mult = MinAVX( mult, Eight_Ones );
+		mult = MaxAVX( mult, Eight_Zeros );
 
 		// pow is fixed point, so this isn't the most accurate, but it doesn't need to be
 		if ( (dl->light.exponent != 0.0f ) && ( dl->light.exponent != 1.0f ) )
-			mult = PowSIMD( mult, dl->light.exponent );
+			mult = PowAVX( mult, dl->light.exponent );
 
 		// if not in between inner and outer cones, mult by 1
-		mult = AndSIMD( inFringe, mult );
-		mult = AddSIMD( mult, AndNotSIMD( inFringe, Four_Ones ) );
-		out.m_flFalloff = MulSIMD( mult, out.m_flFalloff );
+		mult = AndAVX( inFringe, mult );
+		mult = AddAVX( mult, AndNotAVX( inFringe, Eight_Ones ) );
+		out.m_flFalloff = MulAVX( mult, out.m_flFalloff );
 		break;
 
 	}
@@ -1993,38 +1993,38 @@ void GatherSampleStandardLightSSE( SSE_sampleLightOutput_t &out, directlight_t *
 	//	( dl->m_flEndFadeDistance - dl->m_flStartFadeDistance );
 	if ( bHasHardFalloff )
 	{
-		fltx4 t = ReplicateX4( dl->m_flEndFadeDistance - dl->m_flStartFadeDistance );
-		t = ReciprocalSIMD( t );
-		t = MulSIMD( t, SubSIMD( dist, ReplicateX4( dl->m_flStartFadeDistance ) ) );
+		fltx8 t = ReplicateX8( dl->m_flEndFadeDistance - dl->m_flStartFadeDistance );
+		t = ReciprocalAVX( t );
+		t = MulAVX( t, SubAVX( dist, ReplicateX8( dl->m_flStartFadeDistance ) ) );
 
 		// clamp t to [0...1]
-		t = MinSIMD( t, Four_Ones );
-		t = MaxSIMD( t, Four_Zeros );
-		t = SubSIMD( Four_Ones, t );
+		t = MinAVX( t, Eight_Ones );
+		t = MaxAVX( t, Eight_Zeros );
+		t = SubAVX( Eight_Ones, t );
 
 		// Using QuinticInterpolatingPolynomial, SSE-ified
 		// t * t * t *( t * ( t* 6.0 - 15.0 ) + 10.0 )
-		mult = SubSIMD( MulSIMD( ReplicateX4( 6.0f ), t ), ReplicateX4( 15.0f ) );
-		mult = AddSIMD( MulSIMD( mult, t ), ReplicateX4( 10.0f ) );
-		mult = MulSIMD( MulSIMD( t, t), mult );
-		mult = MulSIMD( t, mult );
-		out.m_flFalloff = MulSIMD( mult, out.m_flFalloff );
+		mult = SubAVX( MulAVX( ReplicateX8( 6.0f ), t ), ReplicateX8( 15.0f ) );
+		mult = AddAVX( MulAVX( mult, t ), ReplicateX8( 10.0f ) );
+		mult = MulAVX( MulAVX( t, t), mult );
+		mult = MulAVX( t, mult );
+		out.m_flFalloff = MulAVX( mult, out.m_flFalloff );
 	}
 
 	// Raytrace for visibility function
-	fltx4 fractionVisible = Four_Ones;
+	fltx8 fractionVisible = Eight_Ones;
 	TestLine( pos, src, &fractionVisible, static_prop_index_to_ignore);
-	dot = MulSIMD( fractionVisible, dot );
+	dot = MulAVX( fractionVisible, dot );
 	out.m_flDot[0] = dot;
 
 	for ( int i = 1; i < normalCount; i++ )
 	{
 		if ( bIgnoreNormals )
-			out.m_flDot[i] = ReplicateX4( (float) CONSTANT_DOT );
+			out.m_flDot[i] = ReplicateX8( (float) CONSTANT_DOT );
 		else
 		{
 			out.m_flDot[i] = pNormals[i] * delta;
-			out.m_flDot[i] = MaxSIMD( Four_Zeros, out.m_flDot[i] );
+			out.m_flDot[i] = MaxAVX( Eight_Zeros, out.m_flDot[i] );
 		}
 	}
 }

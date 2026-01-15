@@ -1379,7 +1379,7 @@ void WriteLine( FileHandle_t out, const Vector &vecPos1, const Vector &vecPos2, 
 		color.x / 256, color.y / 256, color.z / 256 );
 }
 
-void WriteTrace( const char *pFileName, const FourRays &rays, const RayTracingResult& result )
+void WriteTrace( const char *pFileName, const EightRays &rays, const RayTracingResultAVX& result )
 {
 	FileHandle_t out;
 
@@ -1388,7 +1388,7 @@ void WriteTrace( const char *pFileName, const FourRays &rays, const RayTracingRe
 		Error ("Couldn't open %s", pFileName);
 
 	// Draws rays
-	for ( int i = 0; i < 4; ++i )
+	for ( int i = 0; i < 8; ++i )
 	{
 		Vector vecOrigin = rays.origin.Vec(i);
 		Vector vecEnd = rays.direction.Vec(i);

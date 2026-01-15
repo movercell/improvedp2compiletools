@@ -387,7 +387,7 @@ inline byte PVSCheck( const byte *pvs, int iCluster )
 }
 
 // outputs 1 in fractionVisible if no occlusion, 0 if full occlusion, and in-between values
-void TestLine( EightVectors const& start, EightVectors const& stop, fltx4 *pFractionVisible, int static_prop_index_to_ignore=-1);
+void TestLine( EightVectors const& start, EightVectors const& stop, fltx8 *pFractionVisible, int static_prop_index_to_ignore=-1);
 
 // returns 1 if the ray sees the sky, 0 if it doesn't, and in-between values for partial coverage
 void TestLine_DoesHitSky( EightVectors const& start, EightVectors const& stop,
