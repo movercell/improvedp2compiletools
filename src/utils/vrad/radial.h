@@ -48,8 +48,7 @@ void WorldToLuxelSpace( lightinfo_t const *l, Vector const &world, Vector2D &coo
 void LuxelSpaceToWorld( lightinfo_t const *l, float s, float t, Vector &world );
 
 void WorldToLuxelSpace( lightinfo_t const *l, FourVectors const &world, FourVectors &coord );
-void LuxelSpaceToWorld( lightinfo_t const *l, fltx4 s, fltx4 t, FourVectors &world );
-
+void LuxelSpaceToWorld( lightinfo_t const* l, fltx8 s, fltx8 t, EightVectors& world );
 void AddDirectToRadial( radial_t *rad, 
 				  Vector const &pnt, 
 				  Vector2D const &coordmins, Vector2D const &coordmaxs, 

@@ -49,17 +49,17 @@ void WorldToLuxelSpace( lightinfo_t const *l, FourVectors const &world, FourVect
 	coord.z = Four_Zeros;
 }
 
-void LuxelSpaceToWorld( lightinfo_t const *l, fltx4 s, fltx4 t, FourVectors &world )
+void LuxelSpaceToWorld( lightinfo_t const *l, fltx8 s, fltx8 t, EightVectors &world )
 {
 	world.DuplicateVector ( l->luxelOrigin );
-	FourVectors st;
+	EightVectors st;
 
-	s = AddSIMD ( s, ReplicateX4 ( l->face->m_LightmapTextureMinsInLuxels[0] ) );
+	s = AddAVX ( s, ReplicateX8 ( l->face->m_LightmapTextureMinsInLuxels[0] ) );
 	st.DuplicateVector ( l->luxelToWorldSpace[0] );
 	st *= s;
 	world += st;
 
-	t = AddSIMD ( t, ReplicateX4 ( l->face->m_LightmapTextureMinsInLuxels[1] ) );
+	t = AddAVX ( t, ReplicateX8 ( l->face->m_LightmapTextureMinsInLuxels[1] ) );
 	st.DuplicateVector ( l->luxelToWorldSpace[1] );
 	st *= t;
 	world += st;
