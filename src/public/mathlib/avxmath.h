@@ -1349,6 +1349,12 @@ public:
 	}
 
 	/// LoadAndSwizzle - load 8 Vectors into a EightVectors, performing transpose op
+	FORCEINLINE void LoadAndSwizzle(Vector const& a, Vector const& b, Vector const& c, Vector const& d, 
+									Vector const& e, Vector const& f, Vector const& g, Vector const& h)
+	{
+		LoadAndSwizzle(a, b, c, d, 0);
+		LoadAndSwizzle(e, f, g, h, 1);
+	}
 	FORCEINLINE void LoadAndSwizzle(Vector const &a, Vector const &b, Vector const &c, Vector const &d, bool half )
 	{
 		// TransposeAVX has large sub-expressions that the compiler can't eliminate on x360
@@ -1414,7 +1420,7 @@ public:
 		z = v;
 #endif
 	}
-#if 0
+
 	// transform four horizontal vectors into the internal vertical ones
 	FORCEINLINE void LoadAndSwizzle( FLTX8 a, FLTX8 b, FLTX8 c, FLTX8 d  )
 	{
@@ -1435,16 +1441,21 @@ public:
 		x		= a;
 		y		= b;
 		z		= c;
-		fltx8 w = d;
+		union {
+			fltx8 w;
+			fltx4 whalves[2];
+		};
+		w = d;
 		// now, matrix is:
 		// x y z ?
 		// x y z ?
 		// x y z ?
 		// x y z ?
-		TransposeAVX(x, y, z, w);
+		TransposeSIMD(xhalves[0], yhalves[0], zhalves[0], whalves[0]);
+		TransposeSIMD(xhalves[1], yhalves[1], zhalves[1], whalves[1]);
 #endif
 	}
-
+#if 0
 	/// LoadAndSwizzleAligned - load 8 Vectors into a EightVectors, performing transpose op.
 	/// all 8 vectors must be 128 bit boundary
 	FORCEINLINE void LoadAndSwizzleAligned(const float *RESTRICT a, const float *RESTRICT b, const float *RESTRICT c, const float *RESTRICT d)

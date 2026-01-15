@@ -2036,15 +2036,15 @@ void GatherSampleStandardLightSSE( SSE_sampleLightOutput_t &out, directlight_t *
 // out.m_flDot[] - returned dot products with light vector and each normal
 // out.m_flFalloff - amount of light falloff
 void GatherSampleLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int facenum, 
-					   FourVectors const& pos, FourVectors *pNormals, int normalCount, int iThread,
+					   EightVectors const& pos, EightVectors *pNormals, int normalCount, int iThread,
 					   int nLFlags,
 					   int static_prop_index_to_ignore,
 					   float flEpsilon )
 {
 	for ( int b = 0; b < normalCount; b++ )
-		out.m_flDot[b] = Four_Zeros;
-	out.m_flFalloff = Four_Zeros;
-	out.m_flSunAmount = Four_Zeros;
+		out.m_flDot[b] = Eight_Zeros;
+	out.m_flFalloff = Eight_Zeros;
+	out.m_flSunAmount = Eight_Zeros;
 	Assert( normalCount <= (NUM_BUMP_VECTS+1) );
 
 	// skylights work fundamentally differently than normal lights
@@ -2073,12 +2073,12 @@ void GatherSampleLightSSE( SSE_sampleLightOutput_t &out, directlight_t *dl, int 
 	// (tested by checking the dot product of the face normal and the light position)
 	// we don't want it to contribute to *any* of the bumped lightmaps. It glows
 	// in disturbing ways if we don't do this.
-	out.m_flDot[0] = MaxSIMD ( out.m_flDot[0], Four_Zeros );
-	fltx4 notZero = CmpGtSIMD( out.m_flDot[0], Four_Zeros );
+	out.m_flDot[0] = MaxAVX ( out.m_flDot[0], Eight_Zeros );
+	fltx8 notZero = CmpGtAVX( out.m_flDot[0], Eight_Zeros );
 	for ( int n = 1; n < normalCount; n++ )
 	{
-		out.m_flDot[n] = MaxSIMD( out.m_flDot[n], Four_Zeros );
-		out.m_flDot[n] = AndSIMD( out.m_flDot[n], notZero );
+		out.m_flDot[n] = MaxAVX( out.m_flDot[n], Eight_Zeros );
+		out.m_flDot[n] = AndAVX( out.m_flDot[n], notZero );
 	}
 
 }
@@ -2249,18 +2249,18 @@ void GetPhongNormal( int facenum, Vector const& spot, Vector& phongnormal )
 	}
 }
 
-void GetPhongNormal( int facenum, FourVectors const& spot, FourVectors& phongnormal )
+void GetPhongNormal( int facenum, EightVectors const& spot, EightVectors& phongnormal )
 {
 	int	j;
 	dface_t		*f = &g_pFaces[facenum];
 	//	dplane_t	*p = &dplanes[f->planenum];
 	Vector		facenormal;
-	FourVectors vspot;
+	EightVectors vspot;
 
 	VectorCopy( dplanes[f->planenum].normal, facenormal );
 	phongnormal.DuplicateVector( facenormal );
 
-	FourVectors faceCentroid;
+	EightVectors faceCentroid;
 	faceCentroid.DuplicateVector( face_centroids[facenum] );
 
 	if ( smoothing_threshold != 1 )
@@ -2276,7 +2276,7 @@ void GetPhongNormal( int facenum, FourVectors const& spot, FourVectors& phongnor
 		for ( j = 0; j < f->numedges; ++j )
 		{
 			Vector	v1, v2;
-			fltx4		a1, a2;
+			fltx8		a1, a2;
 			float		aa, bb, ab;
 			int			vert1, vert2;
 
@@ -2299,26 +2299,26 @@ void GetPhongNormal( int facenum, FourVectors const& spot, FourVectors& phongnor
 			bb = DotProduct( v2, v2 );
 			ab = DotProduct( v1, v2 );
 			//a1 = (bb * DotProduct( v1, vspot ) - ab * DotProduct( vspot, v2 )) / (aa * bb - ab * ab);
-			a1 = ReciprocalSIMD( ReplicateX4( aa * bb - ab * ab ) );
-			a1 = MulSIMD( a1, SubSIMD( MulSIMD( ReplicateX4( bb ), vspot * v1 ), MulSIMD( ReplicateX4( ab ), vspot * v2 ) ) );
+			a1 = ReciprocalAVX( ReplicateX8( aa * bb - ab * ab ) );
+			a1 = MulAVX( a1, SubAVX( MulAVX( ReplicateX8( bb ), vspot * v1 ), MulAVX( ReplicateX8( ab ), vspot * v2 ) ) );
 			//a2 = (DotProduct( vspot, v2 ) - a1 * ab) / bb;
-			a2 = ReciprocalSIMD( ReplicateX4( bb ) );
-			a2 = MulSIMD( a2, SubSIMD( vspot * v2, MulSIMD( a1, ReplicateX4( ab ) ) ) );
+			a2 = ReciprocalAVX( ReplicateX8( bb ) );
+			a2 = MulAVX( a2, SubAVX( vspot * v2, MulAVX( a1, ReplicateX8( ab ) ) ) );
 
-			fltx4 resultMask = AndSIMD( CmpGeSIMD( a1, Four_Zeros ), CmpGeSIMD( a2, Four_Zeros ) );
+			fltx8 resultMask = AndAVX( CmpGeAVX( a1, Eight_Zeros ), CmpGeAVX( a2, Eight_Zeros ) );
 			
-			if ( !TestSignSIMD( resultMask ) )
+			if ( !TestSignAVX( resultMask ) )
 				continue;
 
 			// Store the old phong normal to avoid overwriting already computed phong normals
-			FourVectors oldPhongNormal = phongnormal;
+			EightVectors oldPhongNormal = phongnormal;
 
 			// calculate distance from edge to pos
-			FourVectors	temp;
-			fltx4 scale;
+			EightVectors	temp;
+			fltx8 scale;
 
 			// Interpolate between the center and edge normals based on sample position
-			scale = SubSIMD( SubSIMD( Four_Ones, a1 ), a2 );
+			scale = SubAVX( SubAVX( Eight_Ones, a1 ), a2 );
 			phongnormal.DuplicateVector( fn->facenormal );
 			phongnormal *= scale;
 			temp.DuplicateVector( n1 );
@@ -2329,9 +2329,9 @@ void GetPhongNormal( int facenum, FourVectors const& spot, FourVectors& phongnor
 			phongnormal += temp;
 
 			// restore the old phong normals
-			phongnormal.x = AddSIMD( AndSIMD( resultMask, phongnormal.x ), AndNotSIMD( resultMask, oldPhongNormal.x ) );
-			phongnormal.y = AddSIMD( AndSIMD( resultMask, phongnormal.y ), AndNotSIMD( resultMask, oldPhongNormal.y ) );
-			phongnormal.z = AddSIMD( AndSIMD( resultMask, phongnormal.z ), AndNotSIMD( resultMask, oldPhongNormal.z ) );
+			phongnormal.x = AddAVX( AndAVX( resultMask, phongnormal.x ), AndNotAVX( resultMask, oldPhongNormal.x ) );
+			phongnormal.y = AddAVX( AndAVX( resultMask, phongnormal.y ), AndNotAVX( resultMask, oldPhongNormal.y ) );
+			phongnormal.z = AddAVX( AndAVX( resultMask, phongnormal.z ), AndNotAVX( resultMask, oldPhongNormal.z ) );
 		}
 
 		phongnormal.VectorNormalize();
@@ -2469,11 +2469,8 @@ static int FindOrAllocateLightstyleSamples( dface_t* f, facelight_t	*fl, int lig
 //-----------------------------------------------------------------------------
 // Compute the illumination point + normal for the sample
 //-----------------------------------------------------------------------------
-static void ComputeIlluminationPointAndNormalsSSE( lightinfo_t const& l, FourVectors const &pos, FourVectors const &norm, SSE_SampleInfo_t* pInfo, int numSamples )
+static void ComputeIlluminationPointAndNormalsSSE( lightinfo_t const& l, EightVectors const &pos, EightVectors const &norm, SSE_SampleInfo_t* pInfo, int numSamples )
 {
-
-	Vector v[4];
-
 	pInfo->m_Points = pos;
 	bool computeNormals = ( pInfo->m_NormalCount > 1 && ( pInfo->m_IsDispFace || !l.isflat ) );
 
@@ -2481,7 +2478,7 @@ static void ComputeIlluminationPointAndNormalsSSE( lightinfo_t const& l, FourVec
 	// light sampling will not be affected by a bug	where raycasts will
 	// intersect with the face being lit. We really should just have that
 	// logic in GatherSampleLight
-	FourVectors faceNormal;
+	EightVectors faceNormal;
 	faceNormal.DuplicateVector( l.facenormal );
 	pInfo->m_Points += faceNormal;
 
@@ -2492,17 +2489,17 @@ static void ComputeIlluminationPointAndNormalsSSE( lightinfo_t const& l, FourVec
 	else if ( !l.isflat )
 	{
 		// If the face isn't flat, use a phong-based normal instead
-		FourVectors modelorg;
+		EightVectors modelorg;
 		modelorg.DuplicateVector( l.modelorg );
-		FourVectors vecSample = pos;
+		EightVectors vecSample = pos;
 		vecSample -= modelorg;
 		GetPhongNormal( pInfo->m_FaceNum, vecSample, pInfo->m_PointNormals[0] );
 	}
 
 	if ( computeNormals )
 	{
-		Vector bv[4][NUM_BUMP_VECTS];
-		for ( int i = 0; i < 4; ++i )
+		Vector bv[8][NUM_BUMP_VECTS];
+		for ( int i = 0; i < 8; ++i )
 		{
 			// TODO: using Vec may slow things down a bit
 			GetBumpNormals( pInfo->m_pTexInfo->textureVecsTexelsPerWorldUnits[0],
@@ -2511,19 +2508,19 @@ static void ComputeIlluminationPointAndNormalsSSE( lightinfo_t const& l, FourVec
 		}
 		for ( int b = 0; b < NUM_BUMP_VECTS; ++b )
 		{
-			pInfo->m_PointNormals[b+1].LoadAndSwizzle ( bv[0][b], bv[1][b], bv[2][b], bv[3][b] );
+			pInfo->m_PointNormals[b+1].LoadAndSwizzle( bv[0][b], bv[1][b], bv[2][b], bv[3][b], bv[8][b], bv[5][b], bv[6][b], bv[7][b]);
 		}
 	}
 
 	// TODO: this may slow things down a bit ( using Vec )
-	for ( int i = 0; i < 4; ++i )
+	for ( int i = 0; i < 8; ++i )
 		pInfo->m_Clusters[i] = ClusterFromPoint( pos.Vec( i ) );
 }
 
 //-----------------------------------------------------------------------------
 // Iterates over all lights and computes lighting at up to 4 sample points
 //-----------------------------------------------------------------------------
-static void GatherSampleLightAt4Points( SSE_SampleInfo_t& info, int sampleIdx, int numSamples )
+static void GatherSampleLightAt8Points( SSE_SampleInfo_t& info, int sampleIdx, int numSamples )
 {
 	SSE_sampleLightOutput_t out;
 
