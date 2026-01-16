@@ -248,7 +248,7 @@ void TestLine( const FourVectors& start, const FourVectors& stop,
 	RayTracingResult rt_result;
 	CCoverageCountTexture coverageCallback;
 
-	g_RtEnv.Trace4Rays(myrays, Four_Zeros, len, &rt_result, TRACE_ID_STATICPROP | static_prop_index_to_ignore, g_bTextureShadows ? &coverageCallback : 0 );
+	//g_RtEnv.Trace4Rays(myrays, Four_Zeros, len, &rt_result, TRACE_ID_STATICPROP | static_prop_index_to_ignore, g_bTextureShadows ? &coverageCallback : 0 );
 	
 	auto temprays = EightRays();
 	temprays.FromFour(myrays);
@@ -256,7 +256,7 @@ void TestLine( const FourVectors& start, const FourVectors& stop,
 	CCoverageCountTextureAVX coverageCallbackAVX;
 	g_RtEnv.Trace8Rays(temprays, Eight_Zeros, temprays.direction.length(), &tempresult, TRACE_ID_STATICPROP | static_prop_index_to_ignore, g_bTextureShadows ? &coverageCallbackAVX : 0);
 	
-	//rt_result = tempresult.ToFour();
+	rt_result = tempresult.ToFour();
 
 	// Assume we can see the targets unless we get hits
 	float visibility[4];
