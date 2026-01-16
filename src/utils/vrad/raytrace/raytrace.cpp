@@ -355,9 +355,9 @@ const fltx4 FourEpsilons={1.0e-10,1.0e-10,1.0e-10,1.0e-10};
 const fltx4 FourZeros={1.0e-10,1.0e-10,1.0e-10,1.0e-10};
 const fltx4 FourNegativeEpsilons={-1.0e-10,-1.0e-10,-1.0e-10,-1.0e-10};
 
-const fltx8 EightEpsilons = { 1.0e-10,1.0e-10,1.0e-10,1.0e-10 };
-const fltx8 EightZeros = { 1.0e-10,1.0e-10,1.0e-10,1.0e-10 };
-const fltx8 EightNegativeEpsilons = { -1.0e-10,-1.0e-10,-1.0e-10,-1.0e-10 };
+const fltx8 EightEpsilons =			{ 1.0e-10,1.0e-10,1.0e-10,1.0e-10, 1.0e-10,1.0e-10,1.0e-10,1.0e-10 };
+const fltx8 EightZeros =			{ 1.0e-10,1.0e-10,1.0e-10,1.0e-10, 1.0e-10,1.0e-10,1.0e-10,1.0e-10 };
+const fltx8 EightNegativeEpsilons = { -1.0e-10,-1.0e-10,-1.0e-10,-1.0e-10, -1.0e-10,-1.0e-10,-1.0e-10,-1.0e-10 };
 
 static float BoxSurfaceArea(Vector const &boxmin, Vector const &boxmax)
 {
@@ -701,7 +701,7 @@ void RayTracingEnvironment::Trace8Rays(const EightRays& rays, fltx8 TMin, fltx8 
 		EightRays tmprays;
 		tmprays.origin = rays.origin;
 
-		uint8 need_trace[8] = { 1,1,1,1 };
+		uint8 need_trace[8] = { 1,1,1,1,1,1,1,1 };
 		for (int try_trace = 0; try_trace < 8; try_trace++)
 		{
 			if (need_trace[try_trace])
