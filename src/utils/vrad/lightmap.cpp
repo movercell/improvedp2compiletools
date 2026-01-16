@@ -2791,8 +2791,8 @@ static int SupersampleLightAtPoint( lightinfo_t& l, SSE_SampleInfo_t& info,
 		EightVectors superSampleOffsets;
 		superSampleOffsets.LoadAndSwizzle( Vector( csshift, csshift, 0 ), Vector( csshift, csshift + cscale, 0),
 		                                   Vector( csshift + cscale, csshift, 0 ), Vector( csshift + cscale, csshift + cscale, 0 ), 0 );
-		superSampleOffsets.LoadAndSwizzle( Vector(csshift, csshift, 0), Vector(csshift, csshift + cscale, 0),
-										   Vector(csshift + cscale, csshift, 0), Vector(csshift + cscale, csshift + cscale, 0), 1 );
+		superSampleOffsets.LoadAndSwizzle( Vector(csshift, csshift, cscale), Vector(csshift, csshift + cscale, cscale),
+										   Vector(csshift + cscale, csshift, cscale), Vector(csshift + cscale, csshift + cscale, cscale), 1 );
 		superSampleLightCoord.DuplicateVector( sampleLightOrigin );
 		superSampleLightCoord += superSampleOffsets;
 
