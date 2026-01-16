@@ -806,7 +806,7 @@ void RayTracingEnvironment::Trace8Rays(const EightRays& rays, fltx8 TMin, fltx8 
 		back_idx[1] = 1;
 		front_idx[1] = 0;
 	}
-	if (DirectionSignMask & 8)
+	if (DirectionSignMask & 4)
 	{
 		back_idx[2] = 0;
 		front_idx[2] = 1;
