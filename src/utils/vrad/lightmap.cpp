@@ -2766,7 +2766,7 @@ static int SupersampleLightAtPoint( lightinfo_t& l, SSE_SampleInfo_t& info,
 
 			// Compute the super-sample illumination point and normal
 			// We're assuming the flat normal is the same for all supersamples
-			ComputeIlluminationPointAndNormalsSSE( l, superSamplePosition, superSampleNormal, &info, 4 );
+			ComputeIlluminationPointAndNormalsSSE( l, superSamplePosition, superSampleNormal, &info, 8 );
 
 			// Resample the non-ambient light at this point...
 			LightingValue_t result[4][NUM_BUMP_VECTS+1];
@@ -2802,7 +2802,7 @@ static int SupersampleLightAtPoint( lightinfo_t& l, SSE_SampleInfo_t& info,
 		if ( sample.w && !PointsInWinding( superSamplePosition, sample.w, invalidBits ) )
 			return 0;
 
-		ComputeIlluminationPointAndNormalsSSE( l, superSamplePosition, superSampleNormal, &info, 4 );
+		ComputeIlluminationPointAndNormalsSSE( l, superSamplePosition, superSampleNormal, &info, 8 );
 
 		LightingValue_t result[4][NUM_BUMP_VECTS+1];
 		ResampleLightAt8Points( info, lightStyleIndex, AMBIENT_ONLY, result );
@@ -3141,7 +3141,7 @@ void BuildFacelights (int iThread, int facenum)
 	InitSampleInfo( l, iThread, sampleInfo );
 
 	// Allocate sample positions/normals to SSE
-	int numGroups = ( fl->numsamples & 0x3) ? ( fl->numsamples / 4 ) + 1 : ( fl->numsamples / 4 );
+	int numGroups = ( fl->numsamples & 0b111) ? ( fl->numsamples / 8 ) + 1 : ( fl->numsamples / 8 );
 
 	// always allocate style 0 lightmap
 	f->styles[0] = 0;
