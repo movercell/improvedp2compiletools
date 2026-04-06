@@ -3,13 +3,14 @@
 Ever wondered whether you can speed up your compile times way more than you're allowed with the vanilla compilers? Well, here's your answer: ***Yes!*** 
 
 ## Features
-- Drastically improved compile time!
+- Drastically improved compile time
 - Prettier console output
 - Makes your screw-ups show as errors instead of warnings
+- (RAD) -final now makes static prop lighting not be done with forced fast lighting
 
 ## Planned
 - VIS
-- Even faster compile times!
+- Even faster compile times
 
 ## Not planned but maybe
 - BSP

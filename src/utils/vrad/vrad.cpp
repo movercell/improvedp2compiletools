@@ -8,6 +8,10 @@
 
 // vrad.c
 
+namespace MRAD {
+	bool isFinalCompile = false;
+}
+
 #include "vrad.h"
 #include "physdll.h"
 #include "lightmap.h"
@@ -2504,6 +2508,7 @@ int ParseCommandLine( int argc, char **argv, bool *onlydetail )
 		}
 		else if (!Q_stricmp(argv[i],"-final"))
 		{
+			MRAD::isFinalCompile = true;
 			g_flSkySampleScale = 16.0;
 		}
 		else if (!Q_stricmp(argv[i],"-finitefalloff"))

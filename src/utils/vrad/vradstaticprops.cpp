@@ -11,6 +11,10 @@
 
 #define NO_PROP_LIGHTMAPS
 
+namespace MRAD {
+	extern bool isFinalCompile;
+}
+
 //TODO: stub
 unsigned char* LZMA_Compress( unsigned char* pInput, unsigned int	inputSize, unsigned int* pOutputSize)
 {
@@ -1217,7 +1221,11 @@ void ComputeDirectLightingAtPoint( Vector &position, Vector &normal, Vector &out
 		adjusted_pos4.DuplicateVector( adjusted_pos );
 		normal4.DuplicateVector( normal );
 
-		GatherSampleLightSSE( sampleOutput, dl, -1, adjusted_pos4, &normal4, 1, iThread, nLFlags | GATHERLFLAGS_FORCE_FAST,
+		int flags = nLFlags;
+		if (!MRAD::isFinalCompile)
+			flags |= GATHERLFLAGS_FORCE_FAST;
+		
+		GatherSampleLightSSE( sampleOutput, dl, -1, adjusted_pos4, &normal4, 1, iThread, flags,
 		                      static_prop_id_to_skip, flEpsilon );
 		
 		VectorMA( outColor, sampleOutput.m_flFalloff.m128_f32[0] * sampleOutput.m_flDot[0].m128_f32[0], dl->light.intensity, outColor );

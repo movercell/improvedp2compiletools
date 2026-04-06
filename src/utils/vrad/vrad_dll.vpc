@@ -16,7 +16,7 @@ $Configuration
 	{
 		$AdditionalIncludeDirectories		"$BASE,..\common,..\vmpi,..\vmpi\mysql\mysqlpp\include,..\vmpi\mysql\include"
 		$PreprocessorDefinitions			"$BASE;MPI;PROTECTED_THINGS_DISABLE;VRAD"
-		$AdditionalOptions	"/WX- /O2 /arch:AVX2 $BASE"
+		$AdditionalOptions	"/WX- /O2 $BASE"
 	}
 
 	$Linker
